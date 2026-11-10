@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 import hashlib
+import json
 
 import numpy as np
 import pandas as pd
@@ -14,6 +15,20 @@ REQUIRED = (
     "id_destinasi", "destinasi", "rating", "date", "text_original",
     "text_preprocessed", *TARGETS,
 )
+
+
+BUNDLE_COLUMNS = ("id_destinasi", "destinasi", *TARGETS, "teks_model")
+BUNDLE_FLAGS = {
+    "exact_duplicate_rows": "duplikat_persis",
+    "relative_date_rows": "tanggal_relatif",
+    "potential_encoding_error_rows": "indikasi_encoding",
+}
+BUNDLE_MISSING_FLAGS = {
+    "text_original": "teks_asli_kosong",
+    "text_preprocessed": "teks_olahan_kosong",
+    "date": "tanggal_kosong",
+    "rating": "rating_kosong",
+}
 
 
 @dataclass
@@ -33,12 +48,17 @@ def normalize_text(text):
 
 def load_reviews(path: Path) -> pd.DataFrame:
     data = pd.read_excel(path, sheet_name=SHEET)
-    missing = sorted(set(REQUIRED) - set(data.columns))
+    _validate_schema(data, REQUIRED)
+    return data.assign(teks_model=normalize_text(data["text_preprocessed"]))
+
+
+def _validate_schema(data: pd.DataFrame, required) -> None:
+    missing = sorted(set(required) - set(data.columns))
     if missing:
-        raise ValueError(f"Kolom wajib pada lembar {SHEET}: {missing}")
+        raise ValueError(f"Kolom data wajib belum tersedia: {missing}")
     keys = ["id_destinasi", "destinasi", *TARGETS]
     if data.empty or any(data[key].fillna("").astype(str).str.strip().eq("").any() for key in keys):
-        raise ValueError("Workbook kosong atau ada ID, nama destinasi, atau label yang kosong.")
+        raise ValueError("Dataset kosong atau ada ID, nama destinasi, atau label yang kosong.")
 
     # ID bertipe teks agar format sama dengan CSV penilaian rekomendasi.
     data["id_destinasi"] = data["id_destinasi"].astype(str).str.strip()
@@ -50,7 +70,53 @@ def load_reviews(path: Path) -> pd.DataFrame:
     if conflicts:
         raise ValueError(f"Nama atau label tidak konsisten untuk ID destinasi: {conflicts[:8]}")
 
-    return data.assign(teks_model=normalize_text(data["text_preprocessed"]))
+
+def load_bundled_reviews(directory: Path) -> tuple[pd.DataFrame, dict]:
+    """Baca data model yang ikut dalam repo dan periksa integritas tiap bagian."""
+    manifest_path = directory / "manifest.json"
+    if not manifest_path.is_file():
+        raise FileNotFoundError(f"Paket data tidak ditemukan di {directory}. Perbarui checkout dari cabang riset.")
+
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("schema_version") != 1 or not manifest.get("parts"):
+        raise ValueError("Skema manifest paket data tidak didukung.")
+
+    required = (*BUNDLE_COLUMNS, *BUNDLE_FLAGS.values(), *BUNDLE_MISSING_FLAGS.values())
+    frames = []
+    for part in manifest["parts"]:
+        path = directory / part["file"]
+        if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != part["sha256"]:
+            raise ValueError(f"Bagian paket data hilang atau rusak: {path.name}")
+        frame = pd.read_csv(path, dtype={"id_destinasi": str, "teks_model": str}, keep_default_na=False)
+        if set(required) - set(frame.columns) or len(frame) != part["rows"]:
+            raise ValueError(f"Skema atau jumlah baris tidak cocok: {path.name}")
+        frames.append(frame)
+
+    data = pd.concat(frames, ignore_index=True)
+    _validate_schema(data, required)
+    if len(data) != manifest["rows"] or data["id_destinasi"].nunique() != manifest["destinations"]:
+        raise ValueError("Jumlah ulasan atau destinasi berbeda dari manifest paket data.")
+    if not data[[*BUNDLE_FLAGS.values(), *BUNDLE_MISSING_FLAGS.values()]].isin([0, 1]).all().all():
+        raise ValueError("Penanda audit dalam paket data harus bernilai 0 atau 1.")
+
+    return data, manifest
+
+
+def audit_bundled_reviews(data: pd.DataFrame, manifest: dict) -> dict:
+    """Ringkas penanda yang dihitung dari workbook sebelum kolom mentah dihilangkan."""
+    empty_counts = dict.fromkeys(REQUIRED, 0)
+    empty_counts.update({name: int(data[flag].sum()) for name, flag in BUNDLE_MISSING_FLAGS.items()})
+    return {
+        "input_mode": "bundled_model_data",
+        "source_workbook_sha256": manifest["source_workbook_sha256"],
+        "package_parts_sha256": [part["sha256"] for part in manifest["parts"]],
+        "rows": len(data),
+        "destinations": data["id_destinasi"].nunique(),
+        "empty_by_column": empty_counts,
+        "empty_normalized_text_rows": int(data["teks_model"].eq("").sum()),
+        **{name: int(data[flag].sum()) for name, flag in BUNDLE_FLAGS.items()},
+        "targets": list(TARGETS),
+    }
 
 
 def audit_reviews(data: pd.DataFrame, path: Path) -> dict:

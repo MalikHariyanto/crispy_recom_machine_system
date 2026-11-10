@@ -4,8 +4,8 @@ Pipeline penelitian asistensi Malik Hariyanto untuk mengolah ulasan Google Maps,
 
 ## Mulai dari Colab
 
-1. Buka [notebook](notebooks/Colab_Audit_Wisata_Madura.ipynb), unduh file `ipynb`, lalu unggah ke Colab.
-2. Unggah `koreksi_dataset.xlsx` melalui panel **Files** atau arahkan `DATA_PATH` ke salinan yang kamu miliki. Notebook memakai lembar **Data Ulasan**. Berkas mentah tidak diperlukan di GitHub.
+1. Buka [notebook](notebooks/Colab_Audit_Wisata_Madura_Otomatis.ipynb), unduh file `ipynb`, lalu unggah ke Colab.
+2. Jalankan dengan `DATA_PATH = None`. Sel konfigurasi mengambil repo dan bagian **01** memuat data bawaan otomatis, tanpa unggah Excel. Gunakan `DATA_PATH` hanya untuk memilih workbook alternatif.
 3. Jalankan dari **00 Konfigurasi**. Gunakan runtime GPU bila mengaktifkan `RUN_DEEP`. Untuk mencoba audit, LDA, dan baseline lebih dulu, atur `RUN_DEEP = False` sebelum sel instalasi.
 4. Untuk mencoba pemeringkatan, atur `RUN_BGE = True` pada bagian **00** lalu isi preferensi di bagian **09**. Jalur ini mengunduh model BGE-M3. Unduhan dan encoding pertama dapat memerlukan waktu serta memori tambahan.
 5. Buka folder `hasil_wisata_madura/` di runtime untuk mengambil hasil audit, daftar topik, metrik klasifikasi, atau hasil rekomendasi yang dijalankan.
@@ -31,7 +31,9 @@ Notebook mengatur urutan dan menjelaskan hasil setiap bagian. Implementasi ada d
 
 ## Dataset dan skenario
 
-Dataset menyediakan `id_destinasi`, `destinasi`, `rating`, `date`, `text_original`, `text_preprocessed`, `rekomendasi_cuaca`, dan `wisata`. Dua kolom terakhir adalah atribut per destinasi. Tanggal dalam versi ini relatif terhadap waktu pengambilan, sedangkan anotasi sentimen belum tersedia. Pemodelan musim kunjungan dan sentimen dapat ditambahkan setelah definisi label dan sumber datanya siap.
+Workbook sumber menyediakan `id_destinasi`, `destinasi`, `rating`, `date`, `text_original`, `text_preprocessed`, `rekomendasi_cuaca`, dan `wisata`. Dua kolom terakhir adalah atribut per destinasi. Tanggal dalam versi ini relatif terhadap waktu pengambilan, sedangkan anotasi sentimen belum tersedia. Pemodelan musim kunjungan dan sentimen dapat ditambahkan setelah definisi label dan sumber datanya siap.
+
+Paket di `data/` memuat 79.514 ulasan dari 207 destinasi dalam lima bagian CSV terkompresi. Paket berisi teks siap-model, ID dan nama destinasi, dua label, dan penanda audit yang dihitung dari Excel. File `manifest.json` menyimpan jumlah baris dan checksum setiap bagian. Teks ulasan asli, nilai tanggal, dan rating tersedia pada workbook sumber.
 
 Workbook memuat lokasi dari luar Madura, termasuk Kebun Binatang Surabaya, dan belum menyediakan kolom kabupaten. Bagian 01 menulis `template_verifikasi_wilayah.csv`. Isi `kabupaten` dengan Bangkalan, Sampang, Pamekasan, Sumenep, atau Di luar Madura setelah memeriksa lokasi. Biarkan kosong jika lokasi belum terverifikasi. Simpan dengan nama lain dan setel `REGION_PATH` untuk memakai hanya ID yang terverifikasi di Madura. Tanpa CSV tersebut, metrik dan katalog mencakup workbook campuran.
 

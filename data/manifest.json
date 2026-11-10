@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "source_workbook": "koreksi_dataset.xlsx",
+  "source_workbook_sha256": "84245d7276d9ea14014be983f0a0a0385685c20ae08ff43817fecd5b2329e527",
+  "rows": 79514,
+  "destinations": 207,
+  "parts": [
+    {
+      "file": "ulasan_model_01.csv.gz",
+      "rows": 16000,
+      "sha256": "2c767c9b7c78f39773c24dc1e37ccf5398637188b504c19ff600a8144146a031"
+    },
+    {
+      "file": "ulasan_model_02.csv.gz",
+      "rows": 16000,
+      "sha256": "640741f0a6df70ccb551388e6db71e31fd6f4777826f1020c86b3e05eef26c38"
+    },
+    {
+      "file": "ulasan_model_03.csv.gz",
+      "rows": 16000,
+      "sha256": "2ff4acf031c8f996802d538c87d860fdac4bdcbd6ca3616dd3e5fa34a078e785"
+    },
+    {
+      "file": "ulasan_model_04.csv.gz",
+      "rows": 16000,
+      "sha256": "9a7d601e2b31cb588346e98d3a440be99fbaa0fd5aab83cc88a1c6c4aa363974"
+    },
+    {
+      "file": "ulasan_model_05.csv.gz",
+      "rows": 15514,
+      "sha256": "3350a8066a5c8377892e2eec75341c4c3aa06e62ff3829b06f9089b6bfbf42c6"
+    }
+  ]
+}
