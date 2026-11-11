@@ -1,0 +1,44 @@
+{
+  "input_mode": "bundled_model_data",
+  "source_workbook_sha256": "84245d7276d9ea14014be983f0a0a0385685c20ae08ff43817fecd5b2329e527",
+  "package_parts_sha256": [
+    "2c767c9b7c78f39773c24dc1e37ccf5398637188b504c19ff600a8144146a031",
+    "640741f0a6df70ccb551388e6db71e31fd6f4777826f1020c86b3e05eef26c38",
+    "2ff4acf031c8f996802d538c87d860fdac4bdcbd6ca3616dd3e5fa34a078e785",
+    "9a7d601e2b31cb588346e98d3a440be99fbaa0fd5aab83cc88a1c6c4aa363974",
+    "3350a8066a5c8377892e2eec75341c4c3aa06e62ff3829b06f9089b6bfbf42c6"
+  ],
+  "rows": 79514,
+  "destinations": 207,
+  "empty_by_column": {
+    "id_destinasi": 0,
+    "destinasi": 0,
+    "rating": 0,
+    "date": 0,
+    "text_original": 10,
+    "text_preprocessed": 10,
+    "rekomendasi_cuaca": 0,
+    "wisata": 0
+  },
+  "empty_normalized_text_rows": 10,
+  "exact_duplicate_rows": 631,
+  "relative_date_rows": 79514,
+  "potential_encoding_error_rows": 14659,
+  "targets": [
+    "rekomendasi_cuaca",
+    "wisata"
+  ],
+  "seed": 42,
+  "requested_test_fraction": 0.2,
+  "duplicates_within_destination_removed": 3936,
+  "test_text_overlap_removed": 1554,
+  "train_reviews": 61165,
+  "test_reviews": 12849,
+  "train_destinations": 164,
+  "test_destinations": 43,
+  "heldout_destinations_without_evaluable_reviews": 0,
+  "classes_absent_from_test": {
+    "rekomendasi_cuaca": [],
+    "wisata": []
+  }
+}
