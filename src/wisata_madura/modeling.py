@@ -21,6 +21,7 @@ class TopicFeatures:
     keywords: pd.DataFrame
     weather_summary: pd.DataFrame
     sample_size: int
+    validation: np.ndarray | None = None
 
 
 def run_baselines(split: ReviewSplit, seed=42) -> dict:

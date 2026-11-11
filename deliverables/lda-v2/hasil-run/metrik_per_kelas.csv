@@ -1,0 +1,161 @@
+target,model,unit,kelas,precision,recall,f1-score,support
+rekomendasi_cuaca,mayoritas,ulasan,Kemarau,0.0,0.0,0.0,5890.0
+rekomendasi_cuaca,mayoritas,ulasan,Kemarau & Penghujan,0.5415985679819442,1.0,0.7026453957996769,6959.0
+rekomendasi_cuaca,mayoritas,destinasi,Kemarau,0.0,0.0,0.0,19.0
+rekomendasi_cuaca,mayoritas,destinasi,Kemarau & Penghujan,0.5581395348837209,1.0,0.7164179104477612,24.0
+wisata,mayoritas,ulasan,air terjun,0.0,0.0,0.0,1057.0
+wisata,mayoritas,ulasan,danau/waduk,0.0,0.0,0.0,159.0
+wisata,mayoritas,ulasan,desa/kampung wisata,0.0,0.0,0.0,115.0
+wisata,mayoritas,ulasan,goa,0.0,0.0,0.0,688.0
+wisata,mayoritas,ulasan,hutan/perkebunan,0.0,0.0,0.0,544.0
+wisata,mayoritas,ulasan,lainnya,0.0,0.0,0.0,926.0
+wisata,mayoritas,ulasan,pantai,0.1760448283913145,1.0,0.2993845542981934,2262.0
+wisata,mayoritas,ulasan,pegunungan,0.0,0.0,0.0,1329.0
+wisata,mayoritas,ulasan,pemandian,0.0,0.0,0.0,213.0
+wisata,mayoritas,ulasan,rekreasi/edukasi,0.0,0.0,0.0,2909.0
+wisata,mayoritas,ulasan,religi,0.0,0.0,0.0,833.0
+wisata,mayoritas,ulasan,sejarah,0.0,0.0,0.0,1185.0
+wisata,mayoritas,ulasan,sungai,0.0,0.0,0.0,50.0
+wisata,mayoritas,ulasan,taman,0.0,0.0,0.0,579.0
+wisata,mayoritas,destinasi,air terjun,0.0,0.0,0.0,5.0
+wisata,mayoritas,destinasi,danau/waduk,0.0,0.0,0.0,2.0
+wisata,mayoritas,destinasi,desa/kampung wisata,0.0,0.0,0.0,1.0
+wisata,mayoritas,destinasi,goa,0.0,0.0,0.0,2.0
+wisata,mayoritas,destinasi,hutan/perkebunan,0.0,0.0,0.0,3.0
+wisata,mayoritas,destinasi,lainnya,0.0,0.0,0.0,2.0
+wisata,mayoritas,destinasi,pantai,0.20930232558139536,1.0,0.34615384615384615,9.0
+wisata,mayoritas,destinasi,pegunungan,0.0,0.0,0.0,4.0
+wisata,mayoritas,destinasi,pemandian,0.0,0.0,0.0,1.0
+wisata,mayoritas,destinasi,rekreasi/edukasi,0.0,0.0,0.0,3.0
+wisata,mayoritas,destinasi,religi,0.0,0.0,0.0,3.0
+wisata,mayoritas,destinasi,sejarah,0.0,0.0,0.0,5.0
+wisata,mayoritas,destinasi,sungai,0.0,0.0,0.0,1.0
+wisata,mayoritas,destinasi,taman,0.0,0.0,0.0,2.0
+rekomendasi_cuaca,tfidf_linear_svc,ulasan,Kemarau,0.5130208333333334,0.5351443123938879,0.5238490942330065,5890.0
+rekomendasi_cuaca,tfidf_linear_svc,ulasan,Kemarau & Penghujan,0.5916480238627889,0.5700531685587009,0.5806498829039812,6959.0
+rekomendasi_cuaca,tfidf_linear_svc,destinasi,Kemarau,0.5,0.5789473684210527,0.5365853658536586,19.0
+rekomendasi_cuaca,tfidf_linear_svc,destinasi,Kemarau & Penghujan,0.6190476190476191,0.5416666666666666,0.5777777777777777,24.0
+wisata,tfidf_linear_svc,ulasan,air terjun,0.3272569444444444,0.3566698202459792,0.3413309189678588,1057.0
+wisata,tfidf_linear_svc,ulasan,danau/waduk,0.09090909090909091,0.2389937106918239,0.1317157712305026,159.0
+wisata,tfidf_linear_svc,ulasan,desa/kampung wisata,0.0877914951989026,0.5565217391304348,0.15165876777251186,115.0
+wisata,tfidf_linear_svc,ulasan,goa,0.21595330739299612,0.1613372093023256,0.18469217970049917,688.0
+wisata,tfidf_linear_svc,ulasan,hutan/perkebunan,0.08949011446409989,0.15808823529411764,0.11428571428571428,544.0
+wisata,tfidf_linear_svc,ulasan,lainnya,0.4185667752442997,0.2775377969762419,0.33376623376623377,926.0
+wisata,tfidf_linear_svc,ulasan,pantai,0.6554945054945055,0.5274093722369585,0.5845173934345909,2262.0
+wisata,tfidf_linear_svc,ulasan,pegunungan,0.46275543836519445,0.5282167042889391,0.4933239634574842,1329.0
+wisata,tfidf_linear_svc,ulasan,pemandian,0.0,0.0,0.0,213.0
+wisata,tfidf_linear_svc,ulasan,rekreasi/edukasi,0.6313390313390314,0.38088690271570985,0.4751286449399657,2909.0
+wisata,tfidf_linear_svc,ulasan,religi,0.5104166666666666,0.47058823529411764,0.4896939412866958,833.0
+wisata,tfidf_linear_svc,ulasan,sejarah,0.3645240032546786,0.3780590717299578,0.3711681855840928,1185.0
+wisata,tfidf_linear_svc,ulasan,sungai,0.015503875968992248,0.08,0.025974025974025976,50.0
+wisata,tfidf_linear_svc,ulasan,taman,0.18822393822393824,0.33678756476683935,0.24148606811145512,579.0
+wisata,tfidf_linear_svc,destinasi,air terjun,0.8333333333333334,1.0,0.9090909090909091,5.0
+wisata,tfidf_linear_svc,destinasi,danau/waduk,1.0,1.0,1.0,2.0
+wisata,tfidf_linear_svc,destinasi,desa/kampung wisata,0.5,1.0,0.6666666666666666,1.0
+wisata,tfidf_linear_svc,destinasi,goa,0.0,0.0,0.0,2.0
+wisata,tfidf_linear_svc,destinasi,hutan/perkebunan,0.0,0.0,0.0,3.0
+wisata,tfidf_linear_svc,destinasi,lainnya,1.0,1.0,1.0,2.0
+wisata,tfidf_linear_svc,destinasi,pantai,0.8181818181818182,1.0,0.9,9.0
+wisata,tfidf_linear_svc,destinasi,pegunungan,1.0,1.0,1.0,4.0
+wisata,tfidf_linear_svc,destinasi,pemandian,0.0,0.0,0.0,1.0
+wisata,tfidf_linear_svc,destinasi,rekreasi/edukasi,0.5,0.6666666666666666,0.5714285714285714,3.0
+wisata,tfidf_linear_svc,destinasi,religi,1.0,0.6666666666666666,0.8,3.0
+wisata,tfidf_linear_svc,destinasi,sejarah,0.6666666666666666,0.8,0.7272727272727273,5.0
+wisata,tfidf_linear_svc,destinasi,sungai,0.0,0.0,0.0,1.0
+wisata,tfidf_linear_svc,destinasi,taman,0.5,0.5,0.5,2.0
+rekomendasi_cuaca,lda_logreg,ulasan,Kemarau,0.47863247863247865,0.598981324278438,0.5320865696402987,5890.0
+rekomendasi_cuaca,lda_logreg,ulasan,Kemarau & Penghujan,0.5688207374954363,0.44776548354648654,0.5010854707726944,6959.0
+rekomendasi_cuaca,lda_logreg,destinasi,Kemarau,0.4827586206896552,0.7368421052631579,0.5833333333333334,19.0
+rekomendasi_cuaca,lda_logreg,destinasi,Kemarau & Penghujan,0.6428571428571429,0.375,0.47368421052631576,24.0
+wisata,lda_logreg,ulasan,air terjun,0.06204379562043796,0.01608325449385052,0.025544703230653644,1057.0
+wisata,lda_logreg,ulasan,danau/waduk,0.007518796992481203,0.006289308176100629,0.00684931506849315,159.0
+wisata,lda_logreg,ulasan,desa/kampung wisata,0.016,0.017391304347826087,0.016666666666666666,115.0
+wisata,lda_logreg,ulasan,goa,0.05263157894736842,0.010174418604651164,0.01705237515225335,688.0
+wisata,lda_logreg,ulasan,hutan/perkebunan,0.038461538461538464,0.014705882352941176,0.02127659574468085,544.0
+wisata,lda_logreg,ulasan,lainnya,0.08948194662480377,0.061555075593952485,0.07293666026871401,926.0
+wisata,lda_logreg,ulasan,pantai,0.2434796437659033,0.6768346595932803,0.35812865497076024,2262.0
+wisata,lda_logreg,ulasan,pegunungan,0.14590747330960854,0.030850263355906696,0.05093167701863354,1329.0
+wisata,lda_logreg,ulasan,pemandian,0.0,0.0,0.0,213.0
+wisata,lda_logreg,ulasan,rekreasi/edukasi,0.2727272727272727,0.026813337916809902,0.048826291079812206,2909.0
+wisata,lda_logreg,ulasan,religi,0.1518020769700672,0.5966386554621849,0.24202580959337716,833.0
+wisata,lda_logreg,ulasan,sejarah,0.12401352874859076,0.09282700421940929,0.10617760617760617,1185.0
+wisata,lda_logreg,ulasan,sungai,0.0,0.0,0.0,50.0
+wisata,lda_logreg,ulasan,taman,0.06451612903225806,0.0069084628670120895,0.0124804992199688,579.0
+wisata,lda_logreg,destinasi,air terjun,0.0,0.0,0.0,5.0
+wisata,lda_logreg,destinasi,danau/waduk,0.0,0.0,0.0,2.0
+wisata,lda_logreg,destinasi,desa/kampung wisata,0.0,0.0,0.0,1.0
+wisata,lda_logreg,destinasi,goa,0.0,0.0,0.0,2.0
+wisata,lda_logreg,destinasi,hutan/perkebunan,0.0,0.0,0.0,3.0
+wisata,lda_logreg,destinasi,lainnya,0.0,0.0,0.0,2.0
+wisata,lda_logreg,destinasi,pantai,0.28125,1.0,0.43902439024390244,9.0
+wisata,lda_logreg,destinasi,pegunungan,0.0,0.0,0.0,4.0
+wisata,lda_logreg,destinasi,pemandian,0.0,0.0,0.0,1.0
+wisata,lda_logreg,destinasi,rekreasi/edukasi,0.0,0.0,0.0,3.0
+wisata,lda_logreg,destinasi,religi,0.2727272727272727,1.0,0.42857142857142855,3.0
+wisata,lda_logreg,destinasi,sejarah,0.0,0.0,0.0,5.0
+wisata,lda_logreg,destinasi,sungai,0.0,0.0,0.0,1.0
+wisata,lda_logreg,destinasi,taman,0.0,0.0,0.0,2.0
+rekomendasi_cuaca,fasttext_bilstm,ulasan,Kemarau,0.5257125154894672,0.5762308998302207,0.5498137048436741,5890.0
+rekomendasi_cuaca,fasttext_bilstm,ulasan,Kemarau & Penghujan,0.6095729704364148,0.559994252047708,0.5837327741162373,6959.0
+rekomendasi_cuaca,fasttext_bilstm,destinasi,Kemarau,0.52,0.6842105263157895,0.5909090909090909,19.0
+rekomendasi_cuaca,fasttext_bilstm,destinasi,Kemarau & Penghujan,0.6666666666666666,0.5,0.5714285714285714,24.0
+wisata,fasttext_bilstm,ulasan,air terjun,0.33516483516483514,0.28855250709555347,0.3101169293340112,1057.0
+wisata,fasttext_bilstm,ulasan,danau/waduk,0.030275229357798167,0.20754716981132076,0.05284227381905524,159.0
+wisata,fasttext_bilstm,ulasan,desa/kampung wisata,0.0531496062992126,0.46956521739130436,0.09549071618037135,115.0
+wisata,fasttext_bilstm,ulasan,goa,0.059474412171507604,0.0625,0.06094968107725018,688.0
+wisata,fasttext_bilstm,ulasan,hutan/perkebunan,0.09063260340632603,0.27389705882352944,0.13619744058500913,544.0
+wisata,fasttext_bilstm,ulasan,lainnya,0.2145748987854251,0.1717062634989201,0.1907618476304739,926.0
+wisata,fasttext_bilstm,ulasan,pantai,0.8263950398582817,0.4124668435013263,0.5502801533470952,2262.0
+wisata,fasttext_bilstm,ulasan,pegunungan,0.45975232198142413,0.4469525959367946,0.4532621136970622,1329.0
+wisata,fasttext_bilstm,ulasan,pemandian,0.022321428571428572,0.046948356807511735,0.030257186081694403,213.0
+wisata,fasttext_bilstm,ulasan,rekreasi/edukasi,0.5789056304520223,0.2509453420419388,0.3501199040767386,2909.0
+wisata,fasttext_bilstm,ulasan,religi,0.583793738489871,0.38055222088835533,0.46075581395348836,833.0
+wisata,fasttext_bilstm,ulasan,sejarah,0.3885778275475924,0.29282700421940927,0.3339749759384023,1185.0
+wisata,fasttext_bilstm,ulasan,sungai,0.02040816326530612,0.12,0.03488372093023256,50.0
+wisata,fasttext_bilstm,ulasan,taman,0.18728323699421964,0.27979274611398963,0.22437673130193905,579.0
+wisata,fasttext_bilstm,destinasi,air terjun,0.8,0.8,0.8,5.0
+wisata,fasttext_bilstm,destinasi,danau/waduk,0.0,0.0,0.0,2.0
+wisata,fasttext_bilstm,destinasi,desa/kampung wisata,1.0,1.0,1.0,1.0
+wisata,fasttext_bilstm,destinasi,goa,0.0,0.0,0.0,2.0
+wisata,fasttext_bilstm,destinasi,hutan/perkebunan,0.3333333333333333,0.6666666666666666,0.4444444444444444,3.0
+wisata,fasttext_bilstm,destinasi,lainnya,0.3333333333333333,0.5,0.4,2.0
+wisata,fasttext_bilstm,destinasi,pantai,0.9,1.0,0.9473684210526315,9.0
+wisata,fasttext_bilstm,destinasi,pegunungan,1.0,1.0,1.0,4.0
+wisata,fasttext_bilstm,destinasi,pemandian,0.0,0.0,0.0,1.0
+wisata,fasttext_bilstm,destinasi,rekreasi/edukasi,1.0,0.6666666666666666,0.8,3.0
+wisata,fasttext_bilstm,destinasi,religi,1.0,0.6666666666666666,0.8,3.0
+wisata,fasttext_bilstm,destinasi,sejarah,0.6,0.6,0.6,5.0
+wisata,fasttext_bilstm,destinasi,sungai,0.0,0.0,0.0,1.0
+wisata,fasttext_bilstm,destinasi,taman,1.0,1.0,1.0,2.0
+rekomendasi_cuaca,fasttext_lda_bilstm,ulasan,Kemarau,0.5224199288256228,0.6230899830220713,0.5683313975996903,5890.0
+rekomendasi_cuaca,fasttext_lda_bilstm,ulasan,Kemarau & Penghujan,0.6188186813186813,0.5178905015088375,0.5638738950168192,6959.0
+rekomendasi_cuaca,fasttext_lda_bilstm,destinasi,Kemarau,0.4827586206896552,0.7368421052631579,0.5833333333333334,19.0
+rekomendasi_cuaca,fasttext_lda_bilstm,destinasi,Kemarau & Penghujan,0.6428571428571429,0.375,0.47368421052631576,24.0
+wisata,fasttext_lda_bilstm,ulasan,air terjun,0.32516703786191536,0.27625354777672656,0.2987212276214834,1057.0
+wisata,fasttext_lda_bilstm,ulasan,danau/waduk,0.03940886699507389,0.25157232704402516,0.06814310051107325,159.0
+wisata,fasttext_lda_bilstm,ulasan,desa/kampung wisata,0.03277591973244147,0.4260869565217391,0.06086956521739131,115.0
+wisata,fasttext_lda_bilstm,ulasan,goa,0.05635838150289017,0.056686046511627904,0.05652173913043478,688.0
+wisata,fasttext_lda_bilstm,ulasan,hutan/perkebunan,0.08871662360034453,0.18933823529411764,0.12082111436950146,544.0
+wisata,fasttext_lda_bilstm,ulasan,lainnya,0.20754716981132076,0.23758099352051837,0.2215508559919436,926.0
+wisata,fasttext_lda_bilstm,ulasan,pantai,0.7900241351568785,0.43412908930150307,0.5603423680456491,2262.0
+wisata,fasttext_lda_bilstm,ulasan,pegunungan,0.4369063772048847,0.48457486832204666,0.459507670353193,1329.0
+wisata,fasttext_lda_bilstm,ulasan,pemandian,0.02526315789473684,0.056338028169014086,0.03488372093023256,213.0
+wisata,fasttext_lda_bilstm,ulasan,rekreasi/edukasi,0.6625560538116592,0.2031625988312135,0.31097079715864245,2909.0
+wisata,fasttext_lda_bilstm,ulasan,religi,0.5645412130637636,0.43577430972388953,0.491869918699187,833.0
+wisata,fasttext_lda_bilstm,ulasan,sejarah,0.4302030456852792,0.28607594936708863,0.34363912823112014,1185.0
+wisata,fasttext_lda_bilstm,ulasan,sungai,0.022321428571428572,0.1,0.0364963503649635,50.0
+wisata,fasttext_lda_bilstm,ulasan,taman,0.20152091254752852,0.27461139896373055,0.2324561403508772,579.0
+wisata,fasttext_lda_bilstm,destinasi,air terjun,0.8,0.8,0.8,5.0
+wisata,fasttext_lda_bilstm,destinasi,danau/waduk,0.5,1.0,0.6666666666666666,2.0
+wisata,fasttext_lda_bilstm,destinasi,desa/kampung wisata,0.3333333333333333,1.0,0.5,1.0
+wisata,fasttext_lda_bilstm,destinasi,goa,0.0,0.0,0.0,2.0
+wisata,fasttext_lda_bilstm,destinasi,hutan/perkebunan,0.5,0.3333333333333333,0.4,3.0
+wisata,fasttext_lda_bilstm,destinasi,lainnya,0.5,1.0,0.6666666666666666,2.0
+wisata,fasttext_lda_bilstm,destinasi,pantai,0.9,1.0,0.9473684210526315,9.0
+wisata,fasttext_lda_bilstm,destinasi,pegunungan,1.0,1.0,1.0,4.0
+wisata,fasttext_lda_bilstm,destinasi,pemandian,0.0,0.0,0.0,1.0
+wisata,fasttext_lda_bilstm,destinasi,rekreasi/edukasi,1.0,0.3333333333333333,0.5,3.0
+wisata,fasttext_lda_bilstm,destinasi,religi,1.0,1.0,1.0,3.0
+wisata,fasttext_lda_bilstm,destinasi,sejarah,0.75,0.6,0.6666666666666666,5.0
+wisata,fasttext_lda_bilstm,destinasi,sungai,0.0,0.0,0.0,1.0
+wisata,fasttext_lda_bilstm,destinasi,taman,1.0,1.0,1.0,2.0

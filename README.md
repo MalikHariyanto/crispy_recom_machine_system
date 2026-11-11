@@ -54,3 +54,39 @@ Perbandingan FastText saja dan FastText + LDA mempertahankan arsitektur urutan. 
 - [Gensim FastText](https://radimrehurek.com/gensim/models/fasttext.html)
 - [PyTorch LSTM](https://docs.pytorch.org/docs/stable/generated/torch.nn.LSTM.html)
 - [Kartu model BGE-M3](https://huggingface.co/BAAI/bge-m3)
+
+## Versi 2 — analisis LDA dan validasi pelatihan
+
+Gunakan notebook pada `notebooks/Colab_Audit_Wisata_Madura_Otomatis.ipynb` untuk kode terbaru. Berkas dalam `deliverables/revisi-hki/` adalah arsip pengiriman v1; paket terbaru ada pada `deliverables/lda-v2/`. `DATA_PATH=None` tetap memuat seluruh dataset otomatis, tanpa Excel/manual.
+
+Perubahan v2:
+- Train/validation/test dipisahkan per destinasi, dengan pemeriksaan ID dan teks identik. Semua model belajar dari train yang sama.
+- 18 kandidat LDA: K=2,4,6,8,10,12 × seed=42,43,44. Pemilihan berdasarkan rerata **validation document NPMI**; perplexity, diversity, dan stability Jaccard dilaporkan.
+- Stopword Indonesia/Inggris eksplisit dengan negasi dipertahankan, contoh ulasan tiap topik, bobot kata, template penamaan/review manusia, tiga gambar LDA.
+- BiLSTM: train/validation loss, early stopping, checkpoint terbaik dipulihkan sebelum prediksi test. Maksimum 15 epoch, patience=3.
+- Model/vectorizer LDA, FastText, matriks embedding/token, checkpoint, konfigurasi, hash kode, dan hasil disimpan pada folder run.
+
+**Dasar paper untuk tiap keputusan dan parameter:** [docs/METODOLOGI_DAN_PAPER.md](docs/METODOLOGI_DAN_PAPER.md). Dokumen membedakan dukungan metode, adaptasi lokal, dan angka eksperimen yang belum optimal. Topik yang kurang koheren tetap dilaporkan; pemilihan K tidak membuktikan topiknya sudah baik. Parameter lama dan nilai hasil v1 tidak otomatis berlaku untuk v2.
+
+Keluaran penting:
+
+| Berkas | Dibaca untuk |
+|---|---|
+| `pencarian_lda.csv`, `pemilihan_topik.csv` | Seluruh kandidat dan ringkasan antar-seed |
+| `audit_lda.json`, `kualitas_topik.csv` | Parameter, definisi NPMI, topik lemah, batas grid |
+| `bobot_kata_topik.csv`, `contoh_ulasan_topik.csv` | Dasar interpretasi topik |
+| `template_review_topik.csv` | Nama/catatan hasil review manusia, bukan label otomatis |
+| `pemilihan_topik.png`, `kata_utama_topik.png`, `heatmap_topik_cuaca.png` | Gambar analisis LDA |
+| `riwayat_bilstm.csv`, `kurva_bilstm.png`, `models/checkpoint_bilstm.csv` | Loss train/validation dan epoch terbaik |
+| `metrik_klasifikasi.csv`, `metrik_per_kelas.csv`, `perbandingan_model.png` | Evaluasi test pada model yang benar-benar dijalankan |
+| `audit_dataset.json`, `id_partisi_*.csv` | Data, konfigurasi, versi paket, hash modul, dan split |
+
+Catatan: NPMI berbasis dokumen tidak identik dengan c_v atau NPMI sliding window. Tiga seed pencarian LDA tidak berarti BiLSTM diuji tiga seed. Wilayah belum terverifikasi dan label sentimen/waktu kunjungan belum tersedia. Katalog BGE tetap opsional (`RUN_BGE=False`) dan bukan fusion BGE-E5.
+
+Tes regresi (memerlukan base requirements, gensim dan torch):
+
+```bash
+PYTHONPATH=src python -m unittest discover -s tests -v
+```
+
+Tes meliputi NPMI dengan probabilitas diketahui, invariansi nomor topik, pemisahan tiga partisi, tidak digunakannya test untuk memilih K/kosakata, dan pemulihan checkpoint terbaik sebelum prediksi.

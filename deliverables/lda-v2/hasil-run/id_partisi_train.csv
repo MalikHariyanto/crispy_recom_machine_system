@@ -1,0 +1,131 @@
+id_destinasi,wisata,rekomendasi_cuaca,partisi
+3,air terjun,Kemarau,train
+5,air terjun,Kemarau & Penghujan,train
+6,air terjun,Kemarau,train
+7,air terjun,Kemarau,train
+8,pemandian,Kemarau,train
+9,air terjun,Kemarau,train
+10,air terjun,Kemarau,train
+11,air terjun,Kemarau & Penghujan,train
+14,air terjun,Kemarau,train
+15,air terjun,Kemarau & Penghujan,train
+17,air terjun,Kemarau & Penghujan,train
+19,air terjun,Kemarau & Penghujan,train
+20,air terjun,Kemarau & Penghujan,train
+21,taman,Kemarau,train
+22,taman,Kemarau,train
+23,lainnya,Kemarau,train
+25,rekreasi/edukasi,Kemarau,train
+27,rekreasi/edukasi,Kemarau & Penghujan,train
+29,pegunungan,Kemarau,train
+31,pegunungan,Kemarau,train
+32,pegunungan,Kemarau,train
+33,pegunungan,Kemarau,train
+35,pegunungan,Kemarau,train
+37,sejarah,Kemarau & Penghujan,train
+38,sejarah,Kemarau & Penghujan,train
+39,sejarah,Kemarau & Penghujan,train
+40,sejarah,Kemarau & Penghujan,train
+41,sejarah,Kemarau & Penghujan,train
+42,sejarah,Kemarau & Penghujan,train
+43,sejarah,Kemarau & Penghujan,train
+45,sejarah,Kemarau & Penghujan,train
+48,air terjun,Kemarau & Penghujan,train
+50,air terjun,Kemarau & Penghujan,train
+51,air terjun,Kemarau & Penghujan,train
+52,rekreasi/edukasi,Kemarau & Penghujan,train
+54,desa/kampung wisata,Kemarau & Penghujan,train
+56,pantai,Kemarau,train
+57,goa,Kemarau,train
+58,goa,Kemarau,train
+59,goa,Kemarau,train
+60,goa,Kemarau,train
+63,goa,Kemarau,train
+65,rekreasi/edukasi,Kemarau,train
+66,rekreasi/edukasi,Kemarau & Penghujan,train
+67,pegunungan,Kemarau,train
+68,pegunungan,Kemarau & Penghujan,train
+70,pegunungan,Kemarau & Penghujan,train
+72,hutan/perkebunan,Kemarau & Penghujan,train
+74,hutan/perkebunan,Kemarau & Penghujan,train
+75,hutan/perkebunan,Kemarau & Penghujan,train
+76,hutan/perkebunan,Kemarau & Penghujan,train
+78,sejarah,Kemarau & Penghujan,train
+80,rekreasi/edukasi,Kemarau & Penghujan,train
+81,rekreasi/edukasi,Kemarau & Penghujan,train
+83,desa/kampung wisata,Kemarau & Penghujan,train
+84,desa/kampung wisata,Kemarau & Penghujan,train
+86,desa/kampung wisata,Kemarau & Penghujan,train
+87,pegunungan,Kemarau & Penghujan,train
+88,pegunungan,Kemarau & Penghujan,train
+90,sejarah,Kemarau & Penghujan,train
+92,hutan/perkebunan,Kemarau,train
+93,hutan/perkebunan,Kemarau,train
+94,hutan/perkebunan,Kemarau,train
+95,religi,Kemarau & Penghujan,train
+98,religi,Kemarau & Penghujan,train
+99,religi,Kemarau,train
+100,religi,Kemarau & Penghujan,train
+102,religi,Kemarau & Penghujan,train
+104,religi,Kemarau & Penghujan,train
+106,religi,Kemarau & Penghujan,train
+109,rekreasi/edukasi,Kemarau & Penghujan,train
+110,sejarah,Kemarau & Penghujan,train
+112,sejarah,Kemarau & Penghujan,train
+115,sejarah,Kemarau & Penghujan,train
+117,sejarah,Kemarau & Penghujan,train
+118,pegunungan,Kemarau,train
+120,lainnya,Kemarau & Penghujan,train
+121,pantai,Kemarau & Penghujan,train
+122,pantai,Kemarau,train
+124,pantai,Kemarau,train
+125,pantai,Kemarau,train
+127,pantai,Kemarau,train
+130,pantai,Kemarau,train
+131,pantai,Kemarau,train
+133,pantai,Kemarau,train
+134,pantai,Kemarau,train
+136,pantai,Kemarau & Penghujan,train
+137,pantai,Kemarau,train
+141,pantai,Kemarau,train
+143,pantai,Kemarau,train
+145,pantai,Kemarau & Penghujan,train
+146,pantai,Kemarau,train
+150,pantai,Kemarau,train
+151,pantai,Kemarau,train
+152,pantai,Kemarau & Penghujan,train
+154,pantai,Kemarau,train
+155,pantai,Kemarau & Penghujan,train
+156,pantai,Kemarau & Penghujan,train
+157,pantai,Kemarau & Penghujan,train
+158,pantai,Kemarau & Penghujan,train
+159,pantai,Kemarau,train
+160,pantai,Kemarau,train
+161,pantai,Kemarau,train
+163,pegunungan,Kemarau & Penghujan,train
+165,pantai,Kemarau & Penghujan,train
+166,lainnya,Kemarau & Penghujan,train
+168,pegunungan,Kemarau,train
+171,danau/waduk,Kemarau & Penghujan,train
+172,danau/waduk,Kemarau,train
+173,hutan/perkebunan,Kemarau,train
+176,lainnya,Kemarau,train
+177,lainnya,Kemarau & Penghujan,train
+179,sungai,Kemarau & Penghujan,train
+181,religi,Kemarau,train
+184,taman,Kemarau & Penghujan,train
+186,taman,Kemarau & Penghujan,train
+187,taman,Kemarau & Penghujan,train
+190,taman,Kemarau & Penghujan,train
+191,taman,Kemarau & Penghujan,train
+193,rekreasi/edukasi,Kemarau & Penghujan,train
+194,pegunungan,Kemarau,train
+195,danau/waduk,Kemarau & Penghujan,train
+196,pantai,Kemarau & Penghujan,train
+197,pantai,Kemarau & Penghujan,train
+201,danau/waduk,Kemarau & Penghujan,train
+202,danau/waduk,Kemarau,train
+203,danau/waduk,Kemarau,train
+205,rekreasi/edukasi,Kemarau,train
+206,rekreasi/edukasi,Kemarau,train
+207,hutan/perkebunan,Kemarau,train

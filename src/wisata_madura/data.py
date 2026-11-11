@@ -238,3 +238,34 @@ def select_madura_reviews(data: pd.DataFrame, path: Path) -> tuple[pd.DataFrame,
         "outside_madura": int(districts.eq(outside).sum()),
         "unverified_destinations": len(source_ids) - int(verified.sum()) - int(districts.eq(outside).sum()),
     }
+
+
+@dataclass
+class ExperimentSplit:
+    """Tiga partisi; validation dipakai untuk pemilihan model, test hanya evaluasi akhir."""
+    train: pd.DataFrame
+    validation: pd.DataFrame
+    test: pd.DataFrame
+    audit: dict
+
+
+def validation_split(outer: ReviewSplit, fraction=0.20, seed=142) -> ExperimentSplit:
+    inner = split_reviews(outer.train, test_fraction=fraction, seed=seed)
+    frames = (inner.train, inner.test, outer.test)
+    for i, left in enumerate(frames):
+        for right in frames[i + 1:]:
+            if not set(left.id_destinasi).isdisjoint(right.id_destinasi):
+                raise ValueError("ID destinasi bocor antarpartisi.")
+            if not set(left.teks_model).isdisjoint(right.teks_model):
+                raise ValueError("Teks identik bocor antarpartisi.")
+    audit = {
+        "outer_split": outer.audit,
+        "validation_split": inner.audit,
+        "partition_reviews": dict(zip(("train", "validation", "test"), map(len, frames))),
+        "partition_destinations": dict(zip(
+            ("train", "validation", "test"), (f.id_destinasi.nunique() for f in frames)
+        )),
+        "validation_seed": seed,
+        "protocol": "fit train only; select on validation; evaluate once on test",
+    }
+    return ExperimentSplit(inner.train, inner.test, outer.test, audit)
