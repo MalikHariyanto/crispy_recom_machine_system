@@ -1,5 +1,13 @@
 # Rekomendasi wisata Madura
 
+## Aplikasi Streamlit — Madura Explore
+
+Antarmuka web untuk pencarian rekomendasi, katalog destinasi, insight dataset, dan verifikasi wilayah. Jalankan `pip install -r requirements.txt` lalu `streamlit run app.py`.
+
+**Deploy Streamlit Cloud:** repository `MalikHariyanto/crispy_recom_machine_system`, branch `feat/streamlit-wisata`, main file `app.py`, Python **3.11**. [Panduan deployment dan arsitektur](docs/STREAMLIT.md).
+
+Pencarian default memakai TF-IDF yang ringan; BGE-M3 opsional. Dataset masih mencakup lokasi di luar Madura sehingga aplikasi menyediakan CSV verifikasi wilayah. Pelatihan dan evaluasi riset tetap dilakukan melalui notebook di bawah.
+
 Pipeline penelitian asistensi Malik Hariyanto untuk mengolah ulasan Google Maps, membandingkan model klasifikasi atribut destinasi, dan mencoba pemeringkatan destinasi dengan BGE.
 
 ## Mulai dari Colab
