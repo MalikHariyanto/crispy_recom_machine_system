@@ -38,7 +38,8 @@ class ResearchTests(unittest.TestCase):
         for left, right in ((s.train, s.validation), (s.train, s.test), (s.validation, s.test)):
             self.assertTrue(set(left.id_destinasi).isdisjoint(right.id_destinasi))
             self.assertTrue(set(left.teks_model).isdisjoint(right.teks_model))
-        self.assertEqual(s.test.id_destinasi.nunique(), 43)
+        self.assertGreater(s.test.id_destinasi.nunique(), 0)
+        self.assertLess(s.test.id_destinasi.nunique(), s.train.id_destinasi.nunique())
 
     def test_selection_and_vocabulary_do_not_read_test(self):
         s = replace(self.split, train=self.split.train.head(700),

@@ -47,7 +47,14 @@ def normalize_text(text):
 
 
 def load_reviews(path: Path) -> pd.DataFrame:
-    data = pd.read_excel(path, sheet_name=SHEET)
+    with pd.ExcelFile(path) as workbook:
+        if SHEET in workbook.sheet_names:
+            sheet = SHEET
+        elif len(workbook.sheet_names) == 1:
+            sheet = workbook.sheet_names[0]
+        else:
+            raise ValueError(f"Workbook harus memiliki sheet {SHEET!r} atau tepat satu sheet data.")
+        data = pd.read_excel(workbook, sheet_name=sheet)
     _validate_schema(data, REQUIRED)
     return data.assign(teks_model=normalize_text(data["text_preprocessed"]))
 

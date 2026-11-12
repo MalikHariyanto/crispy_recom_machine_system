@@ -5,7 +5,7 @@ import pandas as pd
 import streamlit as st
 
 from wisata_madura.data import MADURA_DISTRICTS
-from .runtime import load_data
+from .runtime import load_data, dataset_version
 from .services import filter_catalog, read_regions
 from .styles import apply_styles
 from .views import explore, catalog_view, insights, about, csv_download
@@ -52,7 +52,7 @@ def main():
             csv_download(template, "Unduh template CSV", "verifikasi_wilayah.csv", "region_template")
         st.divider()
         st.caption("Dikembangkan oleh Malik Hariyanto\n\nAsistensi Hibah Penelitian")
-    scope_key = (region_hash, verified, tuple(sorted(districts)))
+    scope_key = (dataset_version(), region_hash, verified, tuple(sorted(districts)))
     scoped = filter_catalog(catalog, verified_only=verified, districts=districts)
     if page != "Tentang":
         if not verified and not districts:

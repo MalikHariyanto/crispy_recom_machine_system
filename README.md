@@ -41,11 +41,11 @@ Notebook mengatur urutan dan menjelaskan hasil setiap bagian. Implementasi ada d
 
 Workbook sumber menyediakan `id_destinasi`, `destinasi`, `rating`, `date`, `text_original`, `text_preprocessed`, `rekomendasi_cuaca`, dan `wisata`. Dua kolom terakhir adalah atribut per destinasi. Tanggal dalam versi ini relatif terhadap waktu pengambilan, sedangkan anotasi sentimen belum tersedia. Pemodelan musim kunjungan dan sentimen dapat ditambahkan setelah definisi label dan sumber datanya siap.
 
-Paket di `data/` memuat 79.514 ulasan dari 207 destinasi dalam lima bagian CSV terkompresi. Paket berisi teks siap-model, ID dan nama destinasi, dua label, dan penanda audit yang dihitung dari Excel. File `manifest.json` menyimpan jumlah baris dan checksum setiap bagian. Teks ulasan asli, nilai tanggal, dan rating tersedia pada workbook sumber.
+Paket aktif di `data/` berasal dari `data/source/dataset_madura_bersih.xlsx` (pembaruan 12 November 2026): **2.058 ulasan dari 27 destinasi**, dalam satu bagian CSV terkompresi. Dataset ini menggantikan paket lama berisi 79.514 ulasan/207 destinasi. Paket berisi teks siap-model, ID dan nama destinasi, dua label, dan penanda audit yang dihitung dari Excel. File `manifest.json` menyimpan jumlah baris dan checksum setiap bagian. Teks ulasan asli, nilai tanggal, dan rating tersedia pada workbook sumber.
 
 Workbook memuat lokasi dari luar Madura, termasuk Kebun Binatang Surabaya, dan belum menyediakan kolom kabupaten. Bagian 01 menulis `template_verifikasi_wilayah.csv`. Isi `kabupaten` dengan Bangkalan, Sampang, Pamekasan, Sumenep, atau Di luar Madura setelah memeriksa lokasi. Biarkan kosong jika lokasi belum terverifikasi. Simpan dengan nama lain dan setel `REGION_PATH` untuk memakai hanya ID yang terverifikasi di Madura. Tanpa CSV tersebut, metrik dan katalog mencakup workbook campuran.
 
-Sekitar 20% ID pada tiap jenis wisata dipilih sebagai data uji. Pengulangan teks dalam satu destinasi disisihkan dan teks uji yang identik dengan teks latih dikeluarkan. Pada seluruh workbook yang dipakai di laporan, prosedur ini menghasilkan 164 destinasi latih dan 43 destinasi uji. Vektor FastText dan kosakata LDA dipelajari dari data latih. Satu model LDA bersama dipakai agar tiap dimensi topik bermakna sama di semua contoh dan dapat dibentuk tanpa membaca label contoh uji.
+Sekitar 20% ID pada tiap jenis wisata dipilih sebagai data uji. Pengulangan teks dalam satu destinasi disisihkan dan teks uji yang identik dengan teks latih dikeluarkan. Pada dataset lama yang dipakai di laporan, prosedur ini menghasilkan 164 destinasi latih dan 43 destinasi uji; angka tersebut bukan hasil dataset aktif terbaru. Vektor FastText dan kosakata LDA dipelajari dari data latih. Satu model LDA bersama dipakai agar tiap dimensi topik bermakna sama di semua contoh dan dapat dibentuk tanpa membaca label contoh uji.
 
 | Skenario | Masukan dan pengklasifikasi |
 |---|---|
@@ -98,3 +98,7 @@ PYTHONPATH=src python -m unittest discover -s tests -v
 ```
 
 Tes meliputi NPMI dengan probabilitas diketahui, invariansi nomor topik, pemisahan tiga partisi, tidak digunakannya test untuk memilih K/kosakata, dan pemulihan checkpoint terbaik sebelum prediksi.
+
+## Memperbarui paket data
+
+Jalankan `python scripts/build_dataset_bundle.py data/source/dataset_madura_bersih.xlsx` dengan dependensi `requirements-wisata.txt`. Script memvalidasi skema, menghitung ulang penanda audit/checksum, dan mengganti paket lama. Workbook satu sheet (`Sheet1`) serta format lama (`Data Ulasan`) didukung. Nilai label, ID, rating, dan teks sumber tidak dikoreksi otomatis. Hasil pelatihan, laporan, dan screenshot historis tidak dihitung ulang oleh pembaruan dataset.

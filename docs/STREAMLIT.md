@@ -1,6 +1,6 @@
 # Madura Explore — deployment dan struktur
 
-Antarmuka web untuk katalog dan rekomendasi destinasi. Aplikasi langsung membaca dataset bawaan (207 destinasi, 79.514 ulasan); tidak perlu menjalankan notebook atau mengunggah workbook terlebih dahulu.
+Antarmuka web untuk katalog dan rekomendasi destinasi. Aplikasi langsung membaca dataset bawaan (27 destinasi, 2.058 ulasan; sumber `data/source/dataset_madura_bersih.xlsx`); tidak perlu menjalankan notebook atau mengunggah workbook terlebih dahulu.
 
 ## Streamlit Community Cloud
 
@@ -42,7 +42,7 @@ src/wisata_madura/                   # modul riset tetap tersedia
 notebooks/                          # pelatihan dan evaluasi eksperimen
 ```
 
-Data dimuat melalui loader riset yang memvalidasi checksum manifest. Katalog dan ringkasan audit disimpan dengan `st.cache_data`. Indeks TF-IDF dibangun satu kali dengan `st.cache_resource`; query baru hanya ditransformasi terhadap indeks tersebut. CSV wilayah dan filter tidak mengubah indeks global. Hasil pencarian disimpan per sesi, dipertahankan saat berpindah halaman, dan disembunyikan ketika cakupan wilayah berubah. Katalog memakai pagination sembilan kartu per halaman. Aset visual tidak membutuhkan layanan eksternal.
+Cache data dan indeks memakai hash manifest; pembaruan dataset juga membatalkan hasil pencarian sesi versi lama. Data dimuat melalui loader riset yang memvalidasi checksum manifest. Katalog dan ringkasan audit disimpan dengan `st.cache_data`. Indeks TF-IDF dibangun satu kali dengan `st.cache_resource`; query baru hanya ditransformasi terhadap indeks tersebut. CSV wilayah dan filter tidak mengubah indeks global. Hasil pencarian disimpan per sesi, dipertahankan saat berpindah halaman, dan disembunyikan ketika cakupan wilayah berubah. Katalog memakai pagination sembilan kartu per halaman. Aset visual tidak membutuhkan layanan eksternal.
 
 ## Perilaku rekomendasi
 
@@ -72,6 +72,8 @@ Tes memeriksa pemeringkatan, kandidat/wilayah/riwayat, skor nol, validasi CSV, n
 
 ## Pratinjau
 
+Screenshot berikut menggunakan dataset terbaru: 27 destinasi dan 2.058 ulasan.
+
 ![Halaman jelajah](images/streamlit-home.png)
 
 ![Hasil rekomendasi](images/streamlit-results.png)
@@ -82,3 +84,5 @@ Tes memeriksa pemeringkatan, kandidat/wilayah/riwayat, skor nol, validasi CSV, n
 - Chromium/Playwright: pencarian aktual, katalog tanpa hasil, rendering viewport mobile, unggah CSV valid, filter wilayah terverifikasi, dan penolakan CSV tidak valid lulus.
 - Empat tes pipeline riset lama juga lulus. Tes checkpoint BiLSTM belum dapat dijalankan pada lingkungan web karena `torch` tidak dipasang. Dependensi pelatihan sengaja tidak menjadi dependensi web default.
 - BGE-M3 belum diuji dengan unduhan model; mode deploy default yang divalidasi adalah TF-IDF.
+
+Pembaruan dataset 12 November 2026: tes kesetaraan Excel–bundle, kompatibilitas sheet, enam tes web, serta dua tes split/pemilihan model riset lulus. Browser memverifikasi angka 27 destinasi/2.058 ulasan dan pencarian langsung. Workbook sumber tersimpan di `data/source/`; rebuild dengan `python scripts/build_dataset_bundle.py data/source/dataset_madura_bersih.xlsx` (memerlukan `openpyxl` dari dependensi riset). Hasil riset/laporan lama tetap merupakan artefak dataset sebelumnya, bukan evaluasi ulang dataset ini.
