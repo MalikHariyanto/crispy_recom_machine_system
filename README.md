@@ -33,9 +33,9 @@ Pembobotan sampel/kelas berasal dari kelompok train; FastText dan kosakata/LDA f
 
 [Landasan keputusan dan paper](docs/METODOLOGI_DAN_PAPER.md) · [Log akses sumber literatur](docs/literature_access_2026-11-12.json). Sebagian full text dibatasi jaringan; metadata/abstrak/sumber implementasi yang diakses dibedakan dari full text yang belum terbaca.
 
-## Streamlit · Madura Explore
+## Streamlit · SISRE
 
-Pencarian rekomendasi, katalog destinasi, insight data, ekspor CSV. Data dimuat otomatis; tidak memerlukan unggahan file pengguna.
+Satu halaman rekomendasi wisata: pencarian, filter musim/jenis, saran pencarian, dan kartu lokasi. Data dimuat otomatis; tidak memerlukan unggahan file pengguna.
 
 ```bash
 python -m venv .venv

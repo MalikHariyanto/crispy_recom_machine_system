@@ -1,180 +1,115 @@
-"""UI composition. All searches operate on the same shared catalog index."""
+"""Search and recommendation cards. Model and research details stay in notebooks."""
 from html import escape
-from importlib.util import find_spec
 from urllib.parse import quote_plus
 
-import pandas as pd
 import streamlit as st
 
-from .runtime import lexical_index, semantic_index
+from .runtime import lexical_index
 from .services import filter_catalog
 from .styles import hero
 
+PALETTES = (
+    ('#dcece6','#edc987','#387969','#8db5a4'),
+    ('#e9e9d8','#dca77a','#647b61','#9aaa7e'),
+    ('#dfeaf0','#ebcb8a','#537e91','#94b3bd'),
+    ('#f1e4d7','#d7b474','#b58468','#cfb59a'),
+)
+EXAMPLES = ('Pantai pasir putih', 'Wisata sejarah', 'Pemandangan bukit')
 
-def csv_download(data, label, filename, key):
-    st.download_button(label, data.to_csv(index=False).encode("utf-8-sig"), filename,
-                       "text/csv", key=key, width="stretch")
+
+def _suggest(value):
+    st.session_state['sisre_query'] = value
+    st.session_state['sisre_suggested'] = True
 
 
-def destination_card(row, rank=None):
+def _reset():
+    st.session_state.update(sisre_query='',sisre_weather='Semua musim',
+                            sisre_category='Semua jenis',sisre_example=None)
+    for key in ('sisre_results','sisre_limit'):
+        st.session_state.pop(key,None)
+
+
+def _example_changed():
+    value=st.session_state.get('sisre_example')
+    if value:
+        _suggest(value)
+
+
+def destination_card(row, index, ranked=False):
+    category=str(row.wisata)
+    scene='beach' if category=='pantai' else 'mountain' if category in {'pegunungan','hutan/perkebunan','air terjun'} else 'heritage'
+    colors=PALETTES[index % len(PALETTES)]
+    variables=';'.join(f'--scene-{name}:{color}' for name,color in zip(('bg','sun','land','back'),colors))
+    badge=f'<span class="result-index">{index+1:02d}</span>' if ranked else ''
     with st.container(border=True):
-        if rank is not None:
-            st.markdown(f'<div class="rank">PILIHAN {rank:02d}</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="card-title">{escape(str(row.destinasi))}</div>', unsafe_allow_html=True)
-        st.markdown(f'<span class="tag">{escape(str(row.wisata))}</span>'
-                    f'<span class="tag">{escape(str(row.rekomendasi_cuaca))}</span>', unsafe_allow_html=True)
-        st.caption(f"{int(row.jumlah_ulasan):,} ulasan dalam dataset · Madura")
-        if rank is not None:
-            st.caption(f"Skor kemiripan: {row.skor_kemiripan:.3f} · bukan rating kualitas")
-        with st.expander("Lihat cuplikan ulasan"):
-            # Catalog descriptions include normalized review text, not editorial copy.
-            snippets = row.deskripsi.split(". ", 3)[-1].split(" | ")[:3]
-            st.caption("Teks ulasan yang sudah diproses; ejaan mengikuti dataset.")
+        st.markdown(f'''<div class="destination-art {scene}" style="{variables}"><span class="art-tag">{escape(category.title())}</span><span class="sun"></span><span class="land land-back"></span><span class="land"></span>{badge}</div>
+        <h4 class="result-title">{escape(str(row.destinasi))}</h4>
+        <div class="destination-meta"><span>{escape(str(row.rekomendasi_cuaca))}</span><i class="meta-dot"></i><span>{int(row.jumlah_ulasan):,} ulasan</span></div>''',unsafe_allow_html=True)
+        st.link_button('Lihat lokasi ↗','https://www.google.com/maps/search/?api=1&query='+quote_plus(row.destinasi),width='stretch')
+        with st.expander('Cuplikan ulasan'):
+            snippets=str(row.deskripsi).split('. ',3)[-1].split(' | ')[:2]
             for text in snippets:
                 st.write(text)
-        st.link_button("Cari di Google Maps ↗", "https://www.google.com/maps/search/?api=1&query=" + quote_plus(row.destinasi),
-                       width="stretch")
 
 
-def card_grid(data, ranked=False):
-    for start in range(0, len(data), 3):
-        columns = st.columns(3)
-        for col, (index, row) in zip(columns, data.iloc[start:start + 3].iterrows()):
-            with col:
-                destination_card(row, index + 1 if ranked else None)
-
-
-def explore(catalog, scope_key):
+def explore(catalog, version):
     hero()
-    metrics = st.columns(3)
-    metrics[0].metric("Destinasi dalam cakupan", f"{len(catalog):,}")
-    metrics[1].metric("Ulasan wisatawan", f"{catalog.jumlah_ulasan.sum():,}")
-    metrics[2].metric("Kategori wisata", catalog.wisata.nunique())
-    st.write("")
-    st.subheader("Mau perjalanan seperti apa?")
-    st.caption("Ceritakan suasana, aktivitas, atau nama tempat yang ingin kamu temukan.")
-    with st.form("search"):
-        preference = st.text_input("Preferensi perjalanan", placeholder="Contoh: pantai pasir putih untuk bersantai bersama keluarga",
-                                   max_chars=800)
-        a, b, c = st.columns([1, 1.4, 1])
-        season = a.selectbox("Musim perjalanan", ["Semua musim", "Kemarau", "Penghujan"])
-        types = b.multiselect("Jenis wisata", sorted(catalog.wisata.unique()), placeholder="Semua kategori")
-        k = c.select_slider("Jumlah rekomendasi", [3, 6, 9, 12], value=6)
-        with st.expander("Personalisasi & metode pencarian"):
-            names = dict(zip(catalog.id_destinasi, catalog.destinasi))
-            visited = st.multiselect("Destinasi yang sudah dikunjungi (dikeluarkan dari hasil)", list(names),
-                                    format_func=lambda x: names[x], placeholder="Pilih destinasi yang pernah dikunjungi")
-            methods = ["TF-IDF · pencocokan kata"]
-            if find_spec("sentence_transformers"):
-                methods.append("BGE-M3 · pencarian semantik")
-            method = st.selectbox("Metode", methods)
-            st.caption("TF-IDF mencocokkan kata dalam nama, jenis wisata, dan cuplikan ulasan. "
-                       "BGE-M3 tersedia bila dependensi semantik dipasang oleh pengelola.")
-        submitted = st.form_submit_button("Temukan destinasi →", type="primary", width="stretch")
-    if submitted:
-        if not preference.strip():
-            st.warning("Tulis preferensi perjalanan terlebih dahulu.")
+    if st.session_state.get('sisre_version') != version:
+        st.session_state.pop('sisre_results',None)
+        st.session_state['sisre_version']=version
+    with st.form('sisre_search',border=True):
+        query_col,button_col=st.columns([5,1],vertical_alignment='center')
+        with query_col:
+            query=st.text_input('Cari wisata di Madura',placeholder='Pantai tenang, wisata sejarah, atau tempat buat keluarga…',
+                                label_visibility='collapsed',max_chars=400,key='sisre_query')
+        with button_col:
+            submitted=st.form_submit_button('Cari',type='primary',icon=':material/search:',width='stretch')
+        a,b=st.columns(2)
+        weather=a.selectbox('Musim',['Semua musim','Kemarau','Penghujan'],key='sisre_weather')
+        category=b.selectbox('Jenis wisata',['Semua jenis',*sorted(catalog.wisata.unique())],key='sisre_category',
+                             format_func=lambda x:x.capitalize())
+    st.pills('Ide pencarian',EXAMPLES,key='sisre_example',label_visibility='collapsed',on_change=_example_changed)
+    suggested=st.session_state.pop('sisre_suggested',False)
+    filters=(weather,category)
+    if submitted or suggested:
+        eligible=filter_catalog(catalog,season='' if weather=='Semua musim' else weather,
+                                types=() if category=='Semua jenis' else (category,))
+        if not query.strip():
+            st.session_state.pop('sisre_results',None)
+            st.warning('Tulis tempat atau aktivitas yang kamu cari.')
         else:
-            eligible = filter_catalog(catalog, season="" if season == "Semua musim" else season, types=types)
             try:
-                if method.startswith("BGE"):
-                    with st.spinner("Mencocokkan preferensi dengan destinasi…"):
-                        engine = semantic_index()
-                        excluded = set(engine.catalog.id_destinasi) - set(eligible.id_destinasi)
-                        result = engine.recommend(preference, "" if season == "Semua musim" else season,
-                                                  k, sorted(excluded | set(visited)))
-                        result = result.merge(catalog[["id_destinasi", "deskripsi", "jumlah_ulasan"]], on="id_destinasi")
-                else:
-                    result = lexical_index().search(preference, eligible.id_destinasi, k, visited)
-                st.session_state["search_result"] = (scope_key, preference, method, result)
-            except (ValueError, OSError, ImportError, RuntimeError):
-                st.session_state.pop("search_result", None)
-                st.error("Pencarian belum berhasil. Coba TF-IDF atau periksa ketersediaan model BGE pada server.")
-    saved = st.session_state.get("search_result")
-    if saved and saved[0] == scope_key:
-        _, query, method, result = saved
-        st.subheader("Pilihan untuk perjalananmu")
-        st.write(f'Preferensi: “{query}”')
-        st.caption(f"{len(result)} hasil · {method} · urutan berdasarkan kemiripan teks")
-        if result.empty:
-            st.info("Belum ada hasil yang cocok. Gunakan kata lain atau longgarkan filter jenis wisata dan musim.")
-        else:
-            card_grid(result, ranked=True)
-            csv_download(result.drop(columns="deskripsi"), "Unduh hasil rekomendasi", "rekomendasi_wisata.csv", "ranking_csv")
+                result=lexical_index().search(query,eligible.id_destinasi,k=len(catalog))
+                st.session_state['sisre_results']=(query.strip(),filters,result)
+                st.session_state['sisre_limit']=6
+            except (ValueError,OSError,RuntimeError):
+                st.session_state.pop('sisre_results',None)
+                st.error('Pencarian belum berhasil. Coba lagi sebentar.')
+    saved=st.session_state.get('sisre_results')
+    st.write('')
+    if saved:
+        searched,applied_filters,results=saved
+        heading,action=st.columns([4,1],vertical_alignment='center')
+        heading.subheader(f'Hasil untuk “{searched}”')
+        action.button('Reset',on_click=_reset,width='stretch')
+        labels=[v for v in applied_filters if v not in {'Semua musim','Semua jenis'}]
+        st.caption(f'{len(results)} tempat'+(' · '+' · '.join(labels) if labels else ''))
+        if results.empty:
+            st.info('Belum ada yang cocok. Coba kata lain atau ubah filter.')
+            return
     else:
-        st.subheader("Mulai menjelajah")
-        st.caption("Pratinjau katalog, diurutkan berdasarkan jumlah ulasan; bukan peringkat rekomendasi.")
-        card_grid(catalog.sort_values(["jumlah_ulasan", "destinasi"], ascending=[False, True]).head(3).reset_index(drop=True))
-
-
-def catalog_view(catalog):
-    st.markdown('<div class="eyebrow">DESTINATION DIRECTORY</div>', unsafe_allow_html=True)
-    st.title("Katalog destinasi")
-    st.write("Kenali pilihan tempat dan telusuri ulasan sebelum menentukan perjalanan.")
-    a, b, c = st.columns([2, 1, 1])
-    name = a.text_input("Cari nama destinasi", placeholder="Ketik nama tempat…")
-    types = b.multiselect("Kategori wisata", sorted(catalog.wisata.unique()), placeholder="Semua kategori")
-    season = c.selectbox("Kecocokan musim", ["Semua", "Kemarau", "Penghujan"])
-    filtered = filter_catalog(catalog, season="" if season == "Semua" else season, types=types, name=name)
-    sort = st.selectbox("Urutkan", ["Ulasan terbanyak", "Nama A–Z"])
-    filtered = filtered.sort_values(["jumlah_ulasan", "destinasi"], ascending=[False, True]) if sort == "Ulasan terbanyak" else filtered.sort_values("destinasi")
-    st.caption(f"{len(filtered)} destinasi ditemukan")
-    if filtered.empty:
-        st.info("Tidak ada destinasi untuk filter ini. Coba nama atau kategori lain.")
-        return
-    pages = max(1, (len(filtered) + 8) // 9)
-    page = st.selectbox("Halaman", range(1, pages + 1), format_func=lambda x: f"{x} dari {pages}")
-    card_grid(filtered.iloc[(page - 1) * 9:page * 9].reset_index(drop=True))
-    cols = ["id_destinasi", "destinasi", "wisata", "rekomendasi_cuaca", "jumlah_ulasan"]
-    csv_download(filtered[cols], "Unduh katalog sesuai filter", "katalog_wisata.csv", "catalog_csv")
-
-
-def insights(catalog, audit):
-    st.markdown('<div class="eyebrow">DATA OBSERVATORY</div>', unsafe_allow_html=True)
-    st.title("Di balik rekomendasi")
-    st.write("Ringkasan data untuk memahami cakupan dan batas rekomendasi.")
-    a, b, c = st.columns(3)
-    a.metric("Destinasi dalam cakupan", len(catalog))
-    b.metric("Ulasan dalam cakupan", f"{catalog.jumlah_ulasan.sum():,}")
-    c.metric("Median ulasan / destinasi", f"{catalog.jumlah_ulasan.median():.0f}" if len(catalog) else "0")
-    a, b = st.columns(2)
-    with a:
-        st.subheader("Jenis destinasi")
-        st.bar_chart(catalog.groupby("wisata").size().rename("Destinasi"), color="#167C66", horizontal=True)
-    with b:
-        st.subheader("Kecocokan cuaca")
-        st.bar_chart(catalog.groupby("rekomendasi_cuaca").size().rename("Destinasi"), color="#A3B878", horizontal=True)
-    st.subheader("Kualitas dataset sumber")
-    st.caption("Angka berikut dihitung dari seluruh dataset wisata Madura bawaan.")
-    quality = pd.DataFrame({"Indikator": ["Ulasan sumber", "Baris duplikat persis", "Teks model kosong", "Tanggal relatif", "Indikasi masalah encoding"],
-                            "Jumlah": [audit["rows"], audit["exact_duplicate_rows"], audit["empty_normalized_text_rows"],
-                                       audit["relative_date_rows"], audit["potential_encoding_error_rows"]]})
-    st.dataframe(quality, hide_index=True, width="stretch")
-    st.info("Jumlah ulasan bukan rating. Label cuaca berasal dari dataset dan bukan prakiraan cuaca langsung. "
-            "Verifikasi lokasi, jam operasional, dan kondisi terkini sebelum berkunjung.")
-
-
-def about():
-    st.markdown('<div class="eyebrow">RESEARCH & TRANSPARENCY</div>', unsafe_allow_html=True)
-    st.title("Tentang Madura Explore")
-    st.write("Antarmuka eksplorasi destinasi dari penelitian rekomendasi wisata Malik Hariyanto.")
-    with st.container(border=True):
-        st.subheader("Dari ulasan menjadi pilihan")
-        st.markdown("1. **Katalog:** nama, kategori, kecocokan cuaca, dan maksimal 12 cuplikan ulasan per destinasi.\n"
-                    "2. **Penyaringan:** musim, kategori, dan riwayat kunjungan.\n"
-                    "3. **Pencocokan:** TF-IDF dengan kemiripan kosinus, atau BGE-M3 bila diaktifkan.\n"
-                    "4. **Hasil:** pilihan berdasarkan kemiripan teks, dengan tautan pencarian lokasi dan ekspor CSV.")
-    a, b = st.columns(2)
-    with a:
-        st.subheader("Cara membaca hasil")
-        st.write("Skor menunjukkan kemiripan preferensi dengan deskripsi destinasi. Skor bukan probabilitas, "
-                 "rating kualitas, atau jaminan kepuasan. Skor TF-IDF dan BGE tidak dapat dibandingkan langsung.")
-    with b:
-        st.subheader("Cakupan geografis")
-        st.write("Dataset terbaru berisi destinasi wisata Madura. Data dimuat otomatis dari repository, "
-                 "sehingga pengguna dapat langsung menjelajah tanpa mengunggah file.")
-    st.subheader("Hubungan dengan penelitian")
-    st.write("Notebook tetap menjadi tempat pelatihan LDA, FastText, dan BiLSTM serta evaluasi eksperimen. "
-             "Aplikasi ini tidak melatih ulang model saat digunakan dan tidak menampilkan metrik eksperimen sebagai metrik pencarian. "
-             "Tanpa penilaian relevansi independen, akurasi rekomendasi belum dapat disimpulkan.")
-    st.link_button("Buka kode & metodologi ↗", "https://github.com/MalikHariyanto/crispy_recom_machine_system/tree/feat/streamlit-wisata")
+        st.subheader('Jelajahi Madura')
+        results=catalog.sort_values(['jumlah_ulasan','destinasi'],ascending=[False,True]).reset_index(drop=True)
+    limit=st.session_state.get('sisre_limit',6)
+    shown=results.head(limit).reset_index(drop=True)
+    for start in range(0,len(shown),3):
+        columns=st.columns(3,gap='medium')
+        for column,(index,row) in zip(columns,shown.iloc[start:start+3].iterrows()):
+            with column:
+                destination_card(row,index,ranked=bool(saved))
+    if limit<len(results):
+        left,center,right=st.columns([1,1,1])
+        with center:
+            if st.button('Lihat lebih banyak',width='stretch'):
+                st.session_state['sisre_limit']=limit+6
+                st.rerun()

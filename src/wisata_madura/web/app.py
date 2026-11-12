@@ -1,37 +1,20 @@
-"""Application shell: the bundled Madura dataset is loaded automatically."""
+"""SISRE: a single search-first recommendation screen."""
 import streamlit as st
 
 from .runtime import load_data, dataset_version
-from .styles import apply_styles
-from .views import explore, catalog_view, insights, about
+from .styles import apply_styles, masthead
+from .views import explore
 
 
 def main():
-    st.set_page_config(page_title="Madura Explore · Temukan perjalananmu", page_icon="🌿", layout="wide")
+    st.set_page_config(page_title="SISRE · Wisata Madura", page_icon="🌊", layout="wide")
     apply_styles()
     try:
-        catalog, audit = load_data()
+        catalog, _ = load_data()
+        version = dataset_version()
     except (ValueError, OSError, KeyError):
-        st.error("Dataset belum dapat dimuat. Pastikan folder data/ beserta manifest dan semua bagian CSV tersedia di repository.")
+        st.error("Wisata belum bisa dimuat. Coba lagi sebentar.")
         st.stop()
-    with st.sidebar:
-        st.markdown("## Madura Explore")
-        st.caption("WISATA · CERITA · PENEMUAN")
-        st.divider()
-        page = st.radio("Navigasi", ["Jelajahi", "Katalog destinasi", "Insight data", "Tentang"], label_visibility="collapsed")
-        st.divider()
-        st.markdown("**Destinasi wisata Madura**")
-        st.caption(f"{len(catalog)} destinasi · {audit['rows']:,} ulasan")
-        st.caption("Dataset dimuat otomatis. Langsung cari perjalanan yang sesuai minatmu.")
-        st.divider()
-        st.caption("Dikembangkan oleh Malik Hariyanto\n\nAsistensi Hibah Penelitian")
-    if page == "Jelajahi":
-        explore(catalog, dataset_version())
-    elif page == "Katalog destinasi":
-        catalog_view(catalog)
-    elif page == "Insight data":
-        insights(catalog, audit)
-    else:
-        about()
-    st.markdown('<div class="footer">MADURA EXPLORE &nbsp; / &nbsp; Jelajahi dengan rasa ingin tahu. '
-                'Rencanakan dengan informasi yang tepat.</div>', unsafe_allow_html=True)
+    masthead(len(catalog))
+    explore(catalog, version)
+    st.markdown('<footer class="sisre-footer"><strong>SISRE</strong><span>Wisata Madura</span></footer>', unsafe_allow_html=True)
