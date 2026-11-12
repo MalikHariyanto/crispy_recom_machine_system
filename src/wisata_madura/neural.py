@@ -16,6 +16,7 @@ from torch.utils.data import DataLoader, TensorDataset
 
 from .data import TARGETS, ReviewSplit
 from .modeling import TopicFeatures
+from .protocol import destination_sample_weights
 
 
 @dataclass(frozen=True)
@@ -31,6 +32,7 @@ class DeepConfig:
     min_delta: float = 0.0001
     cpu_threads: int = 2
     learning_rate: float = 0.001
+    balance_destinations: bool = True
 
 
 @dataclass
@@ -155,10 +157,15 @@ def run_bilstm_variants(
         return values
 
     train_y, val_y = encode_labels(split.train), encode_labels(split.validation)
-    losses = {target: _balanced_loss(train_y[:, i], len(labels[target]), device)
+    representative = ~split.train.id_destinasi.duplicated().to_numpy()
+    losses = {target: _balanced_loss(train_y[representative, i] if config.balance_destinations else train_y[:, i],
+                                    len(labels[target]), device)
               for i, target in enumerate(TARGETS)}
-    train_set = TensorDataset(*_features(encoded.train_tokens, topics.train), torch.from_numpy(train_y))
-    val_set = TensorDataset(*_features(encoded.validation_tokens, topics.validation), torch.from_numpy(val_y))
+    def sample_weights(frame):
+        values = destination_sample_weights(frame) if config.balance_destinations else np.ones(len(frame))
+        return torch.as_tensor(values, dtype=torch.float32)
+    train_set = TensorDataset(*_features(encoded.train_tokens, topics.train), torch.from_numpy(train_y), sample_weights(split.train))
+    val_set = TensorDataset(*_features(encoded.validation_tokens, topics.validation), torch.from_numpy(val_y), sample_weights(split.validation))
     test_set = TensorDataset(*_features(encoded.test_tokens, topics.test))
     val_loader = DataLoader(val_set, batch_size=config.batch_size)
     test_loader = DataLoader(test_set, batch_size=config.batch_size)
@@ -176,21 +183,23 @@ def run_bilstm_variants(
         best_loss, best_epoch, best_state, stale = float('inf'), 0, None, 0
         for epoch in range(1, config.bilstm_epochs + 1):
             model.train(); total_loss = 0.0
-            for tokens, lengths, batch_topics, target_ids in loader:
+            for tokens, lengths, batch_topics, target_ids, sample_weight in loader:
                 optimizer.zero_grad()
                 logits = model(tokens.to(device, dtype=torch.long), lengths, batch_topics.to(device))
                 target_ids = target_ids.to(device)
-                loss = torch.stack([losses[target](logits[target], target_ids[:, i]).mean()
+                loss = torch.stack([(losses[target](logits[target], target_ids[:, i]) * sample_weight.to(device)).mean()
                                     for i, target in enumerate(TARGETS)]).mean()
+                if not torch.isfinite(loss):
+                    raise RuntimeError('Loss pelatihan tidak finite; periksa data dan parameter.')
                 loss.backward(); nn.utils.clip_grad_norm_(model.parameters(), 1.0); optimizer.step()
                 total_loss += loss.item() * len(tokens)
             model.eval(); val_total = 0.0
             outputs = {target: [] for target in TARGETS}
             with torch.inference_mode():
-                for tokens, lengths, batch_topics, target_ids in val_loader:
+                for tokens, lengths, batch_topics, target_ids, sample_weight in val_loader:
                     logits = model(tokens.to(device, dtype=torch.long), lengths, batch_topics.to(device))
                     target_ids = target_ids.to(device)
-                    loss = torch.stack([losses[t](logits[t], target_ids[:, i]).mean()
+                    loss = torch.stack([(losses[t](logits[t], target_ids[:, i]) * sample_weight.to(device)).mean()
                                         for i, t in enumerate(TARGETS)]).mean()
                     val_total += loss.item() * len(tokens)
                     for t in TARGETS: outputs[t].extend(logits[t].argmax(dim=1).cpu().tolist())

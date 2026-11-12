@@ -47,9 +47,9 @@ Pasang `sentence-transformers>=3,<6`, lalu restart server untuk memunculkan opsi
 
 [Buka notebook lengkap di Colab](https://colab.research.google.com/github/MalikHariyanto/crispy_recom_machine_system/blob/feat/streamlit-wisata/notebooks/Colab_Audit_Wisata_Madura_Otomatis.ipynb). Jalankan sel dari atas, `DATA_PATH=None`. Dataset dan rating dimuat otomatis dari repo, tanpa unggahan.
 
-Bagian 02B memuat diagram batang rating, batang label cuaca per ulasan, donut cuaca per destinasi, pie jenis wisata per destinasi, dan histogram panjang ulasan. Bagian 03 sudah memiliki train/validation/test; kini dilengkapi batang jumlah dan donut persentase aktual untuk ulasan serta destinasi. Rating/cuaca berupa kategori diskret, sehingga menggunakan diagram batang; histogram dipakai untuk panjang teks numerik. Gambar PNG dan tabel CSV disimpan ke folder run.
+Bagian 02 memuat diagram batang rating, batang label cuaca per ulasan, donut cuaca per destinasi, pie jenis wisata per destinasi, dan histogram panjang ulasan. Bagian 03 sudah memiliki train/validation/test; kini dilengkapi batang jumlah dan donut persentase aktual untuk ulasan serta destinasi. Rating/cuaca berupa kategori diskret, sehingga menggunakan diagram batang; histogram dipakai untuk panjang teks numerik. Gambar PNG dan tabel CSV disimpan ke folder run.
 
-Split per ID destinasi mencegah tempat yang sama muncul di partisi berbeda. Target test sekitar 20% destinasi dan validation sekitar 20% dari sisa train, bukan jaminan rasio ulasan tepat 64:16:20. Duplikat, teks kosong, dan teks identik lintas partisi dibersihkan. Proporsi dihitung ulang dari hasil split aktual.
+Split per ID destinasi mencegah tempat yang sama muncul di partisi berbeda. [Panduan Colab v3](COLAB_V3.md) menjelaskan pembobotan kelompok dan batas evaluasi. V3 memilih split kelompok berbasis metadata dengan target proporsi ulasan 64:16:20; proporsi aktual ditampilkan dan tidak dipaksakan tepat. Duplikat, teks kosong, dan teks identik lintas partisi dibersihkan. Proporsi dihitung ulang dari hasil split aktual.
 
 ## Pengujian
 

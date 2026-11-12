@@ -1,0 +1,108 @@
+{
+  "config": {
+    "seed": 42,
+    "test_fraction": 0.2,
+    "validation_fraction": 0.16,
+    "candidates": 2048
+  },
+  "selected_candidate": 696,
+  "metadata_objective": 0.08723468492188875,
+  "protocol": "group split before fitting; metadata-only selection; fit train/select validation/evaluate test",
+  "selection_uses": "destination ID, group size, wisata/cuaca strata; no text features/model scores",
+  "input_reviews": 2058,
+  "empty_removed": 0,
+  "duplicates_within_destination_removed": 159,
+  "cross_partition_text_removed": {
+    "train": 0,
+    "validation": 15,
+    "test": 22
+  },
+  "partition_reviews": {
+    "train": 1168,
+    "validation": 268,
+    "test": 426
+  },
+  "partition_destinations": {
+    "train": 16,
+    "validation": 5,
+    "test": 6
+  },
+  "assigned_destinations": {
+    "train": 16,
+    "validation": 5,
+    "test": 6
+  },
+  "class_coverage": [
+    {
+      "target": "rekomendasi_cuaca",
+      "kelas": "Kemarau",
+      "train_destinasi": 9,
+      "validation_destinasi": 2,
+      "test_destinasi": 4
+    },
+    {
+      "target": "rekomendasi_cuaca",
+      "kelas": "Kemarau & Penghujan",
+      "train_destinasi": 7,
+      "validation_destinasi": 3,
+      "test_destinasi": 2
+    },
+    {
+      "target": "wisata",
+      "kelas": "air terjun",
+      "train_destinasi": 1,
+      "validation_destinasi": 0,
+      "test_destinasi": 0
+    },
+    {
+      "target": "wisata",
+      "kelas": "hutan/perkebunan",
+      "train_destinasi": 1,
+      "validation_destinasi": 0,
+      "test_destinasi": 0
+    },
+    {
+      "target": "wisata",
+      "kelas": "lainnya",
+      "train_destinasi": 1,
+      "validation_destinasi": 0,
+      "test_destinasi": 0
+    },
+    {
+      "target": "wisata",
+      "kelas": "pantai",
+      "train_destinasi": 8,
+      "validation_destinasi": 2,
+      "test_destinasi": 2
+    },
+    {
+      "target": "wisata",
+      "kelas": "pegunungan",
+      "train_destinasi": 2,
+      "validation_destinasi": 1,
+      "test_destinasi": 1
+    },
+    {
+      "target": "wisata",
+      "kelas": "religi",
+      "train_destinasi": 1,
+      "validation_destinasi": 1,
+      "test_destinasi": 1
+    },
+    {
+      "target": "wisata",
+      "kelas": "sejarah",
+      "train_destinasi": 1,
+      "validation_destinasi": 1,
+      "test_destinasi": 1
+    },
+    {
+      "target": "wisata",
+      "kelas": "taman",
+      "train_destinasi": 1,
+      "validation_destinasi": 0,
+      "test_destinasi": 1
+    }
+  ],
+  "limitations": "Singleton classes remain train-only. Fixed holdout of 27 destinations has high uncertainty. Metadata balancing is not evidence of unbiased generalization."
+}

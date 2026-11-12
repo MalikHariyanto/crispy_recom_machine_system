@@ -1,0 +1,3 @@
+model,best_epoch,best_validation_loss,epochs_executed,device
+fasttext_bilstm,6,1.4755179277106898,9,cpu
+fasttext_lda_bilstm,6,1.4661436009762892,9,cpu

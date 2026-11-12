@@ -1,48 +1,43 @@
-# Landasan metode dan batas eksperimen — pipeline v2
+# Landasan metode dan batas eksperimen — pipeline v3
 
-Dokumen ini memetakan setiap keputusan metode dan kelompok parameter ke literatur. **Paper mendukung gagasan metode, bukan membuktikan nilai parameter lokal paling baik untuk dataset ini.** Ini eksperimen klasifikasi dua atribut destinasi dan eksplorasi topik, bukan klasifikasi sentimen atau analisis musim kunjungan tervalidasi.
+Dataset aktif: **2.058 ulasan / 27 destinasi Madura**, sesuai konfirmasi pemilik data. Tugasnya klasifikasi dua atribut destinasi (cuaca dan jenis wisata) serta eksplorasi topik. Tidak ada klaim sentimen, kausalitas musim, atau bias nol. Paper mendukung gagasan metode; **angka hiperparameter lokal bukan nilai optimal yang dibuktikan paper**.
 
-## Protokol dan inisialisasi
+## Pemetaan keputusan ke literatur
 
-| Keputusan/parameter | Landasan paper | Implementasi dan batas adaptasi |
+| Keputusan | Landasan | Adaptasi lokal dan batas |
 |---|---|---|
-| Pisahkan train/validation/test menurut ID destinasi; cegah teks identik antarbagian | R06 | Mengikuti prinsip evaluasi data berkelompok. Pemilihan destinasi distratifikasi menurut jenis wisata. Tidak mengklaim mengimplementasikan seluruh strategi CV pada paper. Test awal dipertahankan; validation diambil dari train awal. |
-| Rasio test=0,20; validation=0,20 dari sisa; seed=42/142 | R06, R13 | Angka lokal untuk menyediakan validation dan mempertahankan test sebelumnya; bukan rasio atau seed yang diwajibkan paper. Proporsi ulasan mengikuti ukuran destinasi. |
-| LDA bag-of-words dengan CountVectorizer | R01 | LDA memodelkan count kata; bukan memasukkan FastText atau TF-IDF langsung sebagai count. Fitur LDA kemudian dapat digabungkan dengan BiLSTM. |
-| `learning_method=online`, iterasi=20, `n_jobs=1` | R02 | Online variational learning didukung R02. Angka iterasi dan paralelisme membatasi biaya, bukan bukti konvergensi. `iterations` dicatat; perlu uji sensitivitas bila memperluas penelitian. |
-| Kandidat K=(2,4,6,8,10,12), seeds=(42,43,44) | R03, R04, R13 | Pencarian rentang lokal, bukan angka rekomendasi universal. K=2 disertakan karena rentang awal 4–12 memilih batas bawah pada pemeriksaan validation. Test tidak dipakai memperluas grid. Tiga seed adalah diagnosis awal, bukan cukup untuk semua klaim kestabilan. |
-| Pemilihan K berdasarkan rerata validation NPMI | R03 | Adaptasi: NPMI berdasarkan kehadiran kata pada **dokumen** validation, bukan c_v atau sliding window/persis protokol paper. Pasangan tidak pernah bersama=-1; bersama pada seluruh dokumen=0 (tidak informatif). Tidak menamai skor sebagai c_v. |
-| Perplexity validation dan diversity top words | R01–R03 | Perplexity adalah diagnosis probabilistik; tidak dipakai sebagai satu-satunya bukti keterbacaan. Diversity = jumlah kata unik di seluruh top lists / seluruh slot kata, bukan ukuran relevansi manusia. |
-| Stability top-word Jaccard dengan pencocokan optimal | R04 | Terinspirasi pengujian kestabilan dan pencocokan topik. Di sini gangguan berupa seed, memakai Jaccard biasa dan Hungarian matching; bukan reproduksi lengkap protokol resampling/rank agreement R04. |
-| Aturan seri: stability, perplexity, K lebih kecil; seed model akhir tetap seed utama | R03, R04, R13 | Aturan rekayasa eksperimen yang dinyatakan eksplisit. Tidak memilih seed yang kebetulan memperoleh skor tertinggi. Model akhir tetap fit pada train saja. |
-| Stopword Indonesia eksplisit + EnglishStopWords, pertahankan negasi | R05 | Pilihan preprocessing perlu diperiksa pada korpus. Daftar lokal disimpan ke audit; belum divalidasi sebagai stoplist optimal. Hanya jalur LDA yang mendapat stoplist tambahan; teks FastText/TF-IDF tidak diubah oleh langkah ini. |
-| `min_df=3`, `max_df=0,90`, maksimum 4.000 kata, token huruf >=2 | R01, R05 | Penyaringan lokal untuk mengurangi kata sangat jarang/umum dan membatasi memori. Bukan nilai baku paper. Model sumber sudah memakai teks olahan; versi ini tidak mengklaim memperbaiki seluruh preprocessing sumber. |
-| Maksimal 30 ulasan train per destinasi; top-10 kata; 5 contoh per topik | R03–R05 | Sampling seimbang per destinasi adalah desain lokal untuk mengurangi dominasi destinasi dengan banyak ulasan dan mengendalikan biaya. Contoh dipilih dari dokumen dengan topik dominan sesuai; tidak semua topik pasti punya lima contoh. |
-| Heatmap atribut cuaca, rerata per destinasi | R03–R05 | Ringkasan deskriptif dari train sample, bukan uji kausal atau analisis perubahan musim kunjungan. Topik tidak otomatis menjadi aspek tervalidasi. |
-| FastText skip-gram + subword ngram 3–6, window=5 | R07 | Dasar representasi subword dari R07. Gensim melatih model hanya pada train. Validation/test baru memperoleh vektor dari model beku; tidak ada fit pada keduanya. |
-| Dimensi embedding=80, min_count=2, bucket=100.000, epoch FastText=5, workers=1 | R07, R13 | Konfigurasi lokal untuk biaya dan repeatability; berbeda dari sebagian konfigurasi asli paper. Tidak diklaim optimal. |
-| BiLSTM satu lapis, hidden=64 per arah, urutan maksimum 64 token, embedding frozen | R07, R08 | Arsitektur lokal berdasarkan representasi urutan dua arah. Dua kepala softmax memprediksi dua atribut, bukan multilabel sentimen. Panjang/dimensi/freeze adalah pilihan baseline yang perlu diuji lebih lanjut. |
-| Gabungkan hidden BiLSTM dengan distribusi topik melalui concatenation | R01, R08 | Adaptasi fitur lokal: menggabungkan dua representasi. Paper fondasi tidak membuktikan gabungan ini meningkatkan kualitas. Harus dibandingkan dengan varian tanpa LDA pada split sama. |
-| Adam lr=0,001, batch=128 | R09 | Adam didukung R09; batch=128 merupakan pilihan lokal. Tidak mengeklaim jadwal optimizer terbaik. |
-| Dropout=0,20 | R10 | Regularisasi dropout didukung R10; angka lokal 0,20 bukan hasil tuning validation pada eksperimen ini. |
-| Gradient clipping norma=1 | R12 | Prinsip penanganan gradien pada RNN didukung R12; ambang 1 adalah pengaturan lokal. |
-| Bobot kelas proporsional invers frekuensi train; loss rata-rata dua kepala | R15 | Tujuannya memberi perhatian lebih pada kelas jarang. Rumus dan pembobotan adalah pilihan lokal, bukan rumus yang diklaim disalin persis dari R15; R15 mendukung gagasan biaya klasifikasi yang tidak setara. Validation memakai bobot yang dihitung dari train saja. |
-| Maksimum 15 epoch, patience=3, min_delta=0,0001; pilih validation loss terendah | R11 | Early stopping dan pemilihan checkpoint dari validation didukung R11; batas lokal belum dituning. Test diprediksi setelah checkpoint terbaik dipulihkan. |
-| Seed dan deterministik cuDNN; CPU threads=2 | R13 | Membantu repeatability/biaya. Tidak menjamin hasil identik lintas versi/perangkat. Pencarian LDA multi-seed **bukan** pengulangan multi-seed BiLSTM. |
-| Mayoritas, TF-IDF+Linear SVC, LDA+regresi logistik, dua varian BiLSTM | R01, R07, R08, R14 | Pembanding lokal pada train dan test yang sama. TF-IDF 1–2gram, min_df=2, max_features=40.000; SVC berbobot kelas; regresi logistik max_iter=500. Nilai ini baseline lokal, belum dituning. |
-| Macro-F1, micro-F1, accuracy, Hamming loss per atribut dan suara terbanyak destinasi | R06, R13, R16 | Micro-F1 = accuracy dan Hamming loss = 1-accuracy untuk tugas satu label per contoh ini. Kelas langka dan test 43 destinasi membatasi kesimpulan. Voting adalah agregasi lokal; tidak mengklaim seluruh metrik independen. |
-| Grafik, contoh, CSV, hash kode, model/vectorizer, checkpoint | R03–R05, R13 | Mendukung penelaahan dan reproduksibilitas. Grafik sendiri bukan validasi metode. Nama aspek dan kebenaran label tetap perlu penilaian manusia. |
+| Train/validation/test per ID destinasi; cegah teks identik lintas bagian | R06, R17 | Prinsip evaluasi kelompok dan pencegahan leakage. V3 memakai kandidat split metadata dengan rasio nominal 64/16/20 ulasan, bukan algoritma yang diklaim persis dari R06. |
+| 2.048 kandidat, seed=42, stratifikasi wisata, penalti distribusi cuaca | R06, R18 | Desain lokal ditetapkan sebelum fitting. Objektif = L1 selisih proporsi ulasan + 0,1 × L1 selisih jumlah destinasi per label cuaca / jumlah destinasi. Tidak memakai fitur terlatih/skor model. Setelah deduplikasi aktual 1.168/268/426 ulasan dan 16/5/6 destinasi. |
+| Kelas singleton tetap di train; laporkan cakupan kelas | R06, R16, R17 | Tidak mungkin membagi satu destinasi ke tiga partisi tanpa leakage. Kelas tanpa support holdout tidak punya bukti generalisasi. |
+| CountVectorizer train-only → LDA bersama | R01, R02, R17 | LDA menerima count, tidak menerima embedding sebagai count. Satu model bersama menjaga arti dimensi topik konsisten. |
+| Online LDA max_iter=20, n_jobs=1 | R02 | Konfigurasi biaya lokal, bukan bukti konvergensi. Iterasi dicatat. |
+| Grid K=(2,4,6,8,10,12), seeds=(42,43,44) | R03, R04, R13 | Grid lokal. Seleksi rerata validation NPMI; seri memakai stability, perplexity, K lebih kecil. Model akhir seed42 tetap, tidak memilih seed kebetulan terbaik. |
+| NPMI berbasis dokumen validation | R03 | Adaptasi document-level, bukan c_v/sliding-window atau replikasi persis R03. Pasangan tidak bersama=-1; selalu bersama=0. K terbaik dalam grid tetap bisa memiliki coherence negatif. |
+| Stability Jaccard + Hungarian matching, diversity, perplexity | R01, R03, R04 | Diagnostik tambahan; kestabilan antar-seed bukan bukti semantik benar. Tidak mereplikasi seluruh resampling/rank agreement R04. |
+| Stopword Indonesia/Inggris eksplisit, negasi dipertahankan | R05 | Hanya jalur LDA; teks olahan sumber tetap mempunyai keterbatasan provenance. min_df=3, max_df=.90, max_features=4.000 adalah pilihan lokal. |
+| Maksimal 30 ulasan train per destinasi untuk fit LDA | R03–R05 | Sampling lokal untuk biaya dan dominasi kelompok. Validation sample dibatasi dengan aturan sama; tidak melakukan fit pada validation. |
+| FastText skip-gram, subword karakter3–6, window5 | R07 | Fit train saja. Kata baru dari holdout memperoleh vektor subword model beku, bukan pelatihan ulang. |
+| Embedding80, min_count2, bucket100.000, epoch5, workers1, frozen | R07, R13 | Parameter lokal untuk biaya dan repeatability. Registry token holdout hanya indexing vektor beku; tidak digunakan memperbarui embedding train. |
+| BiLSTM hidden64 per arah, max64 token, dua kepala softmax | R08 | Arsitektur lokal. Kepala cuaca/jenis memprediksi masing-masing satu kelas; bukan multilabel sentimen. |
+| Concatenation hidden BiLSTM + distribusi topik | R01, R08 | Adaptasi fitur lokal yang wajib diuji dengan ablation tanpa LDA. Paper fondasi tidak menjamin gabungan menaikkan skor. |
+| Adam lr.001, batch128, dropout.20, gradient clip1 | R09, R10, R12 | Pilihan lokal; tidak diklaim hasil tuning terbaik. |
+| Bobot sampel invers jumlah ulasan per destinasi, normalisasi mean1 | R06, R15 | Setiap destinasi mempunyai total bobot sama. Formula engineering lokal, bukan algoritma persis R06/R15. Tidak menghapus semua bias representasi korpus. |
+| Bobot kelas invers frekuensi destinasi train | R15 | SVC/logreg dan loss deep memakai bobot dari train saja. Validation memakai bobot kelas train dan bobot unit destinasi validation. |
+| Early stopping validation loss, maksimal15 epoch, patience3, min_delta.0001 | R11, R18 | Checkpoint terbaik dipulihkan sebelum prediksi test. Test tidak menentukan epoch/parameter/seed. |
+| Tiga seed embedding/BiLSTM; klasik satu run | R13 | Embedding fit sekali/seed dan dipakai dua ablation. Klasik tidak diulang menjadi tiga observasi identik. Kolom runs menunjukkan jumlah sebenarnya. Tiga seed satu split bukan cross-validation atau confidence interval. |
+| Macro-F1 seluruh kelas + macro_f1_present, support per kelas | R16 | Kelas tanpa test support ditampilkan sebagai nol; metrik pendamping hanya kelas yang hadir. Denominator berbeda harus disebut. Enam destinasi test membatasi kesimpulan. |
+| Accuracy, micro-F1, Hamming loss per target | R16 | Untuk satu label per atribut: micro-F1=accuracy dan Hamming=1−accuracy. Bukan bukti independen. Voting destinasi memakai mayoritas; seri diurutkan label. |
+| Mayoritas, TF-IDF+SVC, LDA+logreg, FastText-BiLSTM, FastText-LDA-BiLSTM | R01, R07, R08, R14 | Semua memakai split sama. TF-IDF1–2gram min_df2 max40.000; logreg max_iter500. Pembanding lokal, bukan klaim tuning tuntas. |
 
 ## Cara membaca hasil
 
-1. Bandingkan `pemilihan_topik.csv` dan grafik: K terpilih adalah terbaik **dalam grid dan protokol ini**, bukan jumlah topik yang terbukti benar.
-2. Baca `kualitas_topik.csv`: skor negatif berarti kata topik kurang sering muncul bersama menurut ukuran ini; jangan menutupinya karena model sudah dipilih.
-3. Baca `contoh_ulasan_topik.csv` sebelum memberi nama pada `template_review_topik.csv`.
-4. Kestabilan dekat 0 menunjukkan kesamaan rendah; tidak ada ambang kelulusan universal yang diklaim di sini.
-5. `kurva_bilstm.png` dan `checkpoint_bilstm.csv` menunjukkan generalisasi pada validation, bukan jaminan generalisasi ke semua wilayah.
-6. Bandingkan kelima model pada `metrik_klasifikasi.csv`. Tambahan LDA boleh memperburuk hasil; laporkan apa adanya.
-7. V2 memakai train lebih kecil karena validation dipisahkan. Jangan mengatribusikan selisih angka v1/v2 hanya pada perbaikan LDA.
-8. Data campuran wilayah, asal label cuaca belum diverifikasi, tanpa sentimen dan tanggal kunjungan absolut. BGE tetap opsional dan belum merupakan fusion BGE-E5. Referensi fondasi tidak menggantikan bukti dataset ini.
+1. K terbaik masih dapat memiliki NPMI negatif; lihat contoh dan isi nama topik melalui review manusia.
+2. Semua model dan seed yang ditetapkan dilaporkan. Jangan memilih ulang split atau seed setelah melihat test.
+3. Kelas train-only tidak memiliki evaluasi generalisasi. Support nol tidak boleh disebut akurasi kelas.
+4. Bobot kelompok/kelas membantu dominasi data, bukan menjamin bebas bias atau memperbaiki label yang salah.
+5. V3 mengubah protokol split dan metrik dibanding v2. Perbedaan skor tidak boleh diatribusikan hanya pada tambahan LDA.
+6. Dataset sepenuhnya Madura sesuai pemilik data. Asal anotasi cuaca dan preprocessing sumber tetap harus dijelaskan; label cuaca bukan prakiraan cuaca langsung.
+7. BGE/Streamlit terpisah dari classifier ini; validasi ranking memerlukan relevansi independen.
 
 ## Daftar paper
 
@@ -64,15 +59,26 @@ Dokumen ini memetakan setiap keputusan metode dan kelompok parameter ke literatu
 - **R15.** Elkan, C. (2001). *The Foundations of Cost-Sensitive Learning*. IJCAI, 973–978. Pembobotan kelas lokal merupakan penerapan gagasan biaya yang tidak setara, bukan bukti bobot invers frekuensi optimal untuk dataset ini.
 - **R16.** Sokolova, M., & Lapalme, G. (2009). *A systematic analysis of performance measures for classification tasks*. Information Processing & Management, 45(4), 427–437. https://doi.org/10.1016/j.ipm.2009.03.002
 
-## Bukti sumber dan keterbatasan akses
+- **R17.** Kapoor, S., & Narayanan, A. (2023). *Leakage and the reproducibility crisis in machine-learning-based science*. Patterns, 4(9), 100804. https://doi.org/10.1016/j.patter.2023.100804
+- **R18.** Cawley, G. C., & Talbot, N. L. C. (2010). *On Over-fitting in Model Selection and Subsequent Selection Bias in Performance Evaluation*. JMLR, 11, 2079–2107. https://www.jmlr.org/papers/v11/cawley10a.html
 
-Pada sesi perbaikan ini, metadata R03, R07, dan R13 diperiksa pada data resmi ACL Anthology di GitHub (`acl-org/acl-anthology`, E14.xml, W13.xml, Q17.xml, D17.xml). R01/R02 diperiksa melalui rujukan implementasi scikit-learn; R04 melalui repositori kode penulis; R07 juga melalui repositori resmi fastText. Formula NPMI dibandingkan dengan implementasi konfirmasi langsung Gensim. Tautan publisher, ACL, DOI, dan arXiv langsung ditolak kebijakan jaringan lingkungan, sehingga **tidak diklaim seluruh full text paper dibaca pada sesi ini**. Rujukan lain dicantumkan sebagai fondasi bibliografis; tidak diklaim seluruh setting lokal direplikasi atau divalidasi oleh paper tersebut.
+## Bukti akses pada 12 November 2026
 
-Sumber pemeriksaan yang dapat ditelusuri:
+Tinjauan **terarah**, bukan systematic review lengkap atau klaim telah membaca semua jurnal yang relevan. Log URL, status akses, ukuran, dan hash materi yang berhasil diperoleh: [literature_access_2026-11-12.json](literature_access_2026-11-12.json).
+
+- Metadata resmi ACL R03 diperiksa (judul/penulis/DOI). Abstrak dan metadata R07 serta R13 diperiksa pada XML resmi ACL Anthology. Abstrak R07 menjelaskan representasi skip-gram berbasis karakter n-gram dan kata yang tidak muncul saat training; R13 menekankan variasi skor akibat seed dan pelaporan distribusi hasil.
+- Dokumentasi scikit-learn yang merujuk Blei/Hoffman diperiksa untuk LDA/count/online variational learning. Ini sumber implementasi, **bukan pembacaan full text R01/R02**.
+- README repositori penulis Greene dkk. diperiksa: kestabilan terhadap perturbasi untuk pemilihan jumlah topik; protokol v3 Jaccard/seed adalah adaptasi, bukan replika kodenya.
+- Implementasi Gensim `direct_confirmation_measure.py` diperiksa sebagai pembanding formula PMI/NPMI; estimator dokumen lokal dinyatakan berbeda dari sliding window.
+- README resmi fastText dan implementasi PyTorch LSTM v2.5.1 diperiksa untuk konsistensi API. Keduanya bukan pengganti jurnal fondasi.
+- Akses langsung JMLR, NeurIPS, ACL, arXiv, PMLR, dan DOI yang dicoba gagal melalui proxy lingkungan. Tidak ada klaim full text R01–R18 seluruhnya dibaca pada sesi ini. Rujukan lain merupakan dasar bibliografis yang perlu pembacaan lanjutan jika mensyaratkan review full text.
+
+Metadata implementasi yang dapat ditelusuri:
 - https://github.com/acl-org/acl-anthology/blob/master/data/xml/E14.xml
-- https://github.com/acl-org/acl-anthology/blob/master/data/xml/W13.xml
 - https://github.com/acl-org/acl-anthology/blob/master/data/xml/Q17.xml
+- https://github.com/acl-org/acl-anthology/blob/master/data/xml/D17.xml
 - https://github.com/scikit-learn/scikit-learn/blob/main/doc/modules/decomposition.rst
 - https://github.com/derekgreene/topic-stability
 - https://github.com/facebookresearch/fastText
 - https://github.com/piskvorky/gensim/blob/develop/gensim/topic_coherence/direct_confirmation_measure.py
+- https://github.com/pytorch/pytorch/blob/v2.5.1/torch/nn/modules/rnn.py

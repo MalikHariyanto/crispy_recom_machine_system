@@ -1,0 +1,8 @@
+section,input,proses,output
+01 Input,dataset_madura_bersih.xlsx,validasi + normalisasi,"reviews (2058, 9)"
+02 Audit/EDA,2058 ulasan,audit + agregasi per unit,EDA PNG/CSV + audit
+03 Split,2058 ulasan,kelompok ID + metadata; tanpa skor,"{'train': 1168, 'validation': 268, 'test': 426}"
+04 LDA,"train=1168, validation=268",fit count/LDA di train; seleksi validation,"K=2; theta=(1168, 2)"
+06 Embedding,1168 ulasan train,"FastText train-only, satu kali per seed",3 embedding beku
+07 Modeling,LDA + embedding + label train/validation,"fit classifier, early stopping validation","seed/model: {42: ['mayoritas', 'tfidf_linear_svc', 'lda_logreg', 'fasttext_bilstm', 'fasttext_lda_bilstm'], 43: ['fasttext_bilstm', 'fasttext_lda_bilstm'], 44: ['fasttext_bilstm', 'fasttext_lda_bilstm']}"
+08 Evaluasi,prediksi tetap + label test,nilai semua run; tidak memilih pemenang seed,36 baris metrik + prediksi CSV

@@ -1,0 +1,11 @@
+target,kelas,train_destinasi,validation_destinasi,test_destinasi
+rekomendasi_cuaca,Kemarau,9,2,4
+rekomendasi_cuaca,Kemarau & Penghujan,7,3,2
+wisata,air terjun,1,0,0
+wisata,hutan/perkebunan,1,0,0
+wisata,lainnya,1,0,0
+wisata,pantai,8,2,2
+wisata,pegunungan,2,1,1
+wisata,religi,1,1,1
+wisata,sejarah,1,1,1
+wisata,taman,1,0,1

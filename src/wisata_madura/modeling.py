@@ -4,14 +4,18 @@ from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
-from sklearn.decomposition import LatentDirichletAllocation
 from sklearn.dummy import DummyClassifier
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, f1_score, hamming_loss
 from sklearn.svm import LinearSVC
 
 from .data import TARGETS, ReviewSplit
+
+def _destination_class_weights(train, target):
+    counts = train.drop_duplicates("id_destinasi")[target].value_counts()
+    return (counts.sum() / (len(counts) * counts)).to_dict()
+
 
 
 @dataclass
@@ -32,59 +36,30 @@ def run_baselines(split: ReviewSplit, seed=42) -> dict:
     train_x = vectorizer.fit_transform(split.train["teks_model"])
     test_x = vectorizer.transform(split.test["teks_model"])
     predictions = {"mayoritas": {}, "tfidf_linear_svc": {}}
+    from .protocol import destination_sample_weights
+    sample_weights = destination_sample_weights(split.train)
     for target in TARGETS:
         models = {
             "mayoritas": DummyClassifier(strategy="most_frequent"),
-            "tfidf_linear_svc": LinearSVC(class_weight="balanced", random_state=seed),
+            "tfidf_linear_svc": LinearSVC(class_weight=_destination_class_weights(split.train, target), random_state=seed),
         }
         for name, model in models.items():
-            model.fit(train_x, split.train[target])
+            model.fit(train_x, split.train[target], sample_weight=sample_weights)
             predictions[name][target] = model.predict(test_x)
     return predictions
 
 
-def fit_topics(split: ReviewSplit, n_topics=6, per_destination=30, seed=42) -> TopicFeatures:
-    # Model bersama menjaga arti tiap dimensi topik tetap sama untuk semua data.
-    sample = (
-        split.train.sample(frac=1, random_state=seed).groupby("id_destinasi", sort=False)
-        .head(per_destination).reset_index(drop=True)
-    )
-    counts = CountVectorizer(min_df=3, max_features=4_000, token_pattern=r"(?u)\b\w\w+\b")
-    sample_counts = counts.fit_transform(sample["teks_model"])
-    model = LatentDirichletAllocation(
-        n_components=n_topics, max_iter=8, learning_method="online", random_state=seed
-    )
-    sample_weights = model.fit_transform(sample_counts)
-    terms = counts.get_feature_names_out()
-    names = [f"topik_{i + 1}" for i in range(n_topics)]
-    keywords = pd.DataFrame({
-        "topik": names,
-        "kata_utama": [", ".join(terms[np.argsort(row)[-8:][::-1]]) for row in model.components_],
-    })
-    by_destination = (
-        pd.DataFrame(sample_weights, columns=names)
-        .assign(id_destinasi=sample["id_destinasi"], rekomendasi_cuaca=sample["rekomendasi_cuaca"])
-        .groupby(["id_destinasi", "rekomendasi_cuaca"])[names].mean()
-    )
-    return TopicFeatures(
-        train=model.transform(counts.transform(split.train["teks_model"])).astype(np.float32),
-        test=model.transform(counts.transform(split.test["teks_model"])).astype(np.float32),
-        keywords=keywords,
-        weather_summary=by_destination.groupby("rekomendasi_cuaca")[names].mean(),
-        sample_size=len(sample),
-    )
-
-
 def run_lda_only(split: ReviewSplit, topics: TopicFeatures, seed=42) -> dict:
+    from .protocol import destination_sample_weights
     predictions = {}
     for target in TARGETS:
-        classifier = LogisticRegression(class_weight="balanced", max_iter=500, random_state=seed)
-        classifier.fit(topics.train, split.train[target])
+        classifier = LogisticRegression(class_weight=_destination_class_weights(split.train, target), max_iter=500, random_state=seed)
+        classifier.fit(topics.train, split.train[target], sample_weight=destination_sample_weights(split.train))
         predictions[target] = classifier.predict(topics.test)
     return {"lda_logreg": predictions}
 
 
-def evaluate_classifiers(test: pd.DataFrame, predictions: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
+def evaluate_classifiers(test: pd.DataFrame, predictions: dict, label_space=None) -> tuple[pd.DataFrame, pd.DataFrame]:
     summary, details = [], []
     for model, outputs in predictions.items():
         for target in TARGETS:
@@ -98,13 +73,16 @@ def evaluate_classifiers(test: pd.DataFrame, predictions: dict) -> tuple[pd.Data
                 ("destinasi", per_destination["aktual"], per_destination["prediksi"]),
             )
             for unit, actual, predicted in evaluations:
-                labels = sorted(set(actual))
+                labels = list(label_space[target]) if label_space is not None else sorted(set(actual) | set(predicted))
                 key = {"target": target, "model": model, "unit": unit}
                 summary.append({
                     **key,
                     "accuracy": accuracy_score(actual, predicted),
                     "micro_f1": f1_score(actual, predicted, average="micro"),
                     "macro_f1": f1_score(actual, predicted, labels=labels, average="macro", zero_division=0),
+                    "macro_f1_present": f1_score(actual, predicted, labels=sorted(set(actual)), average="macro", zero_division=0),
+                    "classes_observed": len(set(actual)),
+                    "classes_evaluated": len(labels),
                     "hamming_loss": hamming_loss(actual, predicted),
                     "n": len(actual),
                 })

@@ -1,0 +1,14 @@
+{
+  "mode": "full",
+  "execution": "All computational notebook cells executed locally on CPU using declared preinstalled dependencies; pip installation step bypassed only in validation harness",
+  "test_suite": "17 tests passed, including torch checkpoint restoration and Streamlit navigation",
+  "run_source_state": "Working tree changes relative to source_commit; module SHA256 in audit identifies the tested source exactly",
+  "dataset_workbook_sha256": "09c6127d532bbf8e08e1be79e29795b080a07acd89039b6f29b5e2314a94fea4",
+  "limitations": [
+    "CPU run, not remote Colab GPU validation",
+    "Full-text academic access restricted for several publishers",
+    "Negative LDA NPMI, six test destinations and train-only classes; deep accuracy is not claimed superior"
+  ],
+  "notebook_sha256": "fc39bfbf8fb39d2221bd3c2c5a74c9aece0752b6f0020eb9d3514a8a092f79b4",
+  "working_tree_dirty_recorded_by_notebook": true
+}

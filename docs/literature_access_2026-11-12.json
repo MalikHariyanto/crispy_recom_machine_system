@@ -1,0 +1,134 @@
+{
+  "date": "2026-11-12",
+  "scope": "Targeted methodological sources, not an exhaustive systematic review",
+  "sources": [
+    {
+      "id": "R01",
+      "url": "https://www.jmlr.org/papers/v3/blei03a.html",
+      "error": "ProxyError"
+    },
+    {
+      "id": "R02",
+      "url": "https://papers.nips.cc/paper/3902-online-learning-for-latent-dirichlet-allocation",
+      "error": "ProxyError"
+    },
+    {
+      "id": "R03",
+      "url": "https://aclanthology.org/E14-1056/",
+      "error": "ProxyError"
+    },
+    {
+      "id": "R04",
+      "url": "https://arxiv.org/abs/1404.4606",
+      "error": "ProxyError"
+    },
+    {
+      "id": "R05",
+      "url": "https://doi.org/10.1017/pan.2017.44",
+      "error": "ProxyError"
+    },
+    {
+      "id": "R06",
+      "url": "https://doi.org/10.1111/ecog.02881",
+      "error": "ProxyError"
+    },
+    {
+      "id": "R07",
+      "url": "https://aclanthology.org/Q17-1010/",
+      "error": "ProxyError"
+    },
+    {
+      "id": "R08",
+      "url": "https://doi.org/10.1162/neco.1997.9.8.1735",
+      "error": "ProxyError"
+    },
+    {
+      "id": "R09",
+      "url": "https://arxiv.org/abs/1412.6980",
+      "error": "ProxyError"
+    },
+    {
+      "id": "R10",
+      "url": "https://www.jmlr.org/papers/v15/srivastava14a.html",
+      "error": "ProxyError"
+    },
+    {
+      "id": "R12",
+      "url": "https://proceedings.mlr.press/v28/pascanu13.html",
+      "error": "ProxyError"
+    },
+    {
+      "id": "R13",
+      "url": "https://aclanthology.org/D17-1035/",
+      "error": "ProxyError"
+    },
+    {
+      "id": "ACL_E14",
+      "url": "https://raw.githubusercontent.com/acl-org/acl-anthology/master/data/xml/E14.xml",
+      "status": 200,
+      "bytes": 91384,
+      "sha256": "9cdf0a8a8dd9aa0038f9b66bb2ce98dd0c15f63390580998b03eb0c9b780a7bc"
+    },
+    {
+      "id": "ACL_Q17",
+      "url": "https://raw.githubusercontent.com/acl-org/acl-anthology/master/data/xml/Q17.xml",
+      "status": 200,
+      "bytes": 60216,
+      "sha256": "819b98cb37fe3e65f86fc76f56816fe0105945985ecd43465dc0954d4043f354"
+    },
+    {
+      "id": "ACL_D17",
+      "url": "https://raw.githubusercontent.com/acl-org/acl-anthology/master/data/xml/D17.xml",
+      "status": 200,
+      "bytes": 513372,
+      "sha256": "76dead30fb330ed19e33dd96bb754b8210c69f1e280b22056a1401c45dfa6a60"
+    },
+    {
+      "id": "FASTTEXT",
+      "url": "https://raw.githubusercontent.com/facebookresearch/fastText/main/docs/unsupervised-tutorial.md",
+      "status": 404,
+      "bytes": 14
+    },
+    {
+      "id": "SKLEARN_LDA",
+      "url": "https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/doc/modules/decomposition.rst",
+      "status": 200,
+      "bytes": 47000,
+      "sha256": "aa64860dc9b45f8637d7007dd7cc19dd8258488fd98a064f21dd6a34f881f73d"
+    },
+    {
+      "id": "STABILITY",
+      "url": "https://raw.githubusercontent.com/derekgreene/topic-stability/master/README.md",
+      "status": 200,
+      "bytes": 5295,
+      "sha256": "33cf49b5443e7259758a4cac48879672a3546e68bb4e0395ff18d3008939287b"
+    },
+    {
+      "id": "NPMI",
+      "url": "https://raw.githubusercontent.com/piskvorky/gensim/develop/gensim/topic_coherence/direct_confirmation_measure.py",
+      "status": 200,
+      "bytes": 8366,
+      "sha256": "19167623d33409f71f5e24dbcc2ebf43e8a5d697a701c4659cf786bcc4d8e4cc"
+    },
+    {
+      "id": "FASTTEXT_TUTORIAL",
+      "url": "https://raw.githubusercontent.com/facebookresearch/fastText/main/website/docs/unsupervised-tutorial.md",
+      "status": 404,
+      "bytes": 14
+    },
+    {
+      "id": "TORCH_LSTM",
+      "url": "https://raw.githubusercontent.com/pytorch/pytorch/v2.5.1/torch/nn/modules/rnn.py",
+      "status": 200,
+      "bytes": 73907,
+      "sha256": "7a9330a13cfdb951a92c980d529efffbe79a440b2a8cbcaa3158bc02622dbca5"
+    },
+    {
+      "id": "FASTTEXT_README",
+      "url": "https://raw.githubusercontent.com/facebookresearch/fastText/main/README.md",
+      "status": 200,
+      "bytes": 13612,
+      "sha256": "ad35fc63e3964624b0566d0bf09591542207736285c691f5b9102fb367a0324f"
+    }
+  ]
+}
