@@ -1,0 +1,138 @@
+<!doctype html><html lang="id"><meta charset="utf-8"><title>Minggu 11 — Output Asli</title><style>body{font:16px Arial,sans-serif;max-width:1150px;margin:30px auto;padding:0 24px;line-height:1.5;color:#18323f}h1,h2{color:#194b60}section{border-top:3px solid #194b60;margin-top:35px;padding-top:10px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f1f5f7;padding:16px}table{border-collapse:collapse;width:100%}td,th{border:1px solid #9fb2bd;padding:8px;text-align:left!important}nav a{margin-right:20px}.note{background:#fff2d1;padding:14px}</style><h1>Dokumentasi Minggu 11 — Output Tersimpan Colab</h1><p>Sumber: notebook unggahan run 20261112-131554-444000. Halaman ini tidak menjalankan ulang model dan tidak memerlukan runtime Colab. Kode dan tabel ditampilkan dari sel tersimpan; penjelasan status di luar blok kode adalah panduan dokumentasi.</p><nav>
+<a href="#senin">Senin</a><a href="#selasa">Selasa</a><a href="#rabu">Rabu</a><a href="#kamis">Kamis</a><a href="#jumat">Jumat</a></nav>
+<section id="senin"><h2>Senin — Konfigurasi dan seed FastText</h2><p class="note">Run ini mengubah seed 42/43/44 dengan pengaturan FastText yang sama. Ini bukan tuning beberapa konfigurasi. Screenshot kode konfigurasi berikut dan output ketiga seed; caption harus menyebut perbandingan seed, bukan perubahan dimensi/n-gram.</p>
+<h3>Kode asli sel</h3><pre>encoded_by_seed = {}
+deep_configs = {}
+training_seeds = (42,43,44) if MODE == &quot;full&quot; else (42,)
+if RUN_DEEP:
+    from wisata_madura.neural import DeepConfig, fit_fasttext, run_bilstm_variants, plot_training_history
+    for training_seed in training_seeds:
+        config = DeepConfig(seed=training_seed, bilstm_epochs=15 if MODE == &quot;full&quot; else 2,
+                            patience=3 if MODE == &quot;full&quot; else 1, balance_destinations=True)
+        deep_configs[training_seed] = config
+        seed_dir = OUTPUT_DIR / &quot;models&quot; / f&quot;seed_{training_seed}&quot;
+        encoded = fit_fasttext(split, config, seed_dir)
+        encoded_by_seed[training_seed] = encoded
+        print(f&quot;Seed {training_seed}: token train={encoded.train_tokens.shape}; embedding={encoded.embeddings.shape}&quot;)
+        print(&quot;Contoh 12 token IDs:&quot;, encoded.train_tokens[0, :12])
+        print(&quot;PAD ID 0; embedding frozen; dimensi:&quot;, config.embedding_dim)
+    display(trace.record(&quot;06 Embedding&quot;, f&quot;{len(split.train)} ulasan train&quot;, &quot;FastText train-only, satu kali per seed&quot;, f&quot;{len(encoded_by_seed)} embedding beku&quot;))
+else:
+    print(&quot;RUN_DEEP=False: embedding/BiLSTM dilewati; bukan eksperimen arsitektur lengkap.&quot;)</pre>
+<pre>Seed 42: token train=(1168, 64); embedding=(3381, 80)
+Contoh 12 token IDs: [ 1  2  3  4  5  6  7  8  9 10 11 12]
+PAD ID 0; embedding frozen; dimensi: 80
+Seed 43: token train=(1168, 64); embedding=(3381, 80)
+Contoh 12 token IDs: [ 1  2  3  4  5  6  7  8  9 10 11 12]
+PAD ID 0; embedding frozen; dimensi: 80
+Seed 44: token train=(1168, 64); embedding=(3381, 80)
+Contoh 12 token IDs: [ 1  2  3  4  5  6  7  8  9 10 11 12]
+PAD ID 0; embedding frozen; dimensi: 80
+</pre>
+</section>
+<section id="selasa"><h2>Selasa — Uji variasi kata/OOV belum tersimpan</h2><p class="note">Notebook unggahan tidak menampilkan uji kata berimbuhan, variasi ejaan, atau pembuktian OOV. Output token IDs atau shape embedding bukan pengganti bukti tersebut.</p><p>Jika ZIP hasil run masih tersedia, diperlukan models/seed_42/fasttext.model dan seluruh file pendampingnya. Model dapat dibaca untuk pengujian tanpa melatih ulang. Jika bobot model sudah hilang, uji ini belum dapat direkonstruksi hanya dari notebook.</p></section>
+<section id="rabu"><h2>Rabu — Urutan token dan matriks embedding</h2><p>Screenshot output asli di bawah: token train, shape embedding, contoh token IDs, dan PAD ID. Output sudah tersimpan dan tidak perlu dijalankan lagi.</p>
+<pre>Seed 42: token train=(1168, 64); embedding=(3381, 80)
+Contoh 12 token IDs: [ 1  2  3  4  5  6  7  8  9 10 11 12]
+PAD ID 0; embedding frozen; dimensi: 80
+Seed 43: token train=(1168, 64); embedding=(3381, 80)
+Contoh 12 token IDs: [ 1  2  3  4  5  6  7  8  9 10 11 12]
+PAD ID 0; embedding frozen; dimensi: 80
+Seed 44: token train=(1168, 64); embedding=(3381, 80)
+Contoh 12 token IDs: [ 1  2  3  4  5  6  7  8  9 10 11 12]
+PAD ID 0; embedding frozen; dimensi: 80
+</pre>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>section</th>
+      <th>input</th>
+      <th>proses</th>
+      <th>output</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4</th>
+      <td>06 Embedding</td>
+      <td>1168 ulasan train</td>
+      <td>FastText train-only, satu kali per seed</td>
+      <td>3 embedding beku</td>
+    </tr>
+  </tbody>
+</table>
+
+</section>
+<section id="kamis"><h2>Kamis — Fitur LDA dan kesesuaian urutan ID</h2><p>Screenshot output bentuk fitur LDA sebagai dokumentasi penyiapan fitur.</p>
+<pre>K terpilih dari run ini: 2
+Bentuk fitur LDA: (1168, 2) (268, 2) (426, 2)
+</pre>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>section</th>
+      <th>input</th>
+      <th>proses</th>
+      <th>output</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>04 LDA</td>
+      <td>train=1168, validation=268</td>
+      <td>fit count/LDA di train; seleksi validation</td>
+      <td>K=2; theta=(1168, 2)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="note">Output di atas menunjukkan jumlah baris/dimensi, bukan pemeriksaan kesamaan urutan ID dengan FastText. Log pengecekan ID secara eksplisit belum tampil dalam notebook unggahan. Jangan menyimpulkan ID sudah cocok hanya karena kedua fitur memiliki 1.168 baris. CSV distribusi topik dokumen latih juga berasal dari sampel LDA; bukan otomatis fitur full train dalam urutan FastText.</p></section>
+<section id="jumat"><h2>Jumat — Konfigurasi dan skenario model</h2><p>Screenshot konfigurasi pada blok Senin, output K terpilih, dan kode berikut yang memanggil model pembanding, LDA saja, serta varian BiLSTM. Skenario: LDA + regresi logistik, FastText–BiLSTM, dan FastText + LDA–BiLSTM. Jangan menyebut ketiganya memakai arsitektur classifier yang sama.</p>
+<pre>K terpilih dari run ini: 2
+Bentuk fitur LDA: (1168, 2) (268, 2) (426, 2)
+</pre>
+<h3>Kode asli sel</h3><pre>from wisata_madura.modeling import run_baselines, run_lda_only, evaluate_classifiers
+
+predictions_by_seed = {SEED: run_baselines(split, seed=SEED)}
+predictions_by_seed[SEED].update(run_lda_only(split, topics, seed=SEED))
+history_frames = []
+if RUN_DEEP:
+    for training_seed in training_seeds:
+        seed_dir = OUTPUT_DIR / &quot;models&quot; / f&quot;seed_{training_seed}&quot;
+        deep_predictions, history = run_bilstm_variants(
+            split, topics, encoded_by_seed[training_seed], deep_configs[training_seed], seed_dir)
+        predictions_by_seed.setdefault(training_seed, {}).update(deep_predictions)
+        history.assign(seed=training_seed).to_csv(seed_dir / &quot;riwayat_bilstm.csv&quot;, index=False)
+        plot_training_history(history, seed_dir)
+        history_frames.append(history.assign(seed=training_seed))
+        display(pd.read_csv(seed_dir / &quot;checkpoint_bilstm.csv&quot;))
+        display(Image(filename=str(seed_dir / &quot;kurva_bilstm.png&quot;)))
+    all_history = pd.concat(history_frames, ignore_index=True)
+    all_history.to_csv(OUTPUT_DIR / &quot;riwayat_bilstm_semua_seed.csv&quot;, index=False)
+display(trace.record(&quot;07 Modeling&quot;, &quot;LDA + embedding + label train/validation&quot;, &quot;fit classifier, early stopping validation&quot;, f&quot;seed/model: { {seed: list(p) for seed,p in predictions_by_seed.items()} }&quot;))</pre>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>section</th>
+      <th>input</th>
+      <th>proses</th>
+      <th>output</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5</th>
+      <td>07 Modeling</td>
+      <td>LDA + embedding + label train/validation</td>
+      <td>fit classifier, early stopping validation</td>
+      <td>seed/model: {42: ['mayoritas', 'tfidf_linear_s...</td>
+    </tr>
+  </tbody>
+</table>
+
+</section>
+<p>Tanggal run 12 November 2026; tanggal dokumentasi/pemeriksaan diisi sesuai realisasi. Hasil ini merupakan tindak lanjut jika dikaitkan dengan tanggal Oktober pada logbook.</p></html>
