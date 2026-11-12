@@ -1,0 +1,71 @@
+{
+  "scope": "Uji tambahan tokenisasi/stopword; bukan pelatihan ulang atau output asli notebook",
+  "source_commit": "722d07a23376e2f0407425cac22ceb469e9eb429",
+  "source_workbook_sha256": "09c6127d532bbf8e08e1be79e29795b080a07acd89039b6f29b5e2314a94fea4",
+  "token_pattern": "(?u)\\b[^\\W\\d_]{2,}\\b",
+  "examples": [
+    [
+      15,
+      "Air Terjun Toroan",
+      "destinasi wisata unik bagi utara pulau madura air terjun laut cocok tempat hunting sunset cuma air laut sangat kotor pakai main anak kurang th apa mungkin waktu tentu harga",
+      "destinasi | wisata | unik | bagi | utara | pulau | madura | air | terjun | laut | cocok | tempat | hunting | sunset | cuma | air | laut | sangat | kotor | pakai | main | anak | kurang | th | apa | mungkin | waktu | tentu | harga",
+      "destinasi | wisata | unik | utara | pulau | madura | air | terjun | laut | cocok | tempat | hunting | sunset | cuma | air | laut | kotor | pakai | main | anak | kurang | th | apa | mungkin | waktu | tentu | harga",
+      "kurang",
+      "Tetap ada pada tokenisasi sebelum penyaringan vocabulary"
+    ],
+    [
+      81,
+      "Alun Alun Bangkalan",
+      "alun alun tempat refresing tengah kota bangkal pohon besar rindang design taman cantik bikin alun alun bangkal makin cantikuntuk sampah unjung sadar sepenuh sampah buang tempat bukan",
+      "alun | alun | tempat | refresing | tengah | kota | bangkal | pohon | besar | rindang | design | taman | cantik | bikin | alun | alun | bangkal | makin | cantikuntuk | sampah | unjung | sadar | sepenuh | sampah | buang | tempat | bukan",
+      "alun | alun | tempat | refresing | tengah | kota | bangkal | pohon | besar | rindang | design | taman | cantik | bikin | alun | alun | bangkal | makin | cantikuntuk | sampah | unjung | sadar | sepenuh | sampah | buang | tempat | bukan",
+      "bukan",
+      "Tetap ada pada tokenisasi sebelum penyaringan vocabulary"
+    ],
+    [
+      980,
+      "Asta Tinggi",
+      "asta tinggi tempat makam raja raja belum juang tahan buah raja belah barat kota sumenep",
+      "asta | tinggi | tempat | makam | raja | raja | belum | juang | tahan | buah | raja | belah | barat | kota | sumenep",
+      "asta | tinggi | tempat | makam | raja | raja | belum | juang | tahan | buah | raja | belah | barat | kota | sumenep",
+      "belum",
+      "Tetap ada pada tokenisasi sebelum penyaringan vocabulary"
+    ],
+    [
+      10,
+      "Air Terjun Toroan",
+      "baguuuussss blm banyak jangkau orang salah satu tempat wisata daerah sampang madura pandang cantik jangan coba renang yaaa atas tempat makan karaoke lupa foto",
+      "baguuuussss | blm | banyak | jangkau | orang | salah | satu | tempat | wisata | daerah | sampang | madura | pandang | cantik | jangan | coba | renang | yaaa | atas | tempat | makan | karaoke | lupa | foto",
+      "baguuuussss | blm | banyak | jangkau | orang | salah | satu | tempat | wisata | daerah | sampang | madura | pandang | cantik | jangan | coba | renang | yaaa | tempat | makan | karaoke | lupa | foto",
+      "jangan",
+      "Tetap ada pada tokenisasi sebelum penyaringan vocabulary"
+    ]
+  ],
+  "stopword_checks": [
+    {
+      "Kata": "tidak",
+      "Masuk_stopword": "Tidak",
+      "Aturan": "Dipertahankan oleh aturan stopword"
+    },
+    {
+      "Kata": "kurang",
+      "Masuk_stopword": "Tidak",
+      "Aturan": "Dipertahankan oleh aturan stopword"
+    },
+    {
+      "Kata": "bukan",
+      "Masuk_stopword": "Tidak",
+      "Aturan": "Dipertahankan oleh aturan stopword"
+    },
+    {
+      "Kata": "belum",
+      "Masuk_stopword": "Tidak",
+      "Aturan": "Dipertahankan oleh aturan stopword"
+    },
+    {
+      "Kata": "jangan",
+      "Masuk_stopword": "Tidak",
+      "Aturan": "Dipertahankan oleh aturan stopword"
+    }
+  ]
+}
