@@ -3,7 +3,7 @@
 ## Jalankan sendiri
 Buka `notebooks/Colab_Audit_Wisata_Madura_Otomatis.ipynb` di Colab. Biarkan `DATA_PATH=None`. Dataset bawaan tetap dimuat otomatis; tidak perlu upload Excel atau mengetik dataset. Pilih runtime GPU untuk `RUN_DEEP=True` (default), lalu Run all. `RUN_DEEP=False` melewati deep learning, tetapi tetap menjalankan seluruh analisis LDA dan baseline. `RUN_BGE=False` secara default.
 
-ZIP ini berisi folder `data/`, `src/`, `notebooks/`, `docs/`, `tests/`, requirements, serta hasil run. Ekstrak utuh untuk penggunaan lokal; gunakan Python >=3.10 dan kernel virtualenv. Notebook otomatis memasang dependensi. Di Colab, notebook dapat mengambil kode dan data dari branch GitHub jika belum ada folder lokal v2. Restart kernel setelah pernah memuat modul versi lama.
+Repo ini berisi folder `data/`, `src/`, `notebooks/`, `docs/`, `tests/`, requirements, serta hasil run. Clone repo untuk penggunaan lokal; gunakan Python >=3.10 dan kernel virtualenv. Notebook otomatis memasang dependensi. Di Colab, notebook dapat mengambil kode dan data dari branch GitHub jika belum ada folder lokal v2. Restart kernel setelah pernah memuat modul versi lama.
 
 ## Perbaikan dan paper
 Baca `docs/METODOLOGI_DAN_PAPER.md`: setiap keputusan dan parameter memiliki rujukan fondasi serta penjelasan adaptasi/pilihan lokal. Tidak semua full text bisa diakses dalam lingkungan ini; cakupan pemeriksaan sumber dinyatakan. Angka parameter tidak diklaim diwajibkan atau terbukti optimal oleh paper.
@@ -17,6 +17,6 @@ Notebook `Colab_Wisata_v2_Dijalankan.ipynb` memuat output run aktual. Pada mesin
 - Lima tes regresi lulus, termasuk pemeriksaan bahwa perubahan test tidak mengubah pemilihan K/kosakata dan prediksi sesuai checkpoint terbaik yang tersimpan.
 - Tidak menjalankan BGE karena default False; tidak ada evaluasi rekomendasi yang diklaim.
 
-Lihat hasil asli di `hasil-run/`. Model/vectorizer LDA disertakan. Bobot FastText/BiLSTM dan embedding besar tetap tersimpan pada mesin run, dan otomatis dibuat ulang pada folder `models/` ketika menjalankan notebook; tidak disertakan dalam ZIP ini. Berkas `.joblib` hanya dimuat jika berasal dari sumber tepercaya.
+Lihat hasil asli di `hasil-run/`. Model/vectorizer LDA disertakan. Bobot FastText/BiLSTM dan embedding besar tetap tersimpan pada mesin run, dan otomatis dibuat ulang pada folder `models/` ketika menjalankan notebook; tidak disertakan dalam repo. Berkas `.joblib` hanya dimuat jika berasal dari sumber tepercaya.
 
 Data masih bercampur wilayah; tanpa verifikasi jangan mengklaim hasil khusus Madura. Sentimen dan waktu kunjungan belum tersedia. Jumlah topik bukan jumlah kelas jenis wisata. Perbandingan v1-v2 bukan eksperimen terkontrol karena train v2 lebih kecil akibat validation.

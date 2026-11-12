@@ -9,7 +9,7 @@ Pilih **Create app → Deploy a public app from GitHub**, lalu isi:
 | Field | Nilai |
 |---|---|
 | Repository | `MalikHariyanto/crispy_recom_machine_system` |
-| Branch | `feat/streamlit-wisata` |
+| Branch | `main` |
 | Main file path | `app.py` |
 | Python version (Advanced settings) | `3.11` |
 

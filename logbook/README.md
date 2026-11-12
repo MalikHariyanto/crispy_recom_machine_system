@@ -1,7 +1,5 @@
-# Logbook minggu 1–12
+# Logbook terbaru
 
-Seluruh panduan rekomendasi gambar sudah dimasukkan langsung pada kolom **Bukti Dokumentasi/Foto** di setiap hari pada file Word dan PDF: rekomendasi gambar, sumber bahan, hal yang perlu terlihat, tanggal aktual, dan caption/nama file. Tidak perlu membuka panduan terpisah.
+Folder `mingguan/` berisi satu set Word minggu 1–12 dari revisi dokumentasi terakhir. Paraf dan tanda tangan yang sudah ada dipertahankan. Minggu 2 mencakup lampiran ilustrasi konsep; tanggal aktual tetap diisi sesuai pelaksanaan.
 
-[Download ZIP Word + PDF minggu 1–12](https://github.com/MalikHariyanto/crispy_recom_machine_system/raw/refs/heads/research/audit-wisata-madura/logbook/Logbook_Malik_Hariyanto_Minggu_01-12.zip) · [File per minggu](mingguan/)
-
-Gambar/foto aktual diisi penulis sesuai pelaksanaan. Folder `arsip/` adalah templat lama 16 minggu; gunakan `mingguan/` untuk revisi aktif.
+Folder `dokumentasi/` berisi visual dan referensi pendukung. Gambar konsep bukan bukti hasil pelatihan. File PDF dan ZIP lama dihapus agar tidak tertukar dengan Word terbaru.

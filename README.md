@@ -1,20 +1,35 @@
-## Dokumen dan hasil penelitian
-
-- [Laporan akhir — revisi HKI (Word)](deliverables/revisi-hki/Laporan_Akhir_Malik_Hariyanto_Revisi_HKI.docx)
-- [Laporan akhir (Word)](reports/Laporan_Akhir_Malik_Hariyanto.docx) · [PDF](reports/Laporan_Akhir_Malik_Hariyanto.pdf)
-- [Laporan kemajuan](reports/)
-- [Logbook 1–12 dengan dokumentasi terisi sebagian (ZIP)](deliverables/logbook/Logbook_01-12_Dokumentasi_Terisi_Sebagian.zip)
-- [Logbook dengan paraf dan tanda tangan (ZIP)](logbook/Logbook_01-12_Paraf_TTD.zip)
-- [Kode, notebook dan hasil eksperimen LDA v2](deliverables/lda-v2/)
-- [Paper](papers/) · [Referensi](references/) · [Dokumentasi metode](docs/METODOLOGI_DAN_PAPER.md)
-
 # Rekomendasi wisata Madura
+
+## Dokumen terbaru
+
+- [Laporan akhir terbaru (Word)](reports/Laporan_Akhir_Malik_Hariyanto.docx) — file unggahan pengguna; isi dipertahankan tanpa perubahan. Belum tersedia PDF yang sesuai dengan revisi ini.
+- [Laporan kemajuan](reports/Laporan_Kemajuan_Malik_Hariyanto.docx)
+- [Logbook minggu 1–12 (Word)](logbook/mingguan/) · [Dokumentasi dan referensi](logbook/dokumentasi/)
+- [Paper terbaru](papers/Artikel_Rekomendasi_Wisata_dengan_Referensi.docx) · [Referensi](references/)
+- [Notebook aktif](notebooks/Colab_Audit_Wisata_Madura_Otomatis.ipynb) · [Hasil run penelitian](deliverables/lda-v2/)
+
+## Susunan folder
+
+| Folder | Isi |
+|---|---|
+| `reports/` | Laporan akhir terbaru, laporan kemajuan, dan lampiran luaran |
+| `logbook/` | Satu set Word mingguan terbaru dan dokumentasi pendukung |
+| `papers/` | Paper terbaru dan catatan kebutuhan paper |
+| `references/` | Hasil penelusuran dan matriks referensi |
+| `notebooks/` | Notebook aktif untuk menjalankan pipeline |
+| `deliverables/lda-v2/` | Notebook dengan output tersimpan, audit, metrik, dan model hasil run |
+| `data/` | Dataset aktif, workbook sumber, dan manifest |
+| `src/`, `tests/`, `scripts/` | Implementasi, pengujian, dan pembentukan paket data |
+| `docs/` | Panduan metode dan aplikasi |
+
+Hasil run tersimpan berasal dari dataset lama pada 11 November 2026; hasil tersebut bukan evaluasi ulang dataset aktif. Versi lama yang sudah diganti dan paket ZIP duplikat dihapus dari tampilan aktif repo; riwayat Git tetap menyimpannya.
+
 
 ## Aplikasi Streamlit — Madura Explore
 
 Antarmuka web untuk pencarian rekomendasi, katalog destinasi, insight dataset, dan verifikasi wilayah. Jalankan `pip install -r requirements.txt` lalu `streamlit run app.py`.
 
-**Deploy Streamlit Cloud:** repository `MalikHariyanto/crispy_recom_machine_system`, branch `feat/streamlit-wisata`, main file `app.py`, Python **3.11**. [Panduan deployment dan arsitektur](docs/STREAMLIT.md).
+**Deploy Streamlit Cloud:** repository `MalikHariyanto/crispy_recom_machine_system`, branch `main`, main file `app.py`, Python **3.11**. [Panduan deployment dan arsitektur](docs/STREAMLIT.md).
 
 Pencarian default memakai TF-IDF yang ringan; BGE-M3 opsional. Dataset masih mencakup lokasi di luar Madura sehingga aplikasi menyediakan CSV verifikasi wilayah. Pelatihan dan evaluasi riset tetap dilakukan melalui notebook di bawah.
 
@@ -75,7 +90,7 @@ Perbandingan FastText saja dan FastText + LDA mempertahankan arsitektur urutan. 
 
 ## Versi 2 — analisis LDA dan validasi pelatihan
 
-Gunakan notebook pada `notebooks/Colab_Audit_Wisata_Madura_Otomatis.ipynb` untuk kode terbaru. Berkas dalam `deliverables/revisi-hki/` adalah arsip pengiriman v1; paket terbaru ada pada `deliverables/lda-v2/`. `DATA_PATH=None` tetap memuat seluruh dataset otomatis, tanpa Excel/manual.
+Gunakan notebook pada `notebooks/Colab_Audit_Wisata_Madura_Otomatis.ipynb` untuk kode terbaru. Hasil run terdokumentasi ada pada `deliverables/lda-v2/`. `DATA_PATH=None` tetap memuat seluruh dataset otomatis, tanpa Excel/manual.
 
 Perubahan v2:
 - Train/validation/test dipisahkan per destinasi, dengan pemeriksaan ID dan teks identik. Semua model belajar dari train yang sama.
