@@ -2,8 +2,9 @@
 
 ## Dokumen terbaru
 
-- [Laporan akhir terbaru (Word)](reports/Laporan_Akhir_Malik_Hariyanto.docx) — file unggahan pengguna; isi dipertahankan tanpa perubahan. Belum tersedia PDF yang sesuai dengan revisi ini.
+- [Laporan akhir terbaru (Word)](reports/Laporan_Akhir_Malik_Hariyanto.docx) — file unggahan pengguna; diperbarui dari unggahan pengguna. Bagian 2.1.5 memuat alur metode serta tabel data, label, protokol, dan hasil evaluasi lanjutan.
 - [Laporan kemajuan](reports/Laporan_Kemajuan_Malik_Hariyanto.docx)
+- [Diagram alur penelitian](reports/figures/Alur_Penelitian_LDA_FastText_BiLSTM.png) · [Dokumentasi Jumat minggu 2](logbook/dokumentasi/M02-D05_Alur_Data_Label_Evaluasi.docx)
 - [Logbook minggu 1–12 (Word)](logbook/mingguan/) · [Dokumentasi dan referensi](logbook/dokumentasi/)
 - [Paper terbaru](papers/Artikel_Rekomendasi_Wisata_dengan_Referensi.docx) · [Referensi](references/)
 - [Notebook aktif](notebooks/Colab_Audit_Wisata_Madura_Otomatis.ipynb) · [Hasil run penelitian](deliverables/lda-v2/)
