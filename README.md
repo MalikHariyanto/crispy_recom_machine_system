@@ -1,3 +1,13 @@
+## Dokumen dan hasil penelitian
+
+- [Laporan akhir — revisi HKI (Word)](deliverables/revisi-hki/Laporan_Akhir_Malik_Hariyanto_Revisi_HKI.docx)
+- [Laporan akhir (Word)](reports/Laporan_Akhir_Malik_Hariyanto.docx) · [PDF](reports/Laporan_Akhir_Malik_Hariyanto.pdf)
+- [Laporan kemajuan](reports/)
+- [Logbook 1–12 dengan dokumentasi terisi sebagian (ZIP)](deliverables/logbook/Logbook_01-12_Dokumentasi_Terisi_Sebagian.zip)
+- [Logbook dengan paraf dan tanda tangan (ZIP)](logbook/Logbook_01-12_Paraf_TTD.zip)
+- [Kode, notebook dan hasil eksperimen LDA v2](deliverables/lda-v2/)
+- [Paper](papers/) · [Referensi](references/) · [Dokumentasi metode](docs/METODOLOGI_DAN_PAPER.md)
+
 # Rekomendasi wisata Madura
 
 ## Aplikasi Streamlit — Madura Explore
