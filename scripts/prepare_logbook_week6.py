@@ -33,6 +33,10 @@ def build():
    rows.append([idx+2,str(data.loc[idx,'destinasi']),text,' | '.join(raw_tokenize(text)),' | '.join(tokens),neg,'Tetap ada pada tokenisasi sebelum penyaringan vocabulary'])
    break
  # Keep examples honest when the source contains no example for a specific word.
+ control_text='Tempat ini tidak bersih dan fasilitasnya kurang terawat.'
+ control_tokens=analyze(control_text)
+ assert 'tidak' in control_tokens and 'kurang' in control_tokens
+ control=pd.DataFrame([[control_text,' | '.join(control_tokens),'Input buatan untuk uji kontrol; bukan ulasan penelitian','tidak dan kurang tetap ada']],columns=['Input_kontrol','Token_sesudah_stopword','Asal','Hasil'])
  mono=pd.DataFrame(rows,columns=['Baris_Excel','Destinasi','Teks_model_sumber','Token_sebelum_stopword','Token_sesudah_stopword','Negasi_diperiksa','Hasil'])
  check=pd.DataFrame([[w,'Tidak' if w not in stop else 'Ya','Dipertahankan oleh aturan stopword'] for w in ['tidak','kurang','bukan','belum','jangan']],columns=['Kata','Masuk_stopword','Aturan'])
  stem=pd.DataFrame([['Status','Run v3 tidak menampilkan uji stemming baru. Belum ada tabel hasil sebelum/sesudah stemming yang dapat dijadikan bukti.'],['Bahan sumber','text_original dan text_preprocessed tersedia, tetapi perbedaan kedua kolom tidak membuktikan stemming telah diuji ulang.'],['Tindakan','Jalankan uji stemming terpisah bila tetap diperlukan; catat library, aturan, tanggal dan output aktual.'],['Hasil uji','Belum tersedia; dokumentasi belum boleh ditulis sebagai hasil pengujian selesai.']],columns=['Bagian','Keterangan'])
@@ -65,7 +69,7 @@ def build():
  ['Status Jumat','Label wisata tersedia; pedoman sentimen hanya rancangan, belum dataset sentimen tervalidasi.'],
  ['Tanggal logbook','Isi tanggal aktual kegiatan; hasil run 12 November bukan bukti pelaksanaan pada September.']
  ],columns=['Bagian','Keterangan'])
- frames={'Panduan':info,'Senin_Tokenisasi':mono,'Senin_Negasi':check,'Selasa_Stemming':stem,'Rabu_Tanggal':dates,'Kamis_Konteks':context,'Jumat_Jenis_Wisata':label,'Jumat_Sentimen':sentiment}
+ frames={'Panduan':info,'Senin_Tokenisasi':mono,'Senin_Negasi':check,'Senin_Uji_Kontrol':control,'Selasa_Stemming':stem,'Rabu_Tanggal':dates,'Kamis_Konteks':context,'Jumat_Jenis_Wisata':label,'Jumat_Sentimen':sentiment}
  p=OUT/'Dokumentasi_Minggu_06.xlsx'
  with pd.ExcelWriter(p,engine='openpyxl') as writer:
   for name,frame in frames.items():frame.to_excel(writer,sheet_name=name,index=False)
@@ -87,6 +91,6 @@ def build():
    s.column_dimensions[get_column_letter(i)].width=width
   s.page_setup.orientation='landscape';s.sheet_properties.pageSetUpPr.fitToPage=True;s.page_setup.fitToWidth=1;s.page_setup.fitToHeight=0;s.print_title_rows='1:1'
  w.save(p)
- (OUT/'uji_tokenisasi.json').write_text(json.dumps({'scope':'Uji tambahan tokenisasi/stopword; bukan pelatihan ulang atau output asli notebook','source_commit':COMMIT,'source_workbook_sha256':hashlib.sha256(data_path.read_bytes()).hexdigest(),'token_pattern':pattern,'examples':rows,'stopword_checks':check.to_dict(orient='records')},ensure_ascii=False,indent=2))
+ (OUT/'uji_tokenisasi.json').write_text(json.dumps({'scope':'Uji tambahan tokenisasi/stopword; bukan pelatihan ulang atau output asli notebook','source_commit':COMMIT,'source_workbook_sha256':hashlib.sha256(data_path.read_bytes()).hexdigest(),'token_pattern':pattern,'examples':rows,'controlled_input':control.to_dict(orient='records'),'stopword_checks':check.to_dict(orient='records')},ensure_ascii=False,indent=2))
  print('Workbook minggu 6 dibuat. Contoh tokenisasi aktual:',len(rows),'kategori wisata:',len(label))
 if __name__=='__main__':build()

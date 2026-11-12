@@ -41,6 +41,14 @@
       "Tetap ada pada tokenisasi sebelum penyaringan vocabulary"
     ]
   ],
+  "controlled_input": [
+    {
+      "Input_kontrol": "Tempat ini tidak bersih dan fasilitasnya kurang terawat.",
+      "Token_sesudah_stopword": "tempat | tidak | bersih | fasilitasnya | kurang | terawat",
+      "Asal": "Input buatan untuk uji kontrol; bukan ulasan penelitian",
+      "Hasil": "tidak dan kurang tetap ada"
+    }
+  ],
   "stopword_checks": [
     {
       "Kata": "tidak",

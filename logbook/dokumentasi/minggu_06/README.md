@@ -4,7 +4,7 @@
 
 | Hari | Sheet Excel | Yang di-screenshot | Status |
 |---|---|---|---|
-| Senin | Senin_Tokenisasi; Senin_Negasi | Teks model, token sesudah stopword, dan kata negasi | Uji tambahan dijalankan 12 November 2026 dengan aturan kode rujukan run v3 |
+| Senin | Senin_Tokenisasi; Senin_Negasi; Senin_Uji_Kontrol | Teks model, token sesudah stopword, dan kata negasi | Uji tambahan dijalankan 12 November 2026 dengan aturan kode rujukan run v3 |
 | Selasa | Selasa_Stemming | Status dan kebutuhan uji; belum ada hasil sebelum/sesudah | Stemming belum dijalankan; jangan dianggap dokumentasi uji selesai |
 | Rabu | Rabu_Tanggal | Nilai date dari sampel sumber dan catatan kebutuhan waktu absolut | Audit notebook v3 mencatat 2.058 tanggal relatif; sampel berasal dari workbook aktif |
 | Kamis | Kamis_Konteks | Perbedaan atribut cuaca, musim kunjungan, periode libur | Label cuaca tersedia; asal anotasi belum terverifikasi |
@@ -14,7 +14,7 @@ Gunakan tanggal aktual pemeriksaan. Rujukan run v3 adalah 12 November 2026; jang
 
 ## Asal uji Senin
 
-Skrip `scripts/prepare_logbook_week6.py` mengambil aturan stopword dan token_pattern dari `src/wisata_madura/topics.py` pada commit sumber notebook `722d07a23376e2f0407425cac22ceb469e9eb429`. Contoh memakai kolom text_preprocessed dari workbook aktif, dinormalisasi sesuai aturan teks model, lalu diuji dengan analyzer CountVectorizer. Ini pemeriksaan tambahan, bukan output token kata yang tertanam di notebook dan bukan run ulang model. Empat contoh aktual tersedia untuk kata tidak/kurang/bukan/belum; aturan jangan juga diperiksa pada stoplist, tanpa mengarang contoh jika tidak ditemukan.
+Skrip `scripts/prepare_logbook_week6.py` mengambil aturan stopword dan token_pattern dari `src/wisata_madura/topics.py` pada commit sumber notebook `722d07a23376e2f0407425cac22ceb469e9eb429`. Contoh memakai kolom text_preprocessed dari workbook aktif, dinormalisasi sesuai aturan teks model, lalu diuji dengan analyzer CountVectorizer. Ini pemeriksaan tambahan, bukan output token kata yang tertanam di notebook dan bukan run ulang model. Empat contoh aktual tersedia untuk kata kurang/bukan/belum/jangan. Kata tidak tidak ditemukan pada teks model sumber. Sheet Senin_Uji_Kontrol menjalankan input buatan yang ditandai jelas, untuk membuktikan aturan tokenisasi mempertahankan tidak dan kurang; input itu bukan ulasan penelitian. Aturan ini tidak mengembalikan negasi yang sudah hilang pada praproses sumber.
 
 Kata yang lolos tokenisasi/stopword masih dapat tersaring saat vocabulary di-fit dengan min_df, max_df, atau max_features. Pemeriksaan tidak menyatakan seluruh negasi dari teks asli tetap ada setelah seluruh praproses sumber. Stoplist tambahan hanya berlaku pada LDA.
 
