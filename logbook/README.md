@@ -1,5 +1,7 @@
 # Logbook terbaru
 
-Folder `mingguan/` berisi satu set Word minggu 1–12 dari revisi dokumentasi terakhir. Paraf dan tanda tangan yang sudah ada dipertahankan. Minggu 2 mencakup lampiran ilustrasi konsep; tanggal aktual tetap diisi sesuai pelaksanaan.
+Folder `mingguan/` berisi 12 Word berdasarkan unggahan pengguna `Word.zip` terbaru. Isi, gambar, paraf, dan tanda tangan dari unggahan dipertahankan.
 
-Folder `dokumentasi/` berisi visual dan referensi pendukung. Gambar konsep bukan bukti hasil pelatihan. File PDF dan ZIP lama dihapus agar tidak tertukar dengan Word terbaru.
+Setiap minggu ditambahkan lembar **Catatan Pertemuan / Bimbingan** dengan pilihan hari Rabu/Kamis, moda online/offline, tanggal aktual, peserta, hasil pembahasan, tindak lanjut, dan tempat dokumentasi. Kolom realisasi masih kosong; fokus pembahasan merupakan bahan yang disesuaikan dengan pertemuan sebenarnya.
+
+Folder `dokumentasi/` berisi bahan pendukung yang dibuat sebelumnya, termasuk alur penelitian dan tabel data, label, serta evaluasi. Dokumen tersebut dapat dipakai sebagai bahan bimbingan, bukan bukti tanggal pertemuan.
