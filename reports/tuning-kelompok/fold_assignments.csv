@@ -1,0 +1,28 @@
+id_destinasi,rekomendasi_cuaca,wisata,validation_fold,train_only
+107,Kemarau & Penghujan,religi,2,False
+108,Kemarau & Penghujan,sejarah,0,False
+115,Kemarau & Penghujan,sejarah,1,False
+123,Kemarau & Penghujan,pantai,1,False
+129,Kemarau & Penghujan,pantai,0,False
+131,Kemarau,pantai,0,False
+142,Kemarau,pantai,1,False
+147,Kemarau,pantai,0,False
+148,Kemarau,pantai,1,False
+152,Kemarau & Penghujan,pantai,2,False
+157,Kemarau & Penghujan,pantai,1,False
+160,Kemarau,pantai,2,False
+168,Kemarau,pegunungan,1,False
+181,Kemarau,religi,0,False
+183,Kemarau & Penghujan,taman,2,False
+19,Kemarau & Penghujan,air terjun,-1,True
+197,Kemarau & Penghujan,pantai,2,False
+21,Kemarau,taman,1,False
+23,Kemarau,lainnya,-1,True
+24,Kemarau,religi,1,False
+29,Kemarau,pegunungan,0,False
+30,Kemarau,pegunungan,0,False
+34,Kemarau,pegunungan,2,False
+55,Kemarau,pantai,0,False
+56,Kemarau,pantai,2,False
+73,Kemarau & Penghujan,hutan/perkebunan,-1,True
+78,Kemarau & Penghujan,sejarah,2,False

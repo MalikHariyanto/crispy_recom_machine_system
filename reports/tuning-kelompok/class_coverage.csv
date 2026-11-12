@@ -1,0 +1,31 @@
+fold,target,kelas,train_destinasi,validation_destinasi
+0,rekomendasi_cuaca,Kemarau,9,6
+0,rekomendasi_cuaca,Kemarau & Penghujan,10,2
+0,wisata,air terjun,1,0
+0,wisata,hutan/perkebunan,1,0
+0,wisata,lainnya,1,0
+0,wisata,pantai,8,4
+0,wisata,pegunungan,2,2
+0,wisata,religi,2,1
+0,wisata,sejarah,2,1
+0,wisata,taman,2,0
+1,rekomendasi_cuaca,Kemarau,10,5
+1,rekomendasi_cuaca,Kemarau & Penghujan,9,3
+1,wisata,air terjun,1,0
+1,wisata,hutan/perkebunan,1,0
+1,wisata,lainnya,1,0
+1,wisata,pantai,8,4
+1,wisata,pegunungan,3,1
+1,wisata,religi,2,1
+1,wisata,sejarah,2,1
+1,wisata,taman,1,1
+2,rekomendasi_cuaca,Kemarau,12,3
+2,rekomendasi_cuaca,Kemarau & Penghujan,7,5
+2,wisata,air terjun,1,0
+2,wisata,hutan/perkebunan,1,0
+2,wisata,lainnya,1,0
+2,wisata,pantai,8,4
+2,wisata,pegunungan,3,1
+2,wisata,religi,2,1
+2,wisata,sejarah,2,1
+2,wisata,taman,1,1

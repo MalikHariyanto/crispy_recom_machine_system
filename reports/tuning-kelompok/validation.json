@@ -1,0 +1,19 @@
+{
+  "full_search": "3 grouped folds, 2 training seeds, 4 candidates, 2 BiLSTM variants; completed on CPU",
+  "notebook": "all cells completed in smoke mode using preinstalled declared dependencies; pip step bypassed in local harness",
+  "tests_passed": 20,
+  "independent_evaluation": "pending new untouched destination data; no independent score",
+  "post_search_change": "selection output clarified to show stronger baseline separately; no retuning grid or model parameters",
+  "current_source_sha256": {
+    "topics.py": "3fe83cc71f1164be295b0ff2e56f4e5e04dafe660115bfbdb914855f11c30a71",
+    "tuning.py": "a271b28342d655f42cae5f90157a6cef0e6d0e4b8f6b06f1f494ebcd312dc171",
+    "neural.py": "028ae3b3100b677dcf40dc2785a03af8e441e4878cb52fd55d9e57ca692225b1",
+    "reporting.py": "89d3ff002fd30c92bbdb3207c1ccef58a15919446b6fc35a9b02e985c36dd1b5",
+    "__init__.py": "902825480b6d79ea87232ead56f1fb4bb81590e078a23ce35c14fedcafd55b3a",
+    "recommendation.py": "9521c62f635f7dc0fcb275de852022c0f5bf4d4ab37142419cd3aad648209e56",
+    "visualization.py": "8bf2ca2d1ead4e95c24d4b06e859116151a315d4a3959983e63e1a380f5859f8",
+    "data.py": "5c39432cb715d323b4c5befb4dfdf90bcc3a5d2d088d2faa75a2cd139afdc9a9",
+    "modeling.py": "620ce390d83d018c9af573aa2732c4c808dbf4b35a88b99de76c96e98018f2b9",
+    "protocol.py": "38bbcd8d590b57616f9f6d59bb296c4aa343a5638da6de4c0b50126de6f3dce6"
+  }
+}

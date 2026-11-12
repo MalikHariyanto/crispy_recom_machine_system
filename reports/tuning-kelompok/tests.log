@@ -1,0 +1,41 @@
+test_bundle_matches_latest_workbook (test_dataset_update.DatasetUpdateTests.test_bundle_matches_latest_workbook) ... ok
+test_legacy_sheet_and_ambiguous_workbook (test_dataset_update.DatasetUpdateTests.test_legacy_sheet_and_ambiguous_workbook) ... ok
+test_groups_texts_and_train_label_coverage (test_protocol_v3.ProtocolTests.test_groups_texts_and_train_label_coverage) ... ok
+test_metrics_include_absent_classes_and_show_support (test_protocol_v3.ProtocolTests.test_metrics_include_absent_classes_and_show_support) ... ok
+test_split_reproducible_and_does_not_use_rating (test_protocol_v3.ProtocolTests.test_split_reproducible_and_does_not_use_rating) ... ok
+test_weights_give_equal_total_mass_to_destinations (test_protocol_v3.ProtocolTests.test_weights_give_equal_total_mass_to_destinations) ... ok
+test_early_stop_restores_saved_checkpoint (test_research_pipeline.ResearchTests.test_early_stop_restores_saved_checkpoint) ... fasttext_bilstm | epoch 1/4 | train=0.7001 | validation=0.6990
+fasttext_bilstm | epoch 2/4 | train=0.6914 | validation=0.6989
+Early stopping; best epoch=1
+fasttext_lda_bilstm | epoch 1/4 | train=0.6662 | validation=0.7051
+fasttext_lda_bilstm | epoch 2/4 | train=0.7048 | validation=0.7050
+Early stopping; best epoch=1
+ok
+test_npmi_known_probabilities (test_research_pipeline.ResearchTests.test_npmi_known_probabilities) ... ok
+test_selection_and_vocabulary_do_not_read_test (test_research_pipeline.ResearchTests.test_selection_and_vocabulary_do_not_read_test) ... LDA K=2, seed=42: validation NPMI=-0.1010, perplexity=366.7
+LDA K=2, seed=43: validation NPMI=-0.1468, perplexity=371.2
+LDA K=3, seed=42: validation NPMI=-0.2955, perplexity=556.7
+LDA K=3, seed=43: validation NPMI=-0.2584, perplexity=551.4
+LDA K=2, seed=42: validation NPMI=-0.1010, perplexity=366.7
+LDA K=2, seed=43: validation NPMI=-0.1468, perplexity=371.2
+LDA K=3, seed=42: validation NPMI=-0.2955, perplexity=556.7
+LDA K=3, seed=43: validation NPMI=-0.2584, perplexity=551.4
+ok
+test_stability_ignores_topic_numbering (test_research_pipeline.ResearchTests.test_stability_ignores_topic_numbering) ... ok
+test_three_partitions_no_identity_or_text_overlap (test_research_pipeline.ResearchTests.test_three_partitions_no_identity_or_text_overlap) ... ok
+test_empty_and_unmatched_query (test_streamlit_app.StreamlitAppTests.test_empty_and_unmatched_query) ... 2026-11-12 13:26:40.387 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_navigation_and_live_search (test_streamlit_app.StreamlitAppTests.test_navigation_and_live_search) ... 2026-11-12 13:26:40.715 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_deep_selection_does_not_claim_to_beat_stronger_baseline (test_tuning.TuningTests.test_deep_selection_does_not_claim_to_beat_stronger_baseline) ... ok
+test_finetuning_does_not_mutate_shared_embedding_cache (test_tuning.TuningTests.test_finetuning_does_not_mutate_shared_embedding_cache) ... ok
+test_group_folds_no_overlap_and_unique_validation_groups (test_tuning.TuningTests.test_group_folds_no_overlap_and_unique_validation_groups) ... ok
+test_actual_workbook_charts_and_split (test_visualization.VisualizationTests.test_actual_workbook_charts_and_split) ... ok
+test_filters_respect_weather_and_literal_name (test_web_services.WebServicesTests.test_filters_respect_weather_and_literal_name) ... ok
+test_query_ranks_relevant_destination_and_drops_zero_overlap (test_web_services.WebServicesTests.test_query_ranks_relevant_destination_and_drops_zero_overlap) ... ok
+test_scope_and_history_cannot_leak_into_ranking (test_web_services.WebServicesTests.test_scope_and_history_cannot_leak_into_ranking) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 7.159s
+
+OK

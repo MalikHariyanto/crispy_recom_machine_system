@@ -1,0 +1,65 @@
+{
+  "candidates": [
+    {
+      "dropout": 0.2,
+      "embedding_dim": 80,
+      "freeze_embeddings": true,
+      "hidden_dim": 32,
+      "learning_rate": 0.001,
+      "length_quantile": 0.9,
+      "name": "compact"
+    },
+    {
+      "dropout": 0.3,
+      "embedding_dim": 128,
+      "freeze_embeddings": true,
+      "hidden_dim": 64,
+      "learning_rate": 0.001,
+      "length_quantile": 0.95,
+      "name": "wider"
+    },
+    {
+      "dropout": 0.4,
+      "embedding_dim": 128,
+      "freeze_embeddings": true,
+      "hidden_dim": 64,
+      "learning_rate": 0.0003,
+      "length_quantile": 0.95,
+      "name": "slower"
+    },
+    {
+      "dropout": 0.4,
+      "embedding_dim": 128,
+      "freeze_embeddings": false,
+      "hidden_dim": 64,
+      "learning_rate": 0.0003,
+      "length_quantile": 0.95,
+      "name": "finetune"
+    }
+  ],
+  "config": {
+    "fold_seed": 20261112,
+    "folds": 3,
+    "lda_iterations": 10,
+    "lda_seeds": [
+      42,
+      43
+    ],
+    "lda_topics": [
+      2,
+      4,
+      6
+    ],
+    "max_epochs": 15,
+    "patience": 3,
+    "training_seeds": [
+      42,
+      43
+    ]
+  },
+  "dataset_sha256": "1c745e414ab197412ab9c1108420998463e44cc05e55f3ee63c918c6ee35c6dc",
+  "objective": "mean destination macro-F1 across both targets, folds and declared seeds; tie by candidate order then model name",
+  "selection_bias": "validation reused for LDA selection, early stopping and hyperparameters; scores are optimistic selection diagnostics",
+  "singleton_policy": "train-only, never evidence of generalization",
+  "status": "exploratory development only; previous holdout already observed; no independent score"
+}

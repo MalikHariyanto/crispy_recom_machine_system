@@ -88,3 +88,9 @@ python scripts/build_dataset_bundle.py data/source/dataset_madura_bersih.xlsx
 Memerlukan dependensi riset termasuk openpyxl. Script mendukung sheet `Sheet1` tunggal maupun `Data Ulasan`, memvalidasi skema, menghitung audit/checksum, dan mengganti paket lama. Cache web memakai versi manifest.
 
 Berkas lama pada `deliverables/`, `reports/lampiran/`, dan laporan PDF/DOCX adalah artefak penelitian sebelumnya. Angka 79.514/207, split v2, dan hasil v1/v2 tidak otomatis menjadi hasil dataset/protokol v3. Jangan membandingkan perubahan skor sebagai efek arsitektur saja ketika split/pembobotan/definisi metrik berubah.
+
+## Tuning kelompok (eksplorasi)
+
+[Notebook tuning](notebooks/Colab_Tuning_Kelompok_Madura.ipynb) · [Buka di Colab](https://colab.research.google.com/github/MalikHariyanto/crispy_recom_machine_system/blob/feat/streamlit-wisata/notebooks/Colab_Tuning_Kelompok_Madura.ipynb) · [Protokol](docs/TUNING_PROTOCOL.md).
+
+Tiga fold destinasi, dua seed, empat kandidat konfigurasi dan dua ablation. Seluruh dataset lama diperlakukan sebagai development karena test sebelumnya sudah diamati. Validation dipakai memilih parameter; skornya bukan estimasi independen. Pemeriksaan data eksternal disediakan, tetapi evaluasi independen dan refit model final menunggu data baru serta protokol beku.

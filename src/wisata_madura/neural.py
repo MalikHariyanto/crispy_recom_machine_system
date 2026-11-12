@@ -33,6 +33,8 @@ class DeepConfig:
     cpu_threads: int = 2
     learning_rate: float = 0.001
     balance_destinations: bool = True
+    dropout: float = 0.2
+    freeze_embeddings: bool = True
 
 
 @dataclass
@@ -98,15 +100,15 @@ def fit_fasttext(split: ReviewSplit, config: DeepConfig, output_dir=None) -> Enc
 class ReviewBiLSTM(nn.Module):
     """Representasi urutan bersama dengan satu kepala prediksi per atribut."""
 
-    def __init__(self, embeddings, class_counts, hidden_dim, topic_dim):
+    def __init__(self, embeddings, class_counts, hidden_dim, topic_dim, dropout=0.2, freeze_embeddings=True):
         super().__init__()
         self.embedding = nn.Embedding.from_pretrained(
-            torch.from_numpy(embeddings), freeze=True, padding_idx=0
+            torch.from_numpy(embeddings).clone(), freeze=freeze_embeddings, padding_idx=0
         )
         self.sequence = nn.LSTM(
             embeddings.shape[1], hidden_dim, batch_first=True, bidirectional=True
         )
-        self.dropout = nn.Dropout(0.2)
+        self.dropout = nn.Dropout(dropout)
         self.topic_dim = topic_dim
         self.heads = nn.ModuleDict({
             name: nn.Linear(2 * hidden_dim + topic_dim, count)
@@ -178,7 +180,7 @@ def run_bilstm_variants(
         generator = torch.Generator().manual_seed(config.seed)
         loader = DataLoader(train_set, batch_size=config.batch_size, shuffle=True, generator=generator)
         model = ReviewBiLSTM(encoded.embeddings, {t: len(v) for t, v in labels.items()},
-                             config.hidden_dim, topic_dim).to(device)
+                             config.hidden_dim, topic_dim, config.dropout, config.freeze_embeddings).to(device)
         optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
         best_loss, best_epoch, best_state, stale = float('inf'), 0, None, 0
         for epoch in range(1, config.bilstm_epochs + 1):

@@ -1,0 +1,21 @@
+{
+  "candidate": {
+    "name": "wider",
+    "embedding_dim": 128,
+    "hidden_dim": 64,
+    "learning_rate": 0.001,
+    "dropout": 0.3,
+    "freeze_embeddings": true,
+    "length_quantile": 0.95
+  },
+  "model": "fasttext_bilstm",
+  "selection_validation_mean": 0.253339658027158,
+  "selection_validation_std": 0.0725818346132508,
+  "evaluation_status": "exploratory selection score only; independent evaluation pending new untouched data",
+  "deployment_ready": false,
+  "baselines_compared": true,
+  "selection_scope": "deep candidates only; overall best reported separately",
+  "best_observed_validation_method": "tfidf_linear_svc",
+  "best_observed_validation_mean": 0.3629451566951567,
+  "outperforms_best_baseline": false
+}
