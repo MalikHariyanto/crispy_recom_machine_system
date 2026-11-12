@@ -8,6 +8,10 @@ Bahan ini dihasilkan dari workbook aktif, bukan bukti pengumpulan pada tanggal r
 - `dataset_wisata.sqlite`: salinan seluruh 2.058 ulasan dari 27 ID destinasi dalam tabel `ulasan`. Kolom `id_ulasan` ditambahkan sebagai primary key; delapan kolom sumber dipertahankan.
 - `struktur_database.sql`: definisi tabel SQLite. Tidak perlu dijalankan jika membuka database yang sudah tersedia.
 
+## Senin — kriteria seleksi
+
+Buka sheet `Kriteria_Seleksi`. Screenshot judul dan baris kriteria beserta statusnya; ambil dua cuplikan jika perlu agar tulisan tetap terbaca. Kriteria disusun dari cakupan laporan dan aturan kode, bukan kutipan langsung proposal. Status yang belum terverifikasi perlu dikonfirmasi dengan pembimbing.
+
 ## Cara screenshot
 
 Gunakan zoom yang membuat tulisan terbaca (sekitar 100–125%), fokus pada area yang diperlukan, dan sertakan judul kolom. Hindari mengecilkan seluruh tabel sampai teks tidak terbaca; ambil dua cuplikan bila terlalu lebar. Jangan mengubah nilai supaya tampak lebih rapi. Caption menyebut sumber, cakupan, dan tanggal pemeriksaan aktual.

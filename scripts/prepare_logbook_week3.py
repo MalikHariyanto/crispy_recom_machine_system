@@ -16,6 +16,73 @@ SOURCE = ROOT / 'data/source/dataset_madura_bersih.xlsx'
 OUT = ROOT / 'logbook/dokumentasi/minggu_03'
 COLS = ['id_destinasi','destinasi','rating','date','text_original','text_preprocessed','rekomendasi_cuaca','wisata']
 
+def add_selection_sheet(book):
+    """Add criteria documentation without asserting unverified selection decisions."""
+    if 'Kriteria_Seleksi' in book.sheetnames:
+        del book['Kriteria_Seleksi']
+    ws = book.create_sheet('Kriteria_Seleksi', 1)
+    ws.merge_cells('A1:E2')
+    ws['A1'] = 'KRITERIA PEMILIHAN DESTINASI DAN ULASAN'
+    ws['A1'].font = Font(name='Calibri', size=16, bold=True, color='FFFFFF')
+    ws['A1'].fill = PatternFill('solid', fgColor='194B60')
+    ws['A1'].alignment = Alignment(vertical='center', wrap_text=True)
+    ws.merge_cells('A3:E3')
+    ws['A3'] = 'Dokumentasi Senin minggu 3 | Disusun dari cakupan laporan dan aturan kode; bukan kutipan langsung proposal.'
+    ws['A3'].font = Font(name='Calibri', size=10, italic=True, color='405363')
+    ws['A3'].alignment = Alignment(wrap_text=True, vertical='center')
+    ws.row_dimensions[3].height = 30
+    headers = ['No.', 'Aspek', 'Kriteria / kebutuhan', 'Penanganan data', 'Status penerapan']
+    for i, value in enumerate(headers, 1):
+        c = ws.cell(5, i, value)
+        c.font = Font(name='Calibri', size=11, bold=True, color='FFFFFF')
+        c.fill = PatternFill('solid', fgColor='194B60')
+        c.alignment = Alignment(wrap_text=True, vertical='center')
+    rows = [
+        ('Cakupan wilayah', 'Destinasi di Bangkalan, Sampang, Pamekasan, dan Sumenep sesuai fokus penelitian.', 'Periksa lokasi sebelum memasukkan ke subset Madura; catat lokasi di luar cakupan.', 'Cakupan ditetapkan; verifikasi lokasi belum lengkap.'),
+        ('Sumber ulasan', 'Ulasan destinasi dari Google Maps sesuai sumber penelitian.', 'Simpan URL tempat dan catatan pengambilan bila tersedia; cek kecocokan nama lokasi.', 'Sumber disebut dalam penelitian; URL per tempat perlu diverifikasi.'),
+        ('Identitas destinasi', 'ID dan nama destinasi terisi serta memiliki pasangan yang konsisten.', 'Periksa ID kosong atau satu ID dengan beberapa nama; telusuri ke sumber bila konflik.', 'Diperiksa pada audit workbook aktif.'),
+        ('Teks untuk model', 'text_preprocessed tersedia dan tidak kosong setelah normalisasi.', 'Teks kosong dikeluarkan saat persiapan model; workbook dokumentasi tetap mempertahankan sumber.', 'Aturan tersedia pada pipeline; audit dicatat terpisah.'),
+        ('Rating dan tanggal', 'Rating dan tanggal dicatat sebagaimana tersedia pada sumber.', 'Tandai nilai kosong/rating di luar 1–5; tanggal relatif tidak dianggap sebagai musim kunjungan.', 'Diperiksa pada audit; bukan aturan buang otomatis semua metadata kosong.'),
+        ('Duplikasi ulasan', 'Pengulangan diperiksa dengan kriteria yang dinyatakan eksplisit.', 'Audit duplikat delapan kolom; pipeline menyisihkan pengulangan teks normalisasi dalam satu destinasi.', 'Audit dan penyaringan pipeline dibedakan.'),
+        ('Label atribut', 'rekomendasi_cuaca dan wisata terisi dan konsisten per ID.', 'Periksa konsistensi; asal anotasi memerlukan verifikasi. Sentimen bukan label tersedia.', 'Konsistensi diperiksa; validitas anotasi belum terverifikasi.'),
+        ('Kualitas karakter', 'Teks asli dan teks olahan dapat ditelusuri untuk pemeriksaan kualitas.', 'Tandai pola indikatif encoding untuk tinjauan manual; jangan langsung menghapus semua teks bertanda.', 'Indikasi dihitung; koreksi manual belum diklaim.'),
+        ('Periode pengambilan', 'Tanggal pengambilan dan waktu kunjungan hanya dicatat jika ada bukti.', 'Isi dari catatan asli; jangan menebak tanggal absolut dari ungkapan waktu relatif.', 'Periode pengambilan perlu dilengkapi dari catatan asli.'),
+    ]
+    for n, values in enumerate(rows, 1):
+        row = n + 5
+        for col, value in enumerate((n, *values), 1):
+            c = ws.cell(row, col, value)
+            c.font = Font(name='Calibri', size=11)
+            c.alignment = Alignment(wrap_text=True, vertical='top')
+            if row % 2 == 0:
+                c.fill = PatternFill('solid', fgColor='EDF4F7')
+        ws.row_dimensions[row].height = 76
+    for col, width in zip('ABCDE', [6, 23, 44, 52, 37]):
+        ws.column_dimensions[col].width = width
+    ws.row_dimensions[5].height = 30
+    end = 5 + len(rows)
+    ws.merge_cells(start_row=end+2, start_column=1, end_row=end+2, end_column=5)
+    ws.cell(end+2, 1, 'Caption: Kriteria pemilihan destinasi dan ulasan sebagai dasar penyiapan dataset. Tanggal penyusunan/pemeriksaan: ____________.')
+    ws.cell(end+2, 1).alignment = Alignment(wrap_text=True, vertical='center')
+    ws.row_dimensions[end+2].height = 32
+    ws.merge_cells(start_row=end+3, start_column=1, end_row=end+3, end_column=5)
+    ws.cell(end+3, 1, 'Dasar: laporan akhir (cakupan), src/wisata_madura/data.py (audit/penyaringan), dan Audit_Dataset. Konfirmasi keputusan seleksi dengan pembimbing.')
+    ws.cell(end+3, 1).alignment = Alignment(wrap_text=True, vertical='center')
+    ws.cell(end+3, 1).font = Font(name='Calibri', size=10, italic=True)
+    ws.row_dimensions[end+3].height = 32
+    ws.freeze_panes = 'C6'
+    ws.auto_filter.ref = f'A5:E{end}'
+    ws.sheet_view.showGridLines = False
+    ws.sheet_view.zoomScale = 85
+    ws.print_title_rows = '1:5'
+    ws.print_area = f'A1:E{end+3}'
+    ws.sheet_properties.pageSetUpPr.fitToPage = True
+    ws.page_setup.orientation = 'landscape'
+    ws.page_setup.paperSize = ws.PAPERSIZE_A3
+    ws.page_setup.fitToWidth = 1
+    ws.page_setup.fitToHeight = 1
+
+
 def build():
     OUT.mkdir(parents=True, exist_ok=True)
     data = pd.read_excel(SOURCE)
@@ -113,6 +180,7 @@ def build():
         for row in sheet.iter_rows(min_row=2):
             for c in row:
                 if isinstance(c.value,str) and c.value.startswith('https://'):c.hyperlink=c.value
+    add_selection_sheet(book)
     book.save(xlsx)
     schema = '''CREATE TABLE ulasan (
     id_ulasan INTEGER PRIMARY KEY,
