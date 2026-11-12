@@ -1,0 +1,75 @@
+{
+  "source_upload": "Colab_Audit_Wisata_Madura_Otomatis_(4).ipynb",
+  "source_sha256": "989bf5c54182cef8484e8d1e2ddec50ee6c2ee136b0605c2d5101bd4d721d7a8",
+  "run_id": "20261112-131554-444000",
+  "source_commit_printed": "722d07a23376e2f0407425cac22ceb469e9eb429",
+  "note": "PNG diekstrak tanpa modifikasi dari output tertanam; indeks sel dimulai dari 0. Bukan menjalankan ulang notebook. Nama file partisi_dataset.png adalah nama ekstraksi gambar output sel 03.",
+  "images": [
+    {
+      "file": "grafik/eda_rating_cuaca_jenis.png",
+      "cell_index_0_based": 6,
+      "output_index_0_based": 1,
+      "sha256": "4e3769545a005de7f61050adb0d7df1b994747f705da13b742f19e0f928797e9"
+    },
+    {
+      "file": "grafik/histogram_panjang_ulasan.png",
+      "cell_index_0_based": 6,
+      "output_index_0_based": 2,
+      "sha256": "517f9e38912a66101cb37ffca93f2da28386c2b6500472eb3975ee16a0b1e4d3"
+    },
+    {
+      "file": "grafik/partisi_dataset.png",
+      "cell_index_0_based": 8,
+      "output_index_0_based": 1,
+      "sha256": "078c62c06c16de9e79ee64a9aa49245dd5113527efba7b955890c4499fe7714d"
+    },
+    {
+      "file": "grafik/pemilihan_topik.png",
+      "cell_index_0_based": 10,
+      "output_index_0_based": 3,
+      "sha256": "4b111c1e790e3c9fc83b3e33e0abbc8dca58e1a73f2aaf6a131e8548a3a29400"
+    },
+    {
+      "file": "grafik/kata_utama_topik.png",
+      "cell_index_0_based": 12,
+      "output_index_0_based": 3,
+      "sha256": "a961c15c6179737de5d9df3cc034fdaa123f50117e34d99080d21147e91e0e8a"
+    },
+    {
+      "file": "grafik/heatmap_topik_cuaca.png",
+      "cell_index_0_based": 12,
+      "output_index_0_based": 4,
+      "sha256": "4ab5f4bf459f852d0ec102c5cc48d4c0d05034053be37529ad57c60ed4b6acdd"
+    },
+    {
+      "file": "grafik/kurva_bilstm_seed_42.png",
+      "cell_index_0_based": 16,
+      "output_index_0_based": 2,
+      "sha256": "41113ba4be7c6b3e24e4613347f1bfa288dabd5c16f63848f00ae0cd588cb0f9"
+    },
+    {
+      "file": "grafik/kurva_bilstm_seed_43.png",
+      "cell_index_0_based": 16,
+      "output_index_0_based": 5,
+      "sha256": "4490b292b362570c7c44d841358f1266d47a2821273442d89b4439ad9302bb4c"
+    },
+    {
+      "file": "grafik/kurva_bilstm_seed_44.png",
+      "cell_index_0_based": 16,
+      "output_index_0_based": 8,
+      "sha256": "e8df49d2dd81c51d894b6e49c9477c29299895a856fd585d76bc985dfcf9105e"
+    },
+    {
+      "file": "grafik/perbandingan_model.png",
+      "cell_index_0_based": 18,
+      "output_index_0_based": 1,
+      "sha256": "4b190243ef0a59dd2e6c2230e6803e7d1d8efca18138ac45c8960808e70bd7bf"
+    },
+    {
+      "file": "grafik/alur_pipeline.png",
+      "cell_index_0_based": 20,
+      "output_index_0_based": 0,
+      "sha256": "f18c3442d1098d461552146c2186b836845f37a20882cc426cc79894d796ab82"
+    }
+  ]
+}
