@@ -1,21 +1,19 @@
 # Madura Explore — deployment dan struktur
 
-Antarmuka web untuk katalog dan rekomendasi destinasi. Aplikasi langsung membaca dataset bawaan (27 destinasi, 2.058 ulasan; sumber `data/source/dataset_madura_bersih.xlsx`); tidak perlu menjalankan notebook atau mengunggah workbook terlebih dahulu.
+Aplikasi memuat otomatis dataset terbaru `dataset_madura_bersih.xlsx`: **2.058 ulasan, 27 destinasi, 8 kategori wisata Madura**. Seluruh dataset dinyatakan berada di Madura oleh pemilik data. Pengguna aplikasi tidak perlu mengunggah file, CSV wilayah, atau melakukan verifikasi lokasi.
 
 ## Streamlit Community Cloud
-
-Pilih **Create app → Deploy a public app from GitHub**, lalu isi:
 
 | Field | Nilai |
 |---|---|
 | Repository | `MalikHariyanto/crispy_recom_machine_system` |
 | Branch | `feat/streamlit-wisata` |
 | Main file path | `app.py` |
-| Python version (Advanced settings) | `3.11` |
+| Python (Advanced settings) | `3.11` |
 
-Streamlit memasang `requirements.txt` dari root. Tidak perlu secrets, API key, database, atau model eksternal untuk pencarian TF-IDF. Jangan pilih `main` selama perubahan belum digabungkan. Sertakan folder `src/`, `.streamlit/`, dan seluruh `data/` saat memindahkan aplikasi.
+Streamlit memasang `requirements.txt` dari root. Default TF-IDF tidak memerlukan secrets, API key, atau unduhan model. Setelah pembaruan kode, pilih **Manage app → Reboot app** bila tampilan masih versi lama.
 
-## Menjalankan lokal
+## Lokal
 
 ```bash
 python -m venv .venv
@@ -24,65 +22,48 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Buka `http://localhost:8501`. Pada Windows, aktivasi dengan `.venv\Scripts\activate`.
+Pada Windows: `.venv\Scripts\activate`. Sertakan `src/`, `.streamlit/`, dan seluruh `data/` saat memindahkan aplikasi.
 
-## Struktur
+## Struktur dan performa
 
-```text
-app.py                              # entry point deployment
-.streamlit/config.toml              # tema dan batas unggahan
-requirements.txt                    # dependensi web ringan
-src/wisata_madura/web/
-  app.py                            # navigasi dan cakupan sesi
-  views.py                          # halaman dan komponen UI
-  styles.py                         # identitas visual lokal
-  services.py                       # indeks TF-IDF dan validasi filter/CSV
-  runtime.py                        # cache data dan resource model
-src/wisata_madura/                   # modul riset tetap tersedia
-notebooks/                          # pelatihan dan evaluasi eksperimen
-```
+- `app.py`: entry point deployment.
+- `src/wisata_madura/web/app.py`: navigasi empat halaman; dataset dimuat otomatis.
+- `views.py` / `styles.py`: komponen, pencarian, katalog, insight, identitas visual lokal.
+- `services.py`: indeks TF-IDF dan filter musim/kategori/nama.
+- `runtime.py`: cache data dan indeks dengan hash manifest; hasil pencarian sesi dikaitkan versi dataset.
+- `src/wisata_madura/visualization.py`: grafik EDA dan split untuk notebook Colab.
 
-Cache data dan indeks memakai hash manifest; pembaruan dataset juga membatalkan hasil pencarian sesi versi lama. Data dimuat melalui loader riset yang memvalidasi checksum manifest. Katalog dan ringkasan audit disimpan dengan `st.cache_data`. Indeks TF-IDF dibangun satu kali dengan `st.cache_resource`; query baru hanya ditransformasi terhadap indeks tersebut. CSV wilayah dan filter tidak mengubah indeks global. Hasil pencarian disimpan per sesi, dipertahankan saat berpindah halaman, dan disembunyikan ketika cakupan wilayah berubah. Katalog memakai pagination sembilan kartu per halaman. Aset visual tidak membutuhkan layanan eksternal.
+Katalog serta audit memakai `st.cache_data`; indeks memakai `st.cache_resource`. Setiap query hanya ditransformasi terhadap indeks. Pagination menampilkan sembilan kartu per halaman. Tidak ada pelatihan model saat membuka halaman. Workbook sumber disimpan di `data/source/`; default web hanya membutuhkan CSV model terkompresi dan manifest ber-checksum.
 
-## Perilaku rekomendasi
+## Rekomendasi
 
-- TF-IDF: unigram/bigram, pembobotan sublinear, maksimum 30.000 fitur, kemiripan kosinus. Deskripsi memuat nama, jenis, cuaca, dan maksimal 12 cuplikan ulasan per destinasi. Bukan model klasifikasi yang dilatih pada notebook.
-- Musim, kategori, wilayah, dan riwayat kunjungan membatasi kandidat sebelum pemeringkatan.
-- TF-IDF tidak mengembalikan hasil dengan skor nol. Query tanpa kata yang cocok memunculkan saran mengubah preferensi/filter.
-- Riwayat pada TF-IDF berfungsi sebagai pengecualian destinasi. BGE juga memakai hingga tiga kunjungan terakhir sebagai konteks, mengikuti modul riset.
-- Skor bukan rating kualitas atau probabilitas. Jumlah ulasan bukan rating.
-- Katalog menyertakan lokasi di luar Madura. Unggah CSV verifikasi dengan `id_destinasi,kabupaten`; hanya nilai Bangkalan, Sampang, Pamekasan, Sumenep, Di luar Madura, atau kosong yang diterima. Template dapat diunduh dari sidebar. Baris dengan wilayah kosong/tidak dipetakan tetap belum terverifikasi. CSV salah menghentikan pemuatan halaman sampai diperbaiki.
-- Label cuaca adalah atribut dataset, bukan prakiraan cuaca saat ini. Cuplikan adalah teks ulasan yang telah diproses, bukan deskripsi redaksi atau verifikasi fasilitas.
-- Insight menampilkan statistik aktual; tidak mengarang akurasi rekomendasi atau mengambil angka eksperimen sebagai kinerja pencarian web.
+TF-IDF unigram/bigram dengan sublinear TF, maksimum 30.000 fitur, dan kemiripan kosinus. Deskripsi terdiri dari nama, jenis, label cuaca, dan maksimal 12 cuplikan ulasan. Musim, kategori, serta riwayat kunjungan membatasi kandidat; skor nol tidak ditampilkan. Skor bukan rating kualitas atau probabilitas. Label cuaca merupakan atribut dataset, bukan prakiraan cuaca langsung. Cuplikan adalah teks setelah preprocessing, bukan keterangan redaksi atau verifikasi fasilitas.
 
-## BGE-M3 opsional
+## BGE opsional
 
-Instal `sentence-transformers>=3,<6` pada server, lalu restart aplikasi. Pilihan BGE muncul otomatis di form **Personalisasi & metode pencarian**. Model `BAAI/bge-m3` baru diunduh/dimuat setelah pengguna memilihnya dan mencari; indeks vektor di-cache. Mode ini membutuhkan akses Hugging Face, penyimpanan dan RAM jauh lebih besar daripada TF-IDF. Untuk deployment Cloud ringan, pertahankan dependensi default. Validasi fungsi BGE memerlukan lingkungan dengan model tersedia; pengujian web default tidak mengunduh atau menguji kualitas BGE.
+Pasang `sentence-transformers>=3,<6`, lalu restart server untuk memunculkan opsi BGE-M3. Model baru dimuat saat dipilih dan digunakan. Membutuhkan akses Hugging Face, penyimpanan dan RAM lebih besar daripada default. Mode deploy ringan yang diuji adalah TF-IDF; BGE belum diuji dengan unduhan model. Pelatihan LDA/FastText/BiLSTM tetap berada pada notebook.
 
-Pelatihan LDA, FastText, dan BiLSTM tetap di notebook. Tidak ada pelatihan otomatis saat pengguna membuka halaman.
+## Colab dan grafik
+
+[Buka notebook lengkap di Colab](https://colab.research.google.com/github/MalikHariyanto/crispy_recom_machine_system/blob/feat/streamlit-wisata/notebooks/Colab_Audit_Wisata_Madura_Otomatis.ipynb). Jalankan sel dari atas, `DATA_PATH=None`. Dataset dan rating dimuat otomatis dari repo, tanpa unggahan.
+
+Bagian 02B memuat diagram batang rating, batang label cuaca per ulasan, donut cuaca per destinasi, pie jenis wisata per destinasi, dan histogram panjang ulasan. Bagian 03 sudah memiliki train/validation/test; kini dilengkapi batang jumlah dan donut persentase aktual untuk ulasan serta destinasi. Rating/cuaca berupa kategori diskret, sehingga menggunakan diagram batang; histogram dipakai untuk panjang teks numerik. Gambar PNG dan tabel CSV disimpan ke folder run.
+
+Split per ID destinasi mencegah tempat yang sama muncul di partisi berbeda. Target test sekitar 20% destinasi dan validation sekitar 20% dari sisa train, bukan jaminan rasio ulasan tepat 64:16:20. Duplikat, teks kosong, dan teks identik lintas partisi dibersihkan. Proporsi dihitung ulang dari hasil split aktual.
 
 ## Pengujian
 
 ```bash
 PYTHONPATH=src python -m unittest discover -s tests -p 'test_web_services.py' -v
 PYTHONPATH=src python -m unittest discover -s tests -p 'test_streamlit_app.py' -v
+# Tes workbook/grafik: pasang requirements-wisata.txt terlebih dahulu.
+PYTHONPATH=src python -m unittest discover -s tests -p 'test_dataset_update.py' -v
+PYTHONPATH=src python -m unittest discover -s tests -p 'test_visualization.py' -v
 ```
 
-Tes memeriksa pemeringkatan, kandidat/wilayah/riwayat, skor nol, validasi CSV, navigasi seluruh halaman, dan rerun pencarian menggunakan dataset asli. Tes pipeline penelitian tetap dapat dijalankan dengan dependensi riset lengkap.
+Tes mencakup pemeringkatan, filter, navigasi, ketiadaan unggahan file, kesetaraan Excel–bundle, jumlah rating, unit hitung pie chart, dan persentase aktual split. Pelatihan BiLSTM memerlukan PyTorch dan tidak menjadi dependensi web default. Laporan/model eksperimen lama tetap artefak historis; penambahan grafik tidak menghitung ulang evaluasi seluruh model.
 
 ## Pratinjau
 
-Screenshot berikut menggunakan dataset terbaru: 27 destinasi dan 2.058 ulasan.
-
 ![Halaman jelajah](images/streamlit-home.png)
-
 ![Hasil rekomendasi](images/streamlit-results.png)
-
-## Validasi implementasi
-
-- Enam tes web (service + Streamlit AppTest) lulus dengan dataset bawaan.
-- Chromium/Playwright: pencarian aktual, katalog tanpa hasil, rendering viewport mobile, unggah CSV valid, filter wilayah terverifikasi, dan penolakan CSV tidak valid lulus.
-- Empat tes pipeline riset lama juga lulus. Tes checkpoint BiLSTM belum dapat dijalankan pada lingkungan web karena `torch` tidak dipasang. Dependensi pelatihan sengaja tidak menjadi dependensi web default.
-- BGE-M3 belum diuji dengan unduhan model; mode deploy default yang divalidasi adalah TF-IDF.
-
-Pembaruan dataset 12 November 2026: tes kesetaraan Excel–bundle, kompatibilitas sheet, enam tes web, serta dua tes split/pemilihan model riset lulus. Browser memverifikasi angka 27 destinasi/2.058 ulasan dan pencarian langsung. Workbook sumber tersimpan di `data/source/`; rebuild dengan `python scripts/build_dataset_bundle.py data/source/dataset_madura_bersih.xlsx` (memerlukan `openpyxl` dari dependensi riset). Hasil riset/laporan lama tetap merupakan artefak dataset sebelumnya, bukan evaluasi ulang dataset ini.

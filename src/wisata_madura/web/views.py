@@ -23,7 +23,7 @@ def destination_card(row, rank=None):
         st.markdown(f'<div class="card-title">{escape(str(row.destinasi))}</div>', unsafe_allow_html=True)
         st.markdown(f'<span class="tag">{escape(str(row.wisata))}</span>'
                     f'<span class="tag">{escape(str(row.rekomendasi_cuaca))}</span>', unsafe_allow_html=True)
-        st.caption(f"{int(row.jumlah_ulasan):,} ulasan dalam dataset · {row.kabupaten}")
+        st.caption(f"{int(row.jumlah_ulasan):,} ulasan dalam dataset · Madura")
         if rank is not None:
             st.caption(f"Skor kemiripan: {row.skor_kemiripan:.3f} · bukan rating kualitas")
         with st.expander("Lihat cuplikan ulasan"):
@@ -83,10 +83,9 @@ def explore(catalog, scope_key):
                         excluded = set(engine.catalog.id_destinasi) - set(eligible.id_destinasi)
                         result = engine.recommend(preference, "" if season == "Semua musim" else season,
                                                   k, sorted(excluded | set(visited)))
-                        result = result.merge(catalog[["id_destinasi", "deskripsi", "jumlah_ulasan", "kabupaten"]], on="id_destinasi")
+                        result = result.merge(catalog[["id_destinasi", "deskripsi", "jumlah_ulasan"]], on="id_destinasi")
                 else:
                     result = lexical_index().search(preference, eligible.id_destinasi, k, visited)
-                    result = result.merge(catalog[["id_destinasi", "kabupaten"]], on="id_destinasi")
                 st.session_state["search_result"] = (scope_key, preference, method, result)
             except (ValueError, OSError, ImportError, RuntimeError):
                 st.session_state.pop("search_result", None)
@@ -126,7 +125,7 @@ def catalog_view(catalog):
     pages = max(1, (len(filtered) + 8) // 9)
     page = st.selectbox("Halaman", range(1, pages + 1), format_func=lambda x: f"{x} dari {pages}")
     card_grid(filtered.iloc[(page - 1) * 9:page * 9].reset_index(drop=True))
-    cols = ["id_destinasi", "destinasi", "wisata", "rekomendasi_cuaca", "jumlah_ulasan", "kabupaten"]
+    cols = ["id_destinasi", "destinasi", "wisata", "rekomendasi_cuaca", "jumlah_ulasan"]
     csv_download(filtered[cols], "Unduh katalog sesuai filter", "katalog_wisata.csv", "catalog_csv")
 
 
@@ -146,7 +145,7 @@ def insights(catalog, audit):
         st.subheader("Kecocokan cuaca")
         st.bar_chart(catalog.groupby("rekomendasi_cuaca").size().rename("Destinasi"), color="#A3B878", horizontal=True)
     st.subheader("Kualitas dataset sumber")
-    st.caption("Angka berikut dihitung dari seluruh dataset bawaan, sebelum filter wilayah.")
+    st.caption("Angka berikut dihitung dari seluruh dataset wisata Madura bawaan.")
     quality = pd.DataFrame({"Indikator": ["Ulasan sumber", "Baris duplikat persis", "Teks model kosong", "Tanggal relatif", "Indikasi masalah encoding"],
                             "Jumlah": [audit["rows"], audit["exact_duplicate_rows"], audit["empty_normalized_text_rows"],
                                        audit["relative_date_rows"], audit["potential_encoding_error_rows"]]})
@@ -162,7 +161,7 @@ def about():
     with st.container(border=True):
         st.subheader("Dari ulasan menjadi pilihan")
         st.markdown("1. **Katalog:** nama, kategori, kecocokan cuaca, dan maksimal 12 cuplikan ulasan per destinasi.\n"
-                    "2. **Penyaringan:** musim, kategori, wilayah terverifikasi, dan riwayat kunjungan.\n"
+                    "2. **Penyaringan:** musim, kategori, dan riwayat kunjungan.\n"
                     "3. **Pencocokan:** TF-IDF dengan kemiripan kosinus, atau BGE-M3 bila diaktifkan.\n"
                     "4. **Hasil:** pilihan berdasarkan kemiripan teks, dengan tautan pencarian lokasi dan ekspor CSV.")
     a, b = st.columns(2)
@@ -172,8 +171,8 @@ def about():
                  "rating kualitas, atau jaminan kepuasan. Skor TF-IDF dan BGE tidak dapat dibandingkan langsung.")
     with b:
         st.subheader("Cakupan geografis")
-        st.write("Dataset sumber mencakup lokasi di luar Madura dan belum memiliki kabupaten terverifikasi. "
-                 "Unggah CSV verifikasi wilayah melalui sidebar untuk membatasi katalog pada lokasi yang sudah diperiksa.")
+        st.write("Dataset terbaru berisi destinasi wisata Madura. Data dimuat otomatis dari repository, "
+                 "sehingga pengguna dapat langsung menjelajah tanpa mengunggah file.")
     st.subheader("Hubungan dengan penelitian")
     st.write("Notebook tetap menjadi tempat pelatihan LDA, FastText, dan BiLSTM serta evaluasi eksperimen. "
              "Aplikasi ini tidak melatih ulang model saat digunakan dan tidak menampilkan metrik eksperimen sebagai metrik pencarian. "

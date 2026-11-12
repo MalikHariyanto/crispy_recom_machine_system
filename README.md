@@ -2,11 +2,11 @@
 
 ## Aplikasi Streamlit — Madura Explore
 
-Antarmuka web untuk pencarian rekomendasi, katalog destinasi, insight dataset, dan verifikasi wilayah. Jalankan `pip install -r requirements.txt` lalu `streamlit run app.py`.
+Antarmuka web untuk pencarian rekomendasi, katalog destinasi, insight dataset tanpa unggahan file. Jalankan `pip install -r requirements.txt` lalu `streamlit run app.py`.
 
 **Deploy Streamlit Cloud:** repository `MalikHariyanto/crispy_recom_machine_system`, branch `feat/streamlit-wisata`, main file `app.py`, Python **3.11**. [Panduan deployment dan arsitektur](docs/STREAMLIT.md).
 
-Pencarian default memakai TF-IDF yang ringan; BGE-M3 opsional. Dataset masih mencakup lokasi di luar Madura sehingga aplikasi menyediakan CSV verifikasi wilayah. Pelatihan dan evaluasi riset tetap dilakukan melalui notebook di bawah.
+Pencarian default memakai TF-IDF yang ringan; BGE-M3 opsional. Dataset terbaru seluruhnya destinasi Madura sesuai konfirmasi pemilik data; aplikasi langsung memuatnya dari repository. Pelatihan dan evaluasi riset tetap dilakukan melalui notebook di bawah.
 
 Pipeline penelitian asistensi Malik Hariyanto untuk mengolah ulasan Google Maps, membandingkan model klasifikasi atribut destinasi, dan mencoba pemeringkatan destinasi dengan BGE.
 
@@ -43,7 +43,7 @@ Workbook sumber menyediakan `id_destinasi`, `destinasi`, `rating`, `date`, `text
 
 Paket aktif di `data/` berasal dari `data/source/dataset_madura_bersih.xlsx` (pembaruan 12 November 2026): **2.058 ulasan dari 27 destinasi**, dalam satu bagian CSV terkompresi. Dataset ini menggantikan paket lama berisi 79.514 ulasan/207 destinasi. Paket berisi teks siap-model, ID dan nama destinasi, dua label, dan penanda audit yang dihitung dari Excel. File `manifest.json` menyimpan jumlah baris dan checksum setiap bagian. Teks ulasan asli, nilai tanggal, dan rating tersedia pada workbook sumber.
 
-Workbook memuat lokasi dari luar Madura, termasuk Kebun Binatang Surabaya, dan belum menyediakan kolom kabupaten. Bagian 01 menulis `template_verifikasi_wilayah.csv`. Isi `kabupaten` dengan Bangkalan, Sampang, Pamekasan, Sumenep, atau Di luar Madura setelah memeriksa lokasi. Biarkan kosong jika lokasi belum terverifikasi. Simpan dengan nama lain dan setel `REGION_PATH` untuk memakai hanya ID yang terverifikasi di Madura. Tanpa CSV tersebut, metrik dan katalog mencakup workbook campuran.
+Dataset aktif sepenuhnya Madura sesuai konfirmasi pemilik data. Aplikasi memuat dataset tersebut secara otomatis dan langsung menampilkan katalog serta pencarian.
 
 Sekitar 20% ID pada tiap jenis wisata dipilih sebagai data uji. Pengulangan teks dalam satu destinasi disisihkan dan teks uji yang identik dengan teks latih dikeluarkan. Pada dataset lama yang dipakai di laporan, prosedur ini menghasilkan 164 destinasi latih dan 43 destinasi uji; angka tersebut bukan hasil dataset aktif terbaru. Vektor FastText dan kosakata LDA dipelajari dari data latih. Satu model LDA bersama dipakai agar tiap dimensi topik bermakna sama di semua contoh dan dapat dibentuk tanpa membaca label contoh uji.
 
@@ -102,3 +102,9 @@ Tes meliputi NPMI dengan probabilitas diketahui, invariansi nomor topik, pemisah
 ## Memperbarui paket data
 
 Jalankan `python scripts/build_dataset_bundle.py data/source/dataset_madura_bersih.xlsx` dengan dependensi `requirements-wisata.txt`. Script memvalidasi skema, menghitung ulang penanda audit/checksum, dan mengganti paket lama. Workbook satu sheet (`Sheet1`) serta format lama (`Data Ulasan`) didukung. Nilai label, ID, rating, dan teks sumber tidak dikoreksi otomatis. Hasil pelatihan, laporan, dan screenshot historis tidak dihitung ulang oleh pembaruan dataset.
+
+## Grafik eksplorasi dan pembagian data di Colab
+
+Notebook terbaru memiliki bagian **02B** (batang rating 1–5, batang cuaca, donut cuaca per destinasi, pie jenis wisata dengan persentase, histogram panjang teks) dan **03** (jumlah serta persentase aktual train/validation/test untuk ulasan dan destinasi). Grafik disimpan PNG dan tabel CSV ke folder run. Split tetap berdasarkan ID destinasi dengan pemeriksaan kebocoran teks; bukan pembagian acak baris ulasan.
+
+[Buka langsung di Google Colab](https://colab.research.google.com/github/MalikHariyanto/crispy_recom_machine_system/blob/feat/streamlit-wisata/notebooks/Colab_Audit_Wisata_Madura_Otomatis.ipynb). Clone notebook mengambil branch `feat/streamlit-wisata` agar memakai dataset terbaru.

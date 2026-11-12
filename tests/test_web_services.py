@@ -1,7 +1,7 @@
 """Regression checks for ranking, session scope, and geographic verification."""
 import unittest
 import pandas as pd
-from wisata_madura.web.services import SearchIndex, filter_catalog, read_regions
+from wisata_madura.web.services import SearchIndex, filter_catalog
 
 
 class WebServicesTests(unittest.TestCase):
@@ -23,19 +23,11 @@ class WebServicesTests(unittest.TestCase):
         self.assertTrue(result.empty)
         self.assertTrue(self.index.search("pantai", []).empty)
 
-    def test_filters_respect_weather_and_verified_region(self):
+    def test_filters_respect_weather_and_literal_name(self):
         result = filter_catalog(self.catalog, season="Penghujan")
         self.assertEqual(set(result.id_destinasi), {"2", "3"})
-        self.assertEqual(list(filter_catalog(self.catalog, verified_only=True).id_destinasi), ["1"])
         self.assertTrue(filter_catalog(self.catalog, name="[x]").empty)
 
-    def test_region_csv_rejects_unknown_ids_duplicates_and_invalid_labels(self):
-        for value in [b'id_destinasi,kabupaten\n9,Sumenep', b'id_destinasi,kabupaten\n1,Sumenep\n1,Sumenep',
-                      b'id_destinasi,kabupaten\n1,Surabaya', b'wrong,column\n1,2']:
-            with self.assertRaises(ValueError):
-                read_regions(value, ["1", "2"])
-        valid = read_regions(b'id_destinasi,kabupaten\n1, sumenep \n2,', ["1", "2"])
-        self.assertEqual(list(valid.kabupaten), ["Sumenep", ""])
 
 
 if __name__ == "__main__":

@@ -13,6 +13,8 @@ class StreamlitAppTests(unittest.TestCase):
     def test_navigation_and_live_search(self):
         app = self.app
         self.assertFalse(app.exception)
+        self.assertEqual(len(app.get("file_uploader")), 0)
+        self.assertNotIn("Belum diverifikasi", " ".join(c.value for c in app.caption))
         app.text_input[0].set_value("pantai pasir putih")
         app.button[0].click().run()
         self.assertFalse(app.exception)
