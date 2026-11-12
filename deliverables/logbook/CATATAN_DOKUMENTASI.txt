@@ -1,0 +1,4 @@
+Dokumentasi ditambahkan pada M02-D01 (kajian LDA/SABTR) dan M09-D05 (bahan peninjauan konteks cuaca dan seasonality).
+Gambar merupakan cuplikan teks dari dokumen referensi yang tersedia, bukan tangkapan layar eksperimen atau bukti pelaksanaan pada tanggal rencana.
+Tanggal aktual tetap kosong. Kolom lain, termasuk dokumentasi yang sudah ada, paraf, dan tanda tangan, dipertahankan.
+File sumber referensi disertakan untuk memeriksa konteks kutipan.
