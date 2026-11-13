@@ -7,6 +7,7 @@ import streamlit as st
 from .runtime import lexical_index
 from .services import filter_catalog
 from .styles import hero
+from .assets import cover_markup
 
 PALETTES = (
     ('#dcece6','#edc987','#387969','#8db5a4'),
@@ -41,9 +42,11 @@ def destination_card(row, index, ranked=False):
     colors=PALETTES[index % len(PALETTES)]
     variables=';'.join(f'--scene-{name}:{color}' for name,color in zip(('bg','sun','land','back'),colors))
     badge=f'<span class="result-index">{index+1:02d}</span>' if ranked else ''
+    photo=cover_markup(row) if getattr(row,'cover_path','') else ''
+    location=f'<div class="destination-location">{escape(str(row.daerah))}</div>' if getattr(row,'daerah','') else ''
     with st.container(border=True):
-        st.markdown(f'''<div class="destination-art {scene}" style="{variables}"><span class="art-tag">{escape(category.title())}</span><span class="sun"></span><span class="land land-back"></span><span class="land"></span>{badge}</div>
-        <h4 class="result-title">{escape(str(row.destinasi))}</h4>
+        st.markdown(f'''<div class="destination-art {'has-photo' if photo else scene}" style="{variables}">{photo}<span class="art-tag">{escape(category.title())}</span>{'' if photo else '<span class="sun"></span><span class="land land-back"></span><span class="land"></span>'}{badge}</div>
+        <h4 class="result-title">{escape(str(row.destinasi))}</h4>{location}
         <div class="destination-meta"><span>{escape(str(row.rekomendasi_cuaca))}</span><i class="meta-dot"></i><span>{int(row.jumlah_ulasan):,} ulasan</span></div>''',unsafe_allow_html=True)
         st.link_button('Lihat lokasi ↗','https://www.google.com/maps/search/?api=1&query='+quote_plus(row.destinasi),width='stretch')
         with st.expander('Cuplikan ulasan'):

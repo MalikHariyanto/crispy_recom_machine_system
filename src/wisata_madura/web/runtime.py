@@ -5,18 +5,21 @@ import streamlit as st
 
 from wisata_madura.data import load_bundled_reviews, audit_bundled_reviews
 from .services import make_catalog, SearchIndex
+from .assets import enrich_catalog, MANIFEST
 
 ROOT = Path(__file__).resolve().parents[3]
 
 
 def dataset_version():
-    return hashlib.sha256((ROOT / "data/manifest.json").read_bytes()).hexdigest()
+    content=(ROOT / "data/manifest.json").read_bytes()
+    if MANIFEST.exists():content+=MANIFEST.read_bytes()
+    return hashlib.sha256(content).hexdigest()
 
 
 @st.cache_data(show_spinner="Menyiapkan katalog wisata…", max_entries=2)
 def _load_data(version):
     reviews, manifest = load_bundled_reviews(ROOT / "data")
-    return make_catalog(reviews), audit_bundled_reviews(reviews, manifest)
+    return enrich_catalog(make_catalog(reviews)), audit_bundled_reviews(reviews, manifest)
 
 
 def load_data():

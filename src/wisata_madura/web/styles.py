@@ -34,6 +34,10 @@ def apply_styles():
     [data-testid="stPills"] button {font-size:.78rem;border-color:#dbe2d8;}
     [data-testid="stVerticalBlockBorderWrapper"] > div {border-radius:16px!important;}
     .destination-art {position:relative;overflow:hidden;height:130px;border-radius:11px;background:var(--scene-bg);margin-bottom:14px;}
+    .destination-art.has-photo {height:170px;}
+    .destination-photo {width:100%;height:100%;display:block;object-fit:cover;}
+    .destination-location {font-size:.76rem;color:var(--teal);font-weight:550;margin:-1px 0 9px;display:flex;gap:5px;align-items:center;}
+    .destination-location:before {content:"";width:6px;height:6px;border:1.5px solid var(--teal);border-radius:50% 50% 50% 0;transform:rotate(-45deg);margin-right:3px;}
     .destination-art .sun {position:absolute;top:22px;right:37px;width:33px;height:33px;border-radius:50%;background:var(--scene-sun);}
     .destination-art .land {position:absolute;bottom:-63px;left:-12%;width:90%;height:135px;border-radius:50%;background:var(--scene-land);transform:rotate(-12deg);}
     .destination-art .land-back {left:45%;bottom:-50px;background:var(--scene-back);height:135px;transform:rotate(8deg);}
