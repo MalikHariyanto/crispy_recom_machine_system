@@ -1,29 +1,21 @@
 {
   "schema_version": 1,
-  "source": "Images supplied by user in three ZIP archives; no claim of independent geographic verification",
+  "source": "User-supplied renamed ZIP archives; matches use filenames except explicitly documented landmark inference. No claim of independent geolocation.",
   "destinations": {
     "21": {
       "name": "Alun Alun Bangkalan",
       "area": "Bangkalan",
       "cover": "alun-alun-bangkalan-city-square.webp",
       "source_filename": "Alun-alun Bangkalan City Square.png",
-      "match_basis": "supplied filename and identifiable catalog landmark; area curated, shared-chat context not accessed",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
       "position": "50% 50%"
     },
-    "23": {
-      "name": "Api Tak Kunjung Padam",
-      "area": "Pamekasan",
-      "cover": "ever-burning-flames-at-night.webp",
-      "source_filename": "Ever-Burning Flames at Night.png",
-      "match_basis": "supplied filename and identifiable catalog landmark; area curated, shared-chat context not accessed",
-      "position": "50% 50%"
-    },
-    "115": {
-      "name": "Museum Kraton Sumenep",
+    "24": {
+      "name": "Asta Tinggi",
       "area": "Sumenep",
-      "cover": "historic-keraton-gateway-under-cloudy-skies.webp",
-      "source_filename": "Historic Keraton Gateway Under Cloudy Skies.png",
-      "match_basis": "supplied filename and identifiable catalog landmark; area curated, shared-chat context not accessed",
+      "cover": "restored-historic-indonesian-gateway.webp",
+      "source_filename": "Asta tinggi.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
       "position": "50% 50%"
     },
     "107": {
@@ -31,47 +23,119 @@
       "area": "Sumenep",
       "cover": "historic-masjid-agung-jamik-sumenep.webp",
       "source_filename": "Historic Masjid Agung Jamik Sumenep.png",
-      "match_basis": "supplied filename and identifiable catalog landmark; area curated, shared-chat context not accessed",
-      "position": "50% 50%"
-    },
-    "181": {
-      "name": "Syaikhona Kholil",
-      "area": "Bangkalan",
-      "cover": "masjid-syaikhona-kholil-with-golden-dome.webp",
-      "source_filename": "Masjid Syaikhona Kholil with Golden Dome.png",
-      "match_basis": "supplied filename and identifiable catalog landmark; area curated, shared-chat context not accessed",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
       "position": "50% 50%"
     },
     "142": {
       "name": "Pantai Camplong",
       "area": "Sampang",
       "cover": "pantai-camplong-beach-welcome-sign.webp",
-      "source_filename": "Pantai Camplong Beach Welcome Sign.png",
-      "match_basis": "supplied filename and identifiable catalog landmark; area curated, shared-chat context not accessed",
+      "source_filename": "Pantai Camplong.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
+      "position": "50% 50%"
+    },
+    "181": {
+      "name": "Syaikhona Kholil",
+      "area": "Bangkalan",
+      "cover": "masjid-syaikhona-kholil-with-golden-dome.webp",
+      "source_filename": "Syaikhona Kholil.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
+      "position": "50% 50%"
+    },
+    "19": {
+      "name": "Air Terjun Toroan",
+      "area": "Sampang",
+      "cover": "turquoise-pool-beneath-a-restored-waterfall.webp",
+      "source_filename": "air terjun toroan.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
+      "position": "50% 50%"
+    },
+    "23": {
+      "name": "Api Tak Kunjung Padam",
+      "area": "Pamekasan",
+      "cover": "ever-burning-flames-at-night.webp",
+      "source_filename": "api tak kunjugn padam.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
+      "position": "50% 50%"
+    },
+    "115": {
+      "name": "Museum Kraton Sumenep",
+      "area": "Sumenep",
+      "cover": "historic-keraton-gateway-under-cloudy-skies.webp",
+      "source_filename": "museum keraton.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
+      "position": "50% 50%"
+    },
+    "148": {
+      "name": "Pantai Lon Malang",
+      "area": "Sampang",
+      "cover": "beach-camp-at-lavender-dusk.webp",
+      "source_filename": "pantai lon malang.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
+      "position": "50% 50%"
+    },
+    "78": {
+      "name": "Istana Gebang",
+      "area": "Blitar",
+      "cover": "istana-gebang.webp",
+      "source_filename": "White statue before a red-roofed building-2.png",
+      "match_basis": "visual landmark match: Bung Karno statue and Istana Gebang facade; inferred, not independently geolocated",
       "position": "50% 50%"
     },
     "34": {
       "name": "Bukit Kehi",
       "area": "Pamekasan",
       "cover": "golden-sunrise-at-bukit-kehi.webp",
-      "source_filename": "Golden Sunrise at Bukit Kehi.png",
-      "match_basis": "supplied filename and identifiable catalog landmark; area curated, shared-chat context not accessed",
+      "source_filename": "bukit kehi.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
+      "position": "50% 50%"
+    },
+    "55": {
+      "name": "Gililabak",
+      "area": "Sumenep",
+      "cover": "aerial-turquoise-shoreline-with-boats.webp",
+      "source_filename": "gililabak.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
+      "position": "50% 50%"
+    },
+    "73": {
+      "name": "Hutan Keranepa",
+      "area": "Sampang",
+      "cover": "macaques-beneath-dappled-forest-light.webp",
+      "source_filename": "hutan keranepa.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
+      "position": "50% 50%"
+    },
+    "131": {
+      "name": "Pantai Siri Kemuning",
+      "area": "Bangkalan",
+      "cover": "curving-beach-green-sea-forest-canopy.webp",
+      "source_filename": "pantai sirih kemuning.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
+      "position": "50% 50%"
+    },
+    "183": {
+      "name": "Taman Rajekwesi",
+      "area": "Bojonegoro",
+      "cover": "restored-park-plaza-beneath-silver-canopy-1.webp",
+      "source_filename": "taman rajekwesi.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
       "position": "50% 50%"
     },
     "29": {
       "name": "Bukit Jadih",
       "area": "Bangkalan",
       "cover": "bukit-jaddih-quarry-and-turquoise-pools.webp",
-      "source_filename": "Bukit Jaddih Quarry and Turquoise Pools.png",
-      "match_basis": "supplied filename and identifiable catalog landmark; area curated, shared-chat context not accessed",
+      "source_filename": "Bukit Jaddih.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
       "position": "50% 50%"
     },
     "56": {
       "name": "Gililiyang",
       "area": "Sumenep",
       "cover": "gili-iyangs-curved-turquoise-sandbar.webp",
-      "source_filename": "Gili Iyang’s Curved Turquoise Sandbar.png",
-      "match_basis": "supplied filename and identifiable catalog landmark; area curated, shared-chat context not accessed",
+      "source_filename": "Gili Iyang.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
       "position": "50% 50%"
     },
     "108": {
@@ -79,168 +143,240 @@
       "area": "Bangkalan",
       "cover": "historic-sembilangan-lighthouse-at-sunset.webp",
       "source_filename": "Historic Sembilangan Lighthouse at Sunset.png",
-      "match_basis": "supplied filename and identifiable catalog landmark; area curated, shared-chat context not accessed",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
       "position": "50% 50%"
     },
     "160": {
       "name": "Pantai Talangsiring",
       "area": "Pamekasan",
       "cover": "pantai-talang-siring-by-the-sea.webp",
-      "source_filename": "Pantai Talang Siring by the Sea.png",
-      "match_basis": "supplied filename and identifiable catalog landmark; area curated, shared-chat context not accessed",
+      "source_filename": "Pantai Talang Siring.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
       "position": "50% 50%"
+    },
+    "30": {
+      "name": "Bukit Kapur Arosbaya",
+      "area": "Bangkalan",
+      "cover": "ochre-quarry-cave-light-and-reflections.webp",
+      "source_filename": "batu kapur arosbaya.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
+      "position": "50% 50%"
+    },
+    "147": {
+      "name": "Pantai Lombang",
+      "area": "Sumenep",
+      "cover": "turquoise-shoreline-with-white-parasols.webp",
+      "source_filename": "pantai lombang.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
+      "position": "50% 50%"
+    },
+    "197": {
+      "name": "Teluk Jumiang",
+      "area": "Pamekasan",
+      "cover": "red-rail-along-the-teal-coast.webp",
+      "source_filename": "teluk jumiang.png",
+      "match_basis": "user-renamed filename, matched to canonical catalog ID/name",
+      "position": "50% 50%"
+    },
+    "129": {
+      "name": "Pantai Rongkang",
+      "area": "Bangkalan",
+      "cover": "",
+      "match_basis": "canonical destination location; cover not yet identified"
+    },
+    "157": {
+      "name": "Pantai Slompeng",
+      "area": "Sumenep",
+      "cover": "",
+      "match_basis": "canonical destination location; cover not yet identified"
+    },
+    "168": {
+      "name": "Puncak Ratu",
+      "area": "Pamekasan",
+      "cover": "",
+      "match_basis": "canonical destination location; cover not yet identified"
     }
   },
   "photos": [
     {
       "source_filename": "Alun-alun Bangkalan City Square.png",
+      "source_sha256": "ec8c2129c047023da7062254b3686c27e1bd00e6e32834e8b094d4ca306e5a3c",
       "file": "alun-alun-bangkalan-city-square.webp",
       "sha256": "bf6f229a446d35cff512790eeefd80e39225e9dc66c5284f6545f69772b32f2b",
       "assignment": "21"
     },
     {
-      "source_filename": "Beach Camp at Lavender Dusk.png",
-      "file": "beach-camp-at-lavender-dusk.webp",
-      "sha256": "d6caa31990d4bff5f76ab8703f3d22210dc0e4bf079c29efaf1bac6ba7df525f",
-      "assignment": "pending"
-    },
-    {
-      "source_filename": "Ever-Burning Flames at Night.png",
-      "file": "ever-burning-flames-at-night.webp",
-      "sha256": "199a1ddb1d7c365a015aa0c647f318920fbba84e4ad705380afe231a60868873",
-      "assignment": "23"
-    },
-    {
-      "source_filename": "Historic Keraton Gateway Under Cloudy Skies.png",
-      "file": "historic-keraton-gateway-under-cloudy-skies.webp",
-      "sha256": "30fc0ac68f55ad53fd8180bdafcaaf920e29d573f8a7244b446f0e76e3f9b2a2",
-      "assignment": "115"
+      "source_filename": "Asta tinggi.png",
+      "source_sha256": "fbd04448535205a3edadd5687da89c04fc6b588ea5c0c268dd52fd0e3adb7fb6",
+      "file": "restored-historic-indonesian-gateway.webp",
+      "sha256": "c5af74b62b762f725c68bd4aac103fb4348af79bdddc7bdb4708b4def9346d4f",
+      "assignment": "24"
     },
     {
       "source_filename": "Historic Masjid Agung Jamik Sumenep.png",
+      "source_sha256": "e4703b9a23d10563c5f12f35bde6548537dda2cf76d3b37a2d75f58311b6951b",
       "file": "historic-masjid-agung-jamik-sumenep.webp",
       "sha256": "7c81d26cf1524003d85a53a7bba351a3c8a144b1f4c6cccee2fb46b5a3d6bd7f",
       "assignment": "107"
     },
     {
-      "source_filename": "Masjid Syaikhona Kholil with Golden Dome.png",
-      "file": "masjid-syaikhona-kholil-with-golden-dome.webp",
-      "sha256": "57d8b7f53df3eeff7b5dd3419cd7269706325fea8586aa088a190921c67c51b9",
-      "assignment": "181"
-    },
-    {
-      "source_filename": "Pantai Camplong Beach Welcome Sign.png",
+      "source_filename": "Pantai Camplong.png",
+      "source_sha256": "d887ea516982617e80d0b9dc713973849aefd5521b2e1cc8d2bea3586b424c68",
       "file": "pantai-camplong-beach-welcome-sign.webp",
       "sha256": "a560f40ed1c474ac2059b6f45fcfa38460749ddf5a51c2cb71478926a507296c",
       "assignment": "142"
     },
     {
-      "source_filename": "Restored historic Indonesian gateway.png",
-      "file": "restored-historic-indonesian-gateway.webp",
-      "sha256": "c5af74b62b762f725c68bd4aac103fb4348af79bdddc7bdb4708b4def9346d4f",
-      "assignment": "pending"
+      "source_filename": "Syaikhona Kholil.png",
+      "source_sha256": "04af5b6d3b5f9a266450f65bc9741c76ef1148085d835554feaf62e8e4c45b30",
+      "file": "masjid-syaikhona-kholil-with-golden-dome.webp",
+      "sha256": "57d8b7f53df3eeff7b5dd3419cd7269706325fea8586aa088a190921c67c51b9",
+      "assignment": "181"
     },
     {
-      "source_filename": "Turquoise Pool Beneath a Restored Waterfall.png",
+      "source_filename": "air terjun toroan.png",
+      "source_sha256": "958b8aa96735ca40f544c1682cc78faea93fccbf068ecc0f7c20ececa44e10f7",
       "file": "turquoise-pool-beneath-a-restored-waterfall.webp",
       "sha256": "a86ee76ac6d2c543cc3f3ffc45a3dbde05d2c61b12906832435d308fb56d6d5f",
-      "assignment": "pending"
+      "assignment": "19"
     },
     {
-      "source_filename": "Aerial Turquoise Shoreline with Boats.png",
-      "file": "aerial-turquoise-shoreline-with-boats.webp",
-      "sha256": "83a3f945b576c95406def5f9575b5a9d4861d40abfde4ea054f0c76eaf43524e",
-      "assignment": "pending"
+      "source_filename": "api tak kunjugn padam.png",
+      "source_sha256": "aadea8166badb6cbc880110fd0af2a4bef6aba7c754863c9b00192004faf06cc",
+      "file": "ever-burning-flames-at-night.webp",
+      "sha256": "199a1ddb1d7c365a015aa0c647f318920fbba84e4ad705380afe231a60868873",
+      "assignment": "23"
     },
     {
-      "source_filename": "Curving Beach, Green Sea, Forest Canopy.png",
-      "file": "curving-beach-green-sea-forest-canopy.webp",
-      "sha256": "482f91fd01c4c2f4a923f4b38a315f5510bf1d2fcf2028e3ae37fd64948ddb7c",
-      "assignment": "pending"
+      "source_filename": "museum keraton.png",
+      "source_sha256": "210a3c85394cb2304bc75be1fa9807c00fc4cb35bab128d439ba513a3e9af476",
+      "file": "historic-keraton-gateway-under-cloudy-skies.webp",
+      "sha256": "30fc0ac68f55ad53fd8180bdafcaaf920e29d573f8a7244b446f0e76e3f9b2a2",
+      "assignment": "115"
     },
     {
-      "source_filename": "Golden Sunrise at Bukit Kehi.png",
+      "source_filename": "pantai lon malang.png",
+      "source_sha256": "702cf302b0dd470717635069b63a60e8e6f1d66568f9f4a2477ef254597ff392",
+      "file": "beach-camp-at-lavender-dusk.webp",
+      "sha256": "d6caa31990d4bff5f76ab8703f3d22210dc0e4bf079c29efaf1bac6ba7df525f",
+      "assignment": "148"
+    },
+    {
+      "source_filename": "Pantai Sembilan pier with seaside swings-2.png",
+      "source_sha256": "3168e2a0048776e9854aa6c0f6313d44f3d6c72e444ddcb03aa9d1a1164e2185",
+      "file": "pantai-sembilan-pier-with-seaside-swings-2.webp",
+      "sha256": "86995a22a781748f632e2fbd6a9a09e6b71cc8ebcc5b617559a19507dd24f902",
+      "assignment": "not_in_catalog",
+      "destination_name": "Pantai Sembilan",
+      "reason": "No matching destination in the bundled dataset; not assigned to another beach."
+    },
+    {
+      "source_filename": "White statue before a red-roofed building-2.png",
+      "source_sha256": "8ee2d3edf465b2345be2e94dd6cf1c602d8af167c9b46475d90390ec41f693b1",
+      "file": "istana-gebang.webp",
+      "sha256": "71d6a0206b61806bfe69ea8499f24cf2098a4653a149149ad0dea50ea3a53369",
+      "assignment": "78"
+    },
+    {
+      "source_filename": "bukit kehi.png",
+      "source_sha256": "9a74f0bc433c9c3e30b0e1bfa6280aade3f261fbaaf5ef02b55a10ecedec76e3",
       "file": "golden-sunrise-at-bukit-kehi.webp",
       "sha256": "714a72bb841f20c9c521400309f2e6a8e6ceb7957325015f52839bcb5636ea30",
       "assignment": "34"
     },
     {
-      "source_filename": "Macaques beneath dappled forest light.png",
+      "source_filename": "gililabak.png",
+      "source_sha256": "7296b3f6430354aa91172f1ca026f4f66022cb8774e8bebaa5083d605630a171",
+      "file": "aerial-turquoise-shoreline-with-boats.webp",
+      "sha256": "83a3f945b576c95406def5f9575b5a9d4861d40abfde4ea054f0c76eaf43524e",
+      "assignment": "55"
+    },
+    {
+      "source_filename": "hutan keranepa.png",
+      "source_sha256": "90c0bde5599bd7851065405ee0fa86a2de82ae753c8ecd2b2cc7098cb4c2f17c",
       "file": "macaques-beneath-dappled-forest-light.webp",
       "sha256": "f49e7582934b1a57c71fc2fcdcf3bc6fd4178ec0803132cd3b69f3096b893f12",
-      "assignment": "pending"
+      "assignment": "73"
     },
     {
-      "source_filename": "Pantai Sembilan pier with seaside swings-2.png",
-      "file": "pantai-sembilan-pier-with-seaside-swings-2.webp",
-      "sha256": "86995a22a781748f632e2fbd6a9a09e6b71cc8ebcc5b617559a19507dd24f902",
-      "assignment": "pending"
+      "source_filename": "pantai sirih kemuning.png",
+      "source_sha256": "e15fe845811ccf4191655cff7b59d6e40d0b27cd379350b36429014627585ab1",
+      "file": "curving-beach-green-sea-forest-canopy.webp",
+      "sha256": "482f91fd01c4c2f4a923f4b38a315f5510bf1d2fcf2028e3ae37fd64948ddb7c",
+      "assignment": "131"
     },
     {
-      "source_filename": "Restored park plaza beneath silver canopy-1.png",
-      "file": "restored-park-plaza-beneath-silver-canopy-1.webp",
-      "sha256": "1dff7232c1e87d508a4cd60a03b342df292e5a64b19ed08d7fa45cfd58eafbd0",
-      "assignment": "pending"
-    },
-    {
-      "source_filename": "Rocky Islet in Turquoise Waters-3.png",
+      "source_filename": "pantai watu leter.png",
+      "source_sha256": "8e20fbb099a2696108cc0f38c309992efd0db0c6174e7be19eeebc5449de717c",
       "file": "rocky-islet-in-turquoise-waters-3.webp",
       "sha256": "8f99d3fe652b5dd9c82875f1c060609155a6dab28047106393b912fb4cc9b059",
-      "assignment": "pending"
+      "assignment": "not_in_catalog",
+      "destination_name": "Pantai Watu Leter",
+      "reason": "No matching destination in the bundled dataset; not assigned to another beach."
     },
     {
-      "source_filename": "Statue Courtyard Under Cloudy Skies.png",
-      "file": "statue-courtyard-under-cloudy-skies.webp",
-      "sha256": "5ea2dd82c9f4abaa4292d658ef50c5090febe19a47a039d19d9b5af0adcf3834",
-      "assignment": "pending"
+      "source_filename": "taman rajekwesi.png",
+      "source_sha256": "cd5f089e90e5d77a37ac85863738af8ce34503250e4c651cd847f2125288e13f",
+      "file": "restored-park-plaza-beneath-silver-canopy-1.webp",
+      "sha256": "1dff7232c1e87d508a4cd60a03b342df292e5a64b19ed08d7fa45cfd58eafbd0",
+      "assignment": "183"
     },
     {
-      "source_filename": "Bukit Jaddih Quarry and Turquoise Pools.png",
+      "source_filename": "Bukit Jaddih.png",
+      "source_sha256": "f0c3e3af2630771551a4e787e0bb0af68179c3ac60968be8693030df257d8f6f",
       "file": "bukit-jaddih-quarry-and-turquoise-pools.webp",
-      "sha256": "06015ac90e7e969104d2f8bc8a6276ac5092f7e230904f1f0c5ff009b396adc4",
+      "sha256": "d1424b3d28097c58775ba3b8390b0c7101e2a098b134b82e31c96bb8cef9f566",
       "assignment": "29"
     },
     {
       "source_filename": "Fishing boats under a coastal tree.png",
+      "source_sha256": "594c49713208aa388149d5f17a883bd8df25be50708b92e968e75cfbe71fe94c",
       "file": "fishing-boats-under-a-coastal-tree.webp",
       "sha256": "21f8b8f54f9d95e8a7d53f6124b7c2d366d78384c8461cacb50b659a0f3c79af",
-      "assignment": "pending"
+      "assignment": "pending",
+      "reason": "Unlabelled coastal scene; several catalog beaches remain unmatched. Awaiting destination name."
     },
     {
-      "source_filename": "Gili Iyang’s Curved Turquoise Sandbar.png",
+      "source_filename": "Gili Iyang.png",
+      "source_sha256": "b9092042e7ca4ea202319931aff6e690e43f0588e68b02cbc25b095ef4a8eea4",
       "file": "gili-iyangs-curved-turquoise-sandbar.webp",
       "sha256": "6855ff55d1cb308eafa04180c9147c8c1853ed933c25bc14e4cc8ec45ffbd9c9",
       "assignment": "56"
     },
     {
       "source_filename": "Historic Sembilangan Lighthouse at Sunset.png",
+      "source_sha256": "9519c7edb63e78c757349d959d476951b43101e70928806616021b3858e06d5f",
       "file": "historic-sembilangan-lighthouse-at-sunset.webp",
       "sha256": "d9aba04f359da4cdbee762ee3daa1df1d8bb5a551da371b6c540c8e9c49785c3",
       "assignment": "108"
     },
     {
-      "source_filename": "Ochre quarry cave, light and reflections.png",
-      "file": "ochre-quarry-cave-light-and-reflections.webp",
-      "sha256": "f5490f063fadbc5be4730c3721d84c0b55b02394b6cc8363ae84fe667bcb63a4",
-      "assignment": "pending"
-    },
-    {
-      "source_filename": "Pantai Talang Siring by the Sea.png",
+      "source_filename": "Pantai Talang Siring.png",
+      "source_sha256": "db515108759c320aab86d23b29babf6a6fdcac3a9204bb8ad5269a7664752921",
       "file": "pantai-talang-siring-by-the-sea.webp",
       "sha256": "a38dee951167355e5ee1fd727c49cc487fcf1786b1c756ec64833c75e716afcb",
       "assignment": "160"
     },
     {
-      "source_filename": "Red Rail Along the Teal Coast.png",
-      "file": "red-rail-along-the-teal-coast.webp",
-      "sha256": "02217711d791274757ff7a1adc09493043b6d785830f765142ad00dac75761a2",
-      "assignment": "pending"
+      "source_filename": "batu kapur arosbaya.png",
+      "source_sha256": "2180de704ee49a5f33ee0b18c40a76d3e741381c70c189a2f797e578005d84ad",
+      "file": "ochre-quarry-cave-light-and-reflections.webp",
+      "sha256": "f5490f063fadbc5be4730c3721d84c0b55b02394b6cc8363ae84fe667bcb63a4",
+      "assignment": "30"
     },
     {
-      "source_filename": "Turquoise Shoreline with White Parasols.png",
+      "source_filename": "pantai lombang.png",
+      "source_sha256": "ddf362aa3c9028b954ddc232de647225e37cbe61671744c104b69d0580766262",
       "file": "turquoise-shoreline-with-white-parasols.webp",
       "sha256": "29ba8df00d914bbca3e5deef8c6cbf48700cd22ea40893ecfc0549db9f1ff348",
-      "assignment": "pending"
+      "assignment": "147"
+    },
+    {
+      "source_filename": "teluk jumiang.png",
+      "source_sha256": "f64008618c360f77e5d8ef3bb38428aa07b5085a5618e51d9b2b7c9077030421",
+      "file": "red-rail-along-the-teal-coast.webp",
+      "sha256": "02217711d791274757ff7a1adc09493043b6d785830f765142ad00dac75761a2",
+      "assignment": "197"
     }
   ]
 }

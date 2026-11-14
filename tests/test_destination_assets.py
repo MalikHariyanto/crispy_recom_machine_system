@@ -1,5 +1,6 @@
 """Covers must be explicitly matched, local, and safe when metadata is missing."""
 import json
+import hashlib
 from pathlib import Path
 import unittest
 from unittest.mock import patch
@@ -22,7 +23,24 @@ class DestinationAssetTests(unittest.TestCase):
         self.assertIn('object-position:',html)
         manifest=json.loads(MANIFEST.read_text())
         self.assertEqual(len(manifest['photos']),25)
+        self.assertEqual(catalog.cover_path.ne('').sum(),22)
+        self.assertEqual(catalog.loc[catalog.id_destinasi.eq('73'),'daerah'].item(),'Sampang')
+        self.assertTrue(catalog.loc[catalog.id_destinasi.eq('24'),'cover_path'].item())
+        jaddih=manifest['destinations']['29']
+        self.assertEqual(jaddih['source_filename'],'Bukit Jaddih.png')
+        self.assertEqual(
+            [photo['source_filename'] for photo in manifest['photos'] if photo['assignment']=='pending'],
+            ['Fishing boats under a coastal tree.png'],
+        )
+        self.assertEqual(
+            {photo['destination_name'] for photo in manifest['photos'] if photo['assignment']=='not_in_catalog'},
+            {'Pantai Sembilan','Pantai Watu Leter'},
+        )
         self.assertNotIn('Pantai Sembilan',set(catalog.destinasi))
+        for photo in manifest['photos']:
+            self.assertEqual(hashlib.sha256((DIRECTORY/photo['file']).read_bytes()).hexdigest(),photo['sha256'])
+            if photo['assignment'].isdigit():
+                self.assertEqual(manifest['destinations'][photo['assignment']]['cover'],photo['file'])
         for row in catalog.itertuples():
             if row.cover_path:
                 with Image.open(row.cover_path) as image:
